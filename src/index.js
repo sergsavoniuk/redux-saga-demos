@@ -9,8 +9,6 @@ import rootSaga from './sagas';
 const store = configureStore();
 store.runSaga(rootSaga);
 
-store.dispatch({ type: 'TEST_ACTION' });
-
 render(<Root store={store} />, document.getElementById('root'));
 
 serviceWorker.register();

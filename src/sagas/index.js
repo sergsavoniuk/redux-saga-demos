@@ -1,11 +1,7 @@
-import { all, fork, take } from 'redux-saga/effects';
+import { all, fork } from 'redux-saga/effects';
 
-function* testSaga() {
-  console.log('testSaga is running');
-  const action = yield take('TEST_ACTION');
-  console.log(action);
-}
+import watchAuthorization from 'sagas/auth';
 
 export default function* rootSaga() {
-  yield all([fork(testSaga)]);
+  yield all([fork(watchAuthorization)]);
 }
