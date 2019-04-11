@@ -28,6 +28,7 @@ export default function* watchAuthorization() {
     const action = yield take([LOGIN_USER_FAILURE, LOGOUT]);
     if (action.type === LOGOUT) {
       yield cancel(task);
+      yield put(push('/auth'));
     }
     yield call([localStorage, localStorage.removeItem], 'username');
   }
