@@ -10,27 +10,40 @@ import {
   LapIcon,
   StartStopIcon,
 } from './Actions.components';
+import {
+  start,
+  stop,
+  reset,
+  setLapTime,
+  getStatus,
+} from 'redux/clock/stopwatch';
 
-export function Actions() {
+export function Actions({ running, start, stop, setLapTime, reset }) {
   return (
     <Wrapper>
-      <ResetButton onClick={() => {}}>
+      <ResetButton onClick={reset}>
         <ResetIcon />
         Reset
       </ResetButton>
-      <LapButton onClick={() => {}}>
+      <LapButton onClick={setLapTime}>
         <LapIcon />
         Lap
       </LapButton>
-      <StartStopButton onClick={() => {}}>
+      <StartStopButton onClick={running ? stop : start}>
         <StartStopIcon />
-        Start
+        {running ? 'Stop' : 'Start'}
       </StartStopButton>
     </Wrapper>
   );
 }
 
+function mapStateToProps(state) {
+  return {
+    running: getStatus(state),
+  };
+}
+
 export default connect(
-  null,
-  {},
+  mapStateToProps,
+  { start, stop, reset, setLapTime },
 )(Actions);

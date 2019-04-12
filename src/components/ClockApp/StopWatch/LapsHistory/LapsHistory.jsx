@@ -2,14 +2,21 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { Table, TableBody, TableHeader } from './LapsHistoryTable';
+import { getLapsHistory } from 'redux/clock/stopwatch';
 
-export function LapsHistory() {
+export function LapsHistory({ lapsHistory }) {
   return (
     <Table>
       <TableHeader />
-      <TableBody />
+      <TableBody lapsHistory={lapsHistory} />
     </Table>
   );
 }
 
-export default connect()(LapsHistory);
+function mapStateToProps(state) {
+  return {
+    lapsHistory: getLapsHistory(state),
+  };
+}
+
+export default connect(mapStateToProps)(LapsHistory);
