@@ -1,28 +1,16 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Header = styled.header`
   display: flex;
   justify-content: flex-end;
   align-items: center;
   width: 100%;
-  min-height: 80px;
+  min-height: 70px;
   padding: 5px;
-  background-color: #333333;
+  background-color: #ffffff1a;
 `;
 
-export const LogoutButton = styled.button`
-  height: 40px;
-  border: none;
-  border-radius: 5px;
-  color: #fff;
-  background-color: #00d2da;
-  padding: 7px 10px 7px 10px;
-  font-size: 1.3em;
-  outline: none;
-  cursor: pointer;
-`;
-
-export const UserInfo = styled.button`
+export const UserInfoLink = styled.a`
   display: flex;
   align-items: center;
   color: #fff;
@@ -44,4 +32,37 @@ export const Avatar = styled.img.attrs({
 
 export const Login = styled.span`
   font-size: 1.2em;
+  ::after {
+    content: '▼';
+  }
 `;
+
+export const Dropdown = styled.ul`
+  position: absolute;
+  top: 70px;
+  right: 0;
+  width: 160px;
+  background-color: #ffffff1a;
+  color: #fff;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+`;
+
+export const DropdownItem = styled.li`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #ddc3e20d;
+    color: #ddc3e2;
+  }
+`;
+
+export const LogoutIcon = styled.img.attrs({
+  src: `${process.env.PUBLIC_URL}/images/logout_icon.png`,
+  alt: 'Logout icon',
+})``;

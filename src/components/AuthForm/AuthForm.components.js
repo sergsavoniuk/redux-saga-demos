@@ -16,20 +16,24 @@ export const Form = styled.form`
   align-items: center;
   width: 100%;
   padding: 15px;
-  background-color: #ffe47c;
-  box-shadow: 0px 0px 10px 10px rgba(86, 59, 64, 1);
+  background-color: #ddc3e20d;
+  border: 1px solid #ddc3e2;
   border-radius: 5px;
 `;
 
 export const Title = styled.h1`
   margin-top: 0;
-  color: #117065;
+  margin-bottom: 50px;
+  color: #ddc3e2;
 `;
 
 export const ErrorMessage = styled.span`
   display: inline-block;
   width: 100%;
-  padding: 10px;
+  height: 50px;
+  line-height: 50px;
+  margin-top: -40px;
+  margin-bottom: 10px;
   text-align: center;
   background-color: #d57369;
   border-radius: 5px;
@@ -41,10 +45,15 @@ export const Input = styled.input`
   height: 50px;
   padding: 7px 10px 7px 10px;
   margin: 5px;
-  border: 2px solid #9b9b9b;
+  margin-bottom: 15px;
+  border: 2px solid #29293f;
   border-radius: 5px;
   outline: none;
   font-size: 1.3em;
+
+  :focus {
+    border: 2px solid #ddc3e2;
+  }
 `;
 
 export const SubmitButton = styled.button.attrs({
@@ -54,10 +63,14 @@ export const SubmitButton = styled.button.attrs({
   height: 50px;
   border: none;
   border-radius: 5px;
-  color: #fff;
-  background-color: #00d2da;
+  color: #ddc3e2;
+  background-color: #29293f;
   padding: 7px 10px 7px 10px;
   font-size: 1.3em;
   outline: none;
   cursor: pointer;
+
+  :hover {
+    border: 1px solid #ddc3e2;
+  }
 `;

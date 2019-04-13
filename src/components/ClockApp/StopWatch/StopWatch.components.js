@@ -5,8 +5,9 @@ export const Wrapper = styled.div`
   flex-direction: column;
   width: 400px;
   margin-top: 50px;
-  background-color: #b7f4fa;
-  box-shadow: 0px 0px 10px 10px rgba(86, 59, 64, 1);
+  background-color: #ddc3e20d;
+  border: 1px solid #ddc3e2;
+  color: #ddc3e2;
 `;
 
 const Box = styled.div`
@@ -17,7 +18,9 @@ const Box = styled.div`
 `;
 
 export const Total = styled(Box)``;
-export const Lap = styled(Box)``;
+export const Lap = styled(Box)`
+  margin-bottom: 310px;
+`;
 
 export const Label = styled.span``;
 

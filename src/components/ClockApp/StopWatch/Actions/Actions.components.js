@@ -4,7 +4,7 @@ export const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  background-color: #c4c4c4;
+  background-color: #29293f;
 `;
 
 export const Button = styled.button`
@@ -15,8 +15,13 @@ export const Button = styled.button`
   padding: 10px;
   border: none;
   background-color: transparent;
+  color: #ddc3e2;
   cursor: pointer;
   outline: none;
+
+  &:hover {
+    background-color: #0e1427;
+  }
 `;
 
 export const ResetIcon = styled.img.attrs({

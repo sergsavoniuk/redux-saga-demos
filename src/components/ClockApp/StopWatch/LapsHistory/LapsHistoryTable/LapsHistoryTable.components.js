@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 export const Table = styled.table`
   width: 100%;
+  color: #ddc3e2;
+  margin-top: -298.18px;
 
   border-collapse: collapse;
 
@@ -18,7 +20,7 @@ export const Table = styled.table`
   }
 
   thead {
-    background-color: #7997a1;
+    background-color: #29293f;
   }
 
   th {

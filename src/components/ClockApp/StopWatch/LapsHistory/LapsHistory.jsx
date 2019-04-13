@@ -6,10 +6,12 @@ import { getLapsHistory } from 'redux/clock/stopwatch';
 
 export function LapsHistory({ lapsHistory }) {
   return (
-    <Table>
-      <TableHeader />
-      <TableBody lapsHistory={lapsHistory} />
-    </Table>
+    lapsHistory.length > 0 && (
+      <Table>
+        <TableHeader />
+        <TableBody lapsHistory={lapsHistory} />
+      </Table>
+    )
   );
 }
 

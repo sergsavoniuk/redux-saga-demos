@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 import {
   CardList,
   Card,
+  StyledLink as Link,
   Title,
   Description,
   ClockAppLogo,

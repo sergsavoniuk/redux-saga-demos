@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
-export const Greeting = styled.h2`
-  display: flex;
-  justify-content: center;
+export const Greeting = styled.h1`
   text-align: center;
-  color: #191919;
+  margin-bottom: 50px;
+  color: #ddc3e2;
 `;

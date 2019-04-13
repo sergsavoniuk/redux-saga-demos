@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const CardList = styled.div`
   display: flex;
@@ -15,15 +16,23 @@ export const Card = styled.div`
   padding: 10px;
   margin-right: 35px;
   margin-bottom: 35px;
-  background-color: #ffe47c;
-  box-shadow: 0px 0px 5px 5px rgba(86, 59, 64, 1);
+  background-color: #29293f;
+  border: 1px solid #ddc3e2;
   border-radius: 5px;
   cursor: pointer;
+
+  :hover {
+    background-color: #ddc3e20d;
+  }
 `;
 
-export const Title = styled.h1`
+export const StyledLink = styled(Link)`
+  text-decoration: none;
+`;
+
+export const Title = styled.h2`
   margin-top: 0;
-  color: #008080;
+  color: #ddc3e2;
 `;
 
 export const ClockAppLogo = styled.img.attrs({
@@ -32,7 +41,7 @@ export const ClockAppLogo = styled.img.attrs({
 })``;
 
 export const Description = styled.p`
-  color: #008b8b;
+  color: #ddc3e2;
   text-align: center;
   font-size: 1.05em;
 `;

@@ -1,24 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
 import {
   Header as StyledHeader,
-  UserInfo,
+  UserInfoLink,
   Avatar,
   Login,
-  LogoutButton,
+  Dropdown,
+  DropdownItem,
+  LogoutIcon,
 } from './Header.components';
 import { logout, getUsername } from 'redux/auth';
 
 export function Header({ username, logout }) {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   return (
-    <StyledHeader>
-      <UserInfo>
-        <Login>{username}</Login>
-        <Avatar />
-      </UserInfo>
-      <LogoutButton onClick={logout}>Logout</LogoutButton>
-    </StyledHeader>
+    <>
+      <StyledHeader>
+        <UserInfoLink onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+          <Login>{username}</Login>
+          <Avatar />
+        </UserInfoLink>
+      </StyledHeader>
+      {isDropdownOpen && (
+        <Dropdown>
+          <DropdownItem onClick={logout}>
+            Logout <LogoutIcon />
+          </DropdownItem>
+        </Dropdown>
+      )}
+    </>
   );
 }
 
