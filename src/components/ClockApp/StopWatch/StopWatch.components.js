@@ -19,7 +19,7 @@ const Box = styled.div`
 
 export const Total = styled(Box)``;
 export const Lap = styled(Box)`
-  margin-bottom: 310px;
+  margin-bottom: 330px;
 `;
 
 export const Label = styled.span``;

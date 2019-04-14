@@ -12,7 +12,7 @@ export function changeTab(tab) {
 }
 
 // Reducer
-export default function tabsReducer(state = { activeTab: 'Alarm' }, action) {
+export default function tabsReducer(state = { activeTab: 'Timer' }, action) {
   switch (action.type) {
     case CHANGE_TAB: {
       return {

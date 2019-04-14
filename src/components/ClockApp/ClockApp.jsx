@@ -10,11 +10,12 @@ function ClockApp() {
     <Tabs>
       <TabList>
         <Tab name="Alarm" />
-        <Tab name="Stopwatch" />
+        <Tab name="StopWatch" />
         <Tab name="Timer" />
       </TabList>
       <TabPanels>
-        <TabPanel name="Alarm" />
+        <TabPanel name="StopWatch" />
+        <TabPanel name="Timer" />
         {/* <Panel name="alarm" />
         <Panel name="stopwatch" />
         <Panel name="timer" /> */}

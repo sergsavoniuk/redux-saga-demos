@@ -8,22 +8,25 @@ const PAGES = {
   // 'alarm': lazy(() =>
   //   import(/* webpackChunkName: "Alarm" */ 'components/CurrentForecast'),
   // ),
-  stopwatch: lazy(() =>
+  StopWatch: lazy(() =>
     import(/* webpackChunkName: "StopWatch" */ 'components/ClockApp/StopWatch'),
   ),
-  // 'timer': lazy(() =>
-  //   import(/* webpackChunkName: "Timer" */ 'components/ForecastFor5Days'),
-  // ),
+  Timer: lazy(() =>
+    import(/* webpackChunkName: "Timer" */ 'components/ClockApp/Timer'),
+  ),
 };
 
 export function TabPanel({ name: componentName, isActiveTab }) {
-  const Page = PAGES['stopwatch'];
+  if (isActiveTab) {
+    const Page = PAGES[componentName];
 
-  return (
-    <Suspense falback={<Loader />}>
-      <Page />
-    </Suspense>
-  );
+    return (
+      <Suspense falback={<Loader />}>
+        <Page />
+      </Suspense>
+    );
+  }
+  return null;
 }
 
 function mapStateToProps(state, ownProps) {
