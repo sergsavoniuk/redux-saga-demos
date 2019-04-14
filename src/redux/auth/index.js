@@ -1,45 +1,47 @@
 // Action types
+export const ActionTypes = {
+  LOGIN_USER: '@auth/LOGIN_USER',
+  LOGIN_USER_SUCCESS: '@auth/LOGIN_USER_SUCCESS',
+  LOGIN_USER_FAILURE: '@auth/LOGIN_USER_FAILURE',
+  LOGOUT: '@auth/LOGOUT',
+};
 
-export const LOGIN_USER = 'LOGIN_USER';
-export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
-export const LOGIN_USER_FAILURE = 'LOGIN_USER_FAILURE';
-export const LOGOUT = 'LOGOUT';
+// Actions creators
+export const ActionCreators = {
+  login(username) {
+    return {
+      type: ActionTypes.LOGIN_USER,
+      payload: {
+        username,
+      },
+    };
+  },
 
-// Actions
+  loginSuccess(username) {
+    return {
+      type: ActionTypes.LOGIN_USER_SUCCESS,
+      payload: {
+        username,
+      },
+    };
+  },
 
-export function login(username) {
-  return {
-    type: LOGIN_USER,
-    payload: {
-      username,
-    },
-  };
-}
+  loginFailure({ error, message }) {
+    return {
+      type: ActionTypes.LOGIN_USER_FAILURE,
+      payload: {
+        error,
+        message,
+      },
+    };
+  },
 
-export function loginSuccess(username) {
-  return {
-    type: LOGIN_USER_SUCCESS,
-    payload: {
-      username,
-    },
-  };
-}
-
-export function loginFailure({ error, message }) {
-  return {
-    type: LOGIN_USER_FAILURE,
-    payload: {
-      error,
-      message,
-    },
-  };
-}
-
-export function logout() {
-  return {
-    type: LOGOUT,
-  };
-}
+  logout() {
+    return {
+      type: ActionTypes.LOGOUT,
+    };
+  },
+};
 
 const initialState = {
   username: null,
@@ -52,13 +54,13 @@ const initialState = {
 
 export default function authReducer(state = initialState, action) {
   switch (action.type) {
-    case LOGIN_USER: {
+    case ActionTypes.LOGIN_USER: {
       return {
         ...state,
         loading: true,
       };
     }
-    case LOGIN_USER_SUCCESS: {
+    case ActionTypes.LOGIN_USER_SUCCESS: {
       return {
         ...state,
         username: action.payload.username,
@@ -67,7 +69,7 @@ export default function authReducer(state = initialState, action) {
         error: null,
       };
     }
-    case LOGIN_USER_FAILURE: {
+    case ActionTypes.LOGIN_USER_FAILURE: {
       return {
         ...state,
         error: action.payload.message,
@@ -75,7 +77,7 @@ export default function authReducer(state = initialState, action) {
         loading: false,
       };
     }
-    case LOGOUT: {
+    case ActionTypes.LOGOUT: {
       return {
         ...state,
         ...initialState,
@@ -87,8 +89,20 @@ export default function authReducer(state = initialState, action) {
 }
 
 // Selectors
+export const Selectors = {
+  getUsername(state) {
+    return state.auth.username;
+  },
 
-export const getUsername = state => state.auth.username;
-export const getIsAuthenticated = state => state.auth.isAuthenticated;
-export const getErrorMessage = state => state.auth.error;
-export const getLoadingStatus = state => state.auth.loading;
+  getIsAuthenticated(state) {
+    return state.auth.isAuthenticated;
+  },
+
+  getErrorMessage(state) {
+    return state.auth.error;
+  },
+
+  getLoadingStatus(state) {
+    return state.auth.loading;
+  },
+};

@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { connect } from 'react-redux';
 
 import Loader from 'components/Loader';
-import { login, getErrorMessage, getLoadingStatus } from 'redux/auth';
+import { ActionCreators, Selectors } from 'redux/auth';
 
 import {
   Wrapper,
@@ -47,14 +47,14 @@ export function AuthForm({ error, loading, login }) {
 
 function mapStateToProps(state) {
   return {
-    error: getErrorMessage(state),
-    loading: getLoadingStatus(state),
+    error: Selectors.getErrorMessage(state),
+    loading: Selectors.getLoadingStatus(state),
   };
 }
 
 export default connect(
   mapStateToProps,
   {
-    login,
+    login: ActionCreators.login,
   },
 )(AuthForm);

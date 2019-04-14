@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import AppCard from './AppCard';
 import { Greeting } from './HomePage.components';
-import { getUsername } from 'redux/auth';
+import { Selectors } from 'redux/auth';
 
 export function HomePage({ username }) {
   return (
@@ -18,7 +18,7 @@ export function HomePage({ username }) {
 
 function mapStateToProps(state) {
   return {
-    username: getUsername(state),
+    username: Selectors.getUsername(state),
   };
 }
 

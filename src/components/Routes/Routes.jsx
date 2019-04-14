@@ -9,7 +9,7 @@ const HomePage = lazy(() =>
 );
 
 const ClockApp = lazy(() =>
-  import(/* webpackChunkName: "ClockApp" */ 'components/ClockApp/StopWatch'),
+  import(/* webpackChunkName: "ClockApp" */ 'components/ClockApp/ClockApp'),
 );
 
 function Routes() {

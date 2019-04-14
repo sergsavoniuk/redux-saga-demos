@@ -6,7 +6,7 @@ import Routes from 'components/Routes';
 import Layout from 'components/Layout';
 import AuthForm from 'components/AuthForm';
 import Loader from 'components/Loader';
-import { login, getIsAuthenticated } from 'redux/auth';
+import { ActionCreators, Selectors } from 'redux/auth';
 
 function getUsername() {
   return localStorage.getItem('username');
@@ -35,11 +35,11 @@ function App({ isAuthenticated, login, push }) {
 
 function mapStateToProps(state) {
   return {
-    isAuthenticated: getIsAuthenticated(state),
+    isAuthenticated: Selectors.getIsAuthenticated(state),
   };
 }
 
 export default connect(
   mapStateToProps,
-  { login, push },
+  { login: ActionCreators.login, push },
 )(App);

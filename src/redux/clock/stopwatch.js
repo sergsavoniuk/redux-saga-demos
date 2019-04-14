@@ -1,88 +1,91 @@
-// Action types
+import { StopwatchStatuses } from 'constants/stopwatchStatuses';
 
-export const START = 'START';
-export const STOP = 'STOP';
-export const RESET = 'RESET';
-export const TOTAL_TICK = 'TOTAL_TICK';
-export const LAP_TICK = 'LAP_TICK';
-export const SET_LAP_TIME = 'SET_LAP_TIME';
+// Action types
+export const ActionTypes = {
+  START: '@clock/stopwatch/START',
+  STOP: '@clock/stopwatch/STOP',
+  RESET: '@clock/stopwatch/RESET',
+  TOTAL_TICK: '@clock/stopwatch/TOTAL_TICK',
+  LAP_TICK: '@clock/stopwatch/LAP_TICK',
+  SET_LAP_TIME: '@clock/stopwatch/SET_LAP_TIME',
+};
 
 // Action creators
+export const ActionCreators = {
+  start(time) {
+    return {
+      type: ActionTypes.START,
+      payload: {
+        time: 0,
+      },
+    };
+  },
 
-export function start(time) {
-  return {
-    type: START,
-    payload: {
-      time: 0,
-    },
-  };
-}
+  stop(time) {
+    return {
+      type: ActionTypes.STOP,
+      payload: {
+        time,
+      },
+    };
+  },
 
-export function stop(time) {
-  return {
-    type: STOP,
-    payload: {
-      time,
-    },
-  };
-}
+  reset() {
+    return {
+      type: ActionTypes.RESET,
+    };
+  },
 
-export function reset() {
-  return {
-    type: RESET,
-  };
-}
+  totalTick(time) {
+    return {
+      type: ActionTypes.TOTAL_TICK,
+      payload: {
+        time,
+      },
+    };
+  },
 
-export function totalTick(time) {
-  return {
-    type: TOTAL_TICK,
-    payload: {
-      time,
-    },
-  };
-}
+  lapTick(time) {
+    return {
+      type: ActionTypes.LAP_TICK,
+      payload: {
+        time,
+      },
+    };
+  },
 
-export function lapTick(time) {
-  return {
-    type: LAP_TICK,
-    payload: {
-      time,
-    },
-  };
-}
-
-export function setLapTime(time) {
-  return {
-    type: SET_LAP_TIME,
-    payload: {
-      time,
-    },
-  };
-}
+  setLapTime(time) {
+    return {
+      type: ActionTypes.SET_LAP_TIME,
+      payload: {
+        time,
+      },
+    };
+  },
+};
 
 const initialState = {
-  running: false,
+  status: StopwatchStatuses.PENDING,
   totalTime: 0,
   lapTime: 0,
   lapsHistory: [],
 };
 
 // Reducer
-
 export default function stopwatchReducer(state = initialState, action) {
   switch (action.type) {
-    case START: {
+    case ActionTypes.START: {
       return {
         ...state,
-        running: true,
+        status: StopwatchStatuses.RUNNING,
         lapTime: 0,
         // totalTime: action.payload.time,
       };
     }
-    case STOP: {
+    case ActionTypes.STOP: {
       return {
         ...state,
-        running: false,
+        status: StopwatchStatuses.STOPPED,
         lapsHistory: state.lapsHistory.concat({
           lap: state.lapsHistory.length + 1,
           total: state.totalTime,
@@ -90,25 +93,25 @@ export default function stopwatchReducer(state = initialState, action) {
         }),
       };
     }
-    case RESET: {
+    case ActionTypes.RESET: {
       return {
         ...state,
         ...initialState,
       };
     }
-    case TOTAL_TICK: {
+    case ActionTypes.TOTAL_TICK: {
       return {
         ...state,
         totalTime: action.payload.time,
       };
     }
-    case LAP_TICK: {
+    case ActionTypes.LAP_TICK: {
       return {
         ...state,
         lapTime: action.payload.time,
       };
     }
-    case SET_LAP_TIME: {
+    case ActionTypes.SET_LAP_TIME: {
       return {
         ...state,
         lapTime: 0,
@@ -124,8 +127,21 @@ export default function stopwatchReducer(state = initialState, action) {
   }
 }
 
-// selectors
-export const getStatus = state => state.clockApp.stopwatch.running;
-export const getTotalTime = state => state.clockApp.stopwatch.totalTime;
-export const getLapTime = state => state.clockApp.stopwatch.lapTime;
-export const getLapsHistory = state => state.clockApp.stopwatch.lapsHistory;
+// Selectors
+export const Selectors = {
+  getStatus(state) {
+    return state.clockApp.stopwatch.status;
+  },
+
+  getTotalTime(state) {
+    return state.clockApp.stopwatch.totalTime;
+  },
+
+  getLapTime(state) {
+    return state.clockApp.stopwatch.lapTime;
+  },
+
+  getLapsHistory(state) {
+    return state.clockApp.stopwatch.lapsHistory;
+  },
+};

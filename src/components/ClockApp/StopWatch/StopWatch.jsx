@@ -4,9 +4,8 @@ import { format, addSeconds } from 'date-fns';
 
 import Actions from './Actions';
 import LapsHistory from './LapsHistory';
-import { Wrapper, Total, Lap, Label, Value } from './StopWatch.components';
-import { getTotalTime, start } from 'redux/clock/stopwatch';
-import { getLapTime } from '../../../redux/clock/stopwatch';
+import { Total, Lap, Label, Value } from './StopWatch.components';
+import { ActionCreators, Selectors } from 'redux/clock/stopwatch';
 
 function StopWatch({ totalTime, start, lapTime }) {
   const [total, setTotal] = useState(null);
@@ -17,7 +16,7 @@ function StopWatch({ totalTime, start, lapTime }) {
   // }, []);
 
   return (
-    <Wrapper>
+    <>
       <Total>
         <Label>Total</Label>
         {/* <Value>{total != null ? format(total, 'HH:mm:s') : '00:00.0'}</Value> */}
@@ -29,18 +28,18 @@ function StopWatch({ totalTime, start, lapTime }) {
       </Lap>
       <LapsHistory />
       <Actions />
-    </Wrapper>
+    </>
   );
 }
 
 function mapStateToProps(state) {
   return {
-    totalTime: getTotalTime(state),
-    lapTime: getLapTime(state),
+    totalTime: Selectors.getTotalTime(state),
+    lapTime: Selectors.getLapTime(state),
   };
 }
 
 export default connect(
   mapStateToProps,
-  { start },
+  { start: ActionCreators.start },
 )(StopWatch);

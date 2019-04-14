@@ -10,7 +10,7 @@ import {
   DropdownItem,
   LogoutIcon,
 } from './Header.components';
-import { logout, getUsername } from 'redux/auth';
+import { ActionCreators, Selectors } from 'redux/auth';
 
 export function Header({ username, logout }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -35,11 +35,11 @@ export function Header({ username, logout }) {
 
 function mapStateToProps(state) {
   return {
-    username: getUsername(state),
+    username: Selectors.getUsername(state),
   };
 }
 
 export default connect(
   mapStateToProps,
-  { logout },
+  { logout: ActionCreators.logout },
 )(Header);

@@ -1,10 +1,11 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
   background-color: #29293f;
+  border-top: 1px solid #ddc3e2;
 `;
 
 export const Button = styled.button`
@@ -39,8 +40,30 @@ export const StartStopIcon = styled.img.attrs({
   alt: 'Start/Stop icon',
 })``;
 
-export const ResetButton = styled(Button)``;
+export const ResetButton = styled(Button)`
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      background-color: #ffffff1a;
+      cursor: not-allowed;
 
-export const LapButton = styled(Button)``;
+      &:hover {
+        background-color: #ffffff1a;
+      }
+    `}
+`;
+
+export const LapButton = styled(Button)`
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      background-color: #ffffff1a;
+      cursor: not-allowed;
+
+      &:hover {
+        background-color: #ffffff1a;
+      }
+    `}
+`;
 
 export const StartStopButton = styled(Button)``;

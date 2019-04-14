@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { Table, TableBody, TableHeader } from './LapsHistoryTable';
-import { getLapsHistory } from 'redux/clock/stopwatch';
+import { Selectors } from 'redux/clock/stopwatch';
 
 export function LapsHistory({ lapsHistory }) {
   return (
@@ -17,7 +17,7 @@ export function LapsHistory({ lapsHistory }) {
 
 function mapStateToProps(state) {
   return {
-    lapsHistory: getLapsHistory(state),
+    lapsHistory: Selectors.getLapsHistory(state),
   };
 }
 
