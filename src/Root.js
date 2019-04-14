@@ -7,6 +7,11 @@ import App from 'components/App';
 import { history } from 'redux/configureStore';
 
 const GlobalStyles = createGlobalStyle`
+  @font-face {
+    font-family: 'Digital';
+    src: url(${process.env.PUBLIC_URL}/fonts/digital-7.ttf);
+  }
+
   * {
     box-sizing: border-box;
   }

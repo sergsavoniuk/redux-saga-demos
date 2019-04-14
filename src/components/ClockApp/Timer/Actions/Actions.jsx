@@ -8,25 +8,21 @@ import {
   ResetIcon,
   StartStopIcon,
 } from './Actions.components';
-import { ActionCreators, Selectors } from 'redux/clock/stopwatch';
-import { StopwatchStatuses } from 'constants/stopwatchStatuses';
+import { ActionCreators, Selectors } from 'redux/clock/timer';
+import { TimerStatuses } from 'constants/timerStatuses';
 
-export function Actions() {
+export function Actions({ status, start, stop, reset }) {
   return (
     <Wrapper>
-      <ResetButton
-      // disabled={status === StopwatchStatuses.PENDING}
-      // onClick={reset}
-      >
+      <ResetButton disabled={status === TimerStatuses.PENDING} onClick={reset}>
         <ResetIcon />
         Reset
       </ResetButton>
       <StartStopButton
-      // onClick={status === StopwatchStatuses.RUNNING ? stop : start}
+        onClick={status === TimerStatuses.RUNNING ? stop : () => start(120)}
       >
         <StartStopIcon />
-        Start
-        {/* {status === StopwatchStatuses.RUNNING ? 'Stop' : 'Start'} */}
+        {status === TimerStatuses.RUNNING ? 'Stop' : 'Start'}
       </StartStopButton>
     </Wrapper>
   );
@@ -38,11 +34,11 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect()(Actions);
-// mapStateToProps,
-// {
-//   start: ActionCreators.start,
-//   stop: ActionCreators.stop,
-//   reset: ActionCreators.reset,
-//   setLapTime: ActionCreators.setLapTime,
-// },
+export default connect(
+  mapStateToProps,
+  {
+    start: ActionCreators.start,
+    stop: ActionCreators.stop,
+    reset: ActionCreators.reset,
+  },
+)(Actions);
