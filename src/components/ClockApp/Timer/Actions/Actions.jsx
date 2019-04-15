@@ -11,7 +11,14 @@ import {
 import { ActionCreators, Selectors } from 'redux/clock/timer';
 import { TimerStatuses } from 'constants/timerStatuses';
 
-export function Actions({ status, start, stop, reset }) {
+export function Actions({
+  status,
+  startTime,
+  remainedTime,
+  start,
+  stop,
+  reset,
+}) {
   return (
     <Wrapper>
       <ResetButton disabled={status === TimerStatuses.PENDING} onClick={reset}>
@@ -19,7 +26,11 @@ export function Actions({ status, start, stop, reset }) {
         Reset
       </ResetButton>
       <StartStopButton
-        onClick={status === TimerStatuses.RUNNING ? stop : () => start(120)}
+        onClick={
+          status === TimerStatuses.RUNNING
+            ? stop
+            : () => start(remainedTime || startTime)
+        }
       >
         <StartStopIcon />
         {status === TimerStatuses.RUNNING ? 'Stop' : 'Start'}
@@ -31,6 +42,8 @@ export function Actions({ status, start, stop, reset }) {
 function mapStateToProps(state) {
   return {
     status: Selectors.getStatus(state),
+    startTime: Selectors.getStartTime(state),
+    remainedTime: Selectors.getRemainedTime(state),
   };
 }
 

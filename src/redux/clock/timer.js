@@ -6,6 +6,7 @@ export const ActionTypes = {
   STOP: '@clock/timer/STOP',
   RESET: '@clock/timer/RESET',
   TICK: '@clock/timer/TICK',
+  SET_START_TIME: '@clock/timer/SET_START_TIME',
 };
 
 // Action creators
@@ -39,6 +40,15 @@ export const ActionCreators = {
       },
     };
   },
+
+  setStartTime(time) {
+    return {
+      type: ActionTypes.SET_START_TIME,
+      payload: {
+        time,
+      },
+    };
+  },
 };
 
 // Reducer
@@ -56,7 +66,6 @@ export default function timerReducer(state = initialState, action) {
       return {
         ...state,
         status: TimerStatuses.RUNNING,
-        startTime: time,
         remainedTime: time,
       };
     }
@@ -69,13 +78,20 @@ export default function timerReducer(state = initialState, action) {
     case ActionTypes.RESET: {
       return {
         ...state,
-        ...initialState,
+        status: TimerStatuses.PENDING,
+        remainedTime: null,
       };
     }
     case ActionTypes.TICK: {
       return {
         ...state,
         remainedTime: action.payload.time,
+      };
+    }
+    case ActionTypes.SET_START_TIME: {
+      return {
+        ...state,
+        startTime: action.payload.time,
       };
     }
     default:

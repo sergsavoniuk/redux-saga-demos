@@ -1,6 +1,9 @@
-import React, { memo, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { connect } from 'react-redux';
 
 import { Wrapper, TimeInput } from './TimeField.components';
+import { Selectors } from 'redux/clock/timer';
+import { TimerStatuses } from 'constants/timerStatuses';
 
 const BACKSPACE_CODE = 8;
 const DELETE_CODE = 46;
@@ -9,7 +12,7 @@ const CODE_OF_9 = 57;
 const LEFT_ARROW = 37;
 const RIGHT_ARROW = 39;
 
-function TimeField({ name, value, onChange }) {
+function TimeField({ name, value, status, onChange }) {
   const inputRef = useRef(null);
   const cursorPosition = useRef(null);
   const backspacePressed = useRef(null);
@@ -62,6 +65,7 @@ function TimeField({ name, value, onChange }) {
     <Wrapper>
       <TimeInput
         ref={inputRef}
+        disabled={status !== TimerStatuses.PENDING}
         value={value}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
@@ -71,4 +75,10 @@ function TimeField({ name, value, onChange }) {
   );
 }
 
-export default memo(TimeField);
+function mapStateToProps(state) {
+  return {
+    status: Selectors.getStatus(state),
+  };
+}
+
+export default connect(mapStateToProps)(TimeField);
