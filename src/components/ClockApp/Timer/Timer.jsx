@@ -4,6 +4,7 @@ import { format, addSeconds, subSeconds } from 'date-fns';
 
 import TimeField from './TimeField';
 import Actions from './Actions';
+import Notification from 'components/ClockApp/Notification';
 import { Wrapper, Box, Separator, RemainedTime } from './Timer.components';
 import { ActionCreators, Selectors } from 'redux/clock/timer';
 
@@ -11,7 +12,9 @@ function secsToTime(timeInSecs) {
   return addSeconds(new Date('01 Jan 1970 00:00:00'), timeInSecs + 1);
 }
 
-export function Timer({ startTime, remainedTime, setStartTime }) {
+export function Timer({ status, startTime, remainedTime, setStartTime }) {
+  const [showNotification, setShowNotification] = useState(false);
+
   const [hours, setHours] = useState('00');
   const [minutes, setMinutes] = useState('00');
   const [seconds, setSeconds] = useState('00');
@@ -24,6 +27,14 @@ export function Timer({ startTime, remainedTime, setStartTime }) {
     );
   }, [hours, minutes, seconds]);
 
+  useEffect(() => {
+    setShowNotification(remainedTime === 0 && status === 'STOPPED');
+  }, [status]);
+
+  function handleCloseNotification() {
+    setShowNotification(false);
+  }
+
   return (
     <Wrapper>
       <Box>
@@ -33,6 +44,12 @@ export function Timer({ startTime, remainedTime, setStartTime }) {
         <Separator>:</Separator>
         <TimeField name="Secs." value={seconds} onChange={setSeconds} />
       </Box>
+      {
+        <Notification
+          visible={showNotification}
+          onClose={handleCloseNotification}
+        />
+      }
       {remainedTime !== null && (
         <RemainedTime>
           {remainedTime > 0
@@ -47,6 +64,7 @@ export function Timer({ startTime, remainedTime, setStartTime }) {
 
 function mapStateToProps(state) {
   return {
+    status: Selectors.getStatus(state),
     startTime: Selectors.getStartTime(state),
     remainedTime: Selectors.getRemainedTime(state),
   };

@@ -1,13 +1,10 @@
-import React, { Suspense, useEffect, useRef, lazy } from 'react';
+import React, { Suspense, lazy } from 'react';
 import { connect } from 'react-redux';
 
 import Loader from 'components/Loader';
 import { getActiveTab } from 'redux/clock/tabs';
 
 const PAGES = {
-  // 'alarm': lazy(() =>
-  //   import(/* webpackChunkName: "Alarm" */ 'components/CurrentForecast'),
-  // ),
   StopWatch: lazy(() =>
     import(/* webpackChunkName: "StopWatch" */ 'components/ClockApp/StopWatch'),
   ),

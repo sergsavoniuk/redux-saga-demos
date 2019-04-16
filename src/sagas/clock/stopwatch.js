@@ -1,7 +1,6 @@
 import {
   actionChannel,
   delay,
-  call,
   race,
   put,
   take,
@@ -14,7 +13,7 @@ export default function* watchStopwatch() {
   const channel = yield actionChannel(ActionTypes.START);
   while (yield take(channel)) {
     while (true) {
-      const { stopAction, setLapAction, resetAction, tickAction } = yield race({
+      const { stopAction, resetAction, tickAction } = yield race({
         stopAction: take(ActionTypes.STOP),
         setLapAction: take(ActionTypes.SET_LAP_TIME),
         resetAction: take(ActionTypes.RESET),
@@ -28,7 +27,6 @@ export default function* watchStopwatch() {
         yield put(ActionCreators.totalTick(totalTime + 1));
         yield put(ActionCreators.lapTick(lapTime + 1));
       } else if (resetAction || stopAction) {
-        // yield put(stop(lapTime));
         break;
       }
     }
