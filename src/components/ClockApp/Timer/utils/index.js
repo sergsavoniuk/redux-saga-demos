@@ -3,7 +3,7 @@ import { addSeconds } from 'date-fns';
 const date = new Date('01 Jan 1970 00:00:00');
 
 export function secsToTime(timeInSecs) {
-  return addSeconds(new Date('01 Jan 1970 00:00:00'), timeInSecs + 1);
+  return addSeconds(date, timeInSecs + 1);
 }
 
 export function init(startTime) {

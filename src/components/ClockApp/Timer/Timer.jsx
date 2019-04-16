@@ -2,7 +2,7 @@ import React, { useState, useEffect, useReducer } from 'react';
 import { connect } from 'react-redux';
 import { format, subSeconds } from 'date-fns';
 
-import Actions from './Actions';
+import Actions from './components/Actions';
 import TimeField from './components/TimeField';
 import Notification from 'components/ClockApp/Notification';
 import { Wrapper, Box, Separator, RemainedTime } from './Timer.components';
