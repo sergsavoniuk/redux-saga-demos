@@ -11,7 +11,7 @@ import {
   StartStopIcon,
 } from './Actions.components';
 import { ActionCreators, Selectors } from 'redux/clock/stopwatch';
-import { StopwatchStatuses } from 'constants/stopwatchStatuses';
+import { StopwatchStatuses } from 'constants/clock/stopwatchStatuses';
 
 export function Actions({ status, start, stop, reset, setLapTime }) {
   return (

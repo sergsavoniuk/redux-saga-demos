@@ -8,7 +8,7 @@ import {
 } from 'redux-saga/effects';
 
 import { ActionTypes, ActionCreators, Selectors } from 'redux/clock/timer';
-import { TimerStatuses } from 'constants/timerStatuses';
+import { TimerStatuses } from 'constants/clock/timerStatuses';
 
 export default function* watchTimer() {
   const channel = yield actionChannel(ActionTypes.START);

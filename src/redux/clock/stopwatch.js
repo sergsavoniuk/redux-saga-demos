@@ -1,4 +1,4 @@
-import { StopwatchStatuses } from 'constants/stopwatchStatuses';
+import { StopwatchStatuses } from 'constants/clock/stopwatchStatuses';
 
 // Action types
 export const ActionTypes = {

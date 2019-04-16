@@ -1,24 +1,24 @@
 import React from 'react';
 
-import { Tabs, TabList, TabPanels } from './Tabs';
-import Tab from './Tabs/Tab';
+import Tab from './Tabs';
 import TabPanel from './Tabs/TabPanel';
-// import Stopwatch from './StopWatch';
+import { Tabs, TabList, TabPanels } from './Tabs';
+import { TabNames } from 'constants/clock/tabNames';
+
+const { Alarms, StopWatch, Timer } = TabNames;
 
 function ClockApp() {
   return (
     <Tabs>
       <TabList>
-        <Tab name="Alarm" />
-        <Tab name="StopWatch" />
-        <Tab name="Timer" />
+        <Tab name={Alarms} />
+        <Tab name={StopWatch} />
+        <Tab name={Timer} />
       </TabList>
       <TabPanels>
-        <TabPanel name="StopWatch" />
-        <TabPanel name="Timer" />
-        {/* <Panel name="alarm" />
-        <Panel name="stopwatch" />
-        <Panel name="timer" /> */}
+        <TabPanel componentName={Alarms} />
+        <TabPanel componentName={StopWatch} />
+        <TabPanel componentName={Timer} />
       </TabPanels>
     </Tabs>
   );

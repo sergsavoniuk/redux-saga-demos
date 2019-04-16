@@ -1,9 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import { connect } from 'react-redux';
 
 import { Wrapper, TimeInput } from './TimeField.components';
-import { Selectors } from 'redux/clock/timer';
-import { TimerStatuses } from 'constants/clock/timerStatuses';
 
 const BACKSPACE_CODE = 8;
 const DELETE_CODE = 46;
@@ -12,7 +9,7 @@ const CODE_OF_9 = 57;
 const LEFT_ARROW = 37;
 const RIGHT_ARROW = 39;
 
-function TimeField({ name, label, value, status, onChange }) {
+function TimeField({ name, label, value, disabled, status, onChange }) {
   const inputRef = useRef(null);
   const cursorPosition = useRef(null);
   const backspacePressed = useRef(null);
@@ -73,7 +70,7 @@ function TimeField({ name, label, value, status, onChange }) {
     <Wrapper>
       <TimeInput
         ref={inputRef}
-        disabled={status !== TimerStatuses.PENDING}
+        disabled={disabled}
         value={value}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
@@ -83,10 +80,4 @@ function TimeField({ name, label, value, status, onChange }) {
   );
 }
 
-function mapStateToProps(state) {
-  return {
-    status: Selectors.getStatus(state),
-  };
-}
-
-export default connect(mapStateToProps)(TimeField);
+export default TimeField;

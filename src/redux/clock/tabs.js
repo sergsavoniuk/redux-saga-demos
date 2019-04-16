@@ -1,3 +1,5 @@
+import { TabNames } from 'constants/clock/tabNames';
+
 // Action types
 export const CHANGE_TAB = '@clock/tabs/CHANGE_TAB';
 
@@ -12,7 +14,10 @@ export function changeTab(tab) {
 }
 
 // Reducer
-export default function tabsReducer(state = { activeTab: 'Timer' }, action) {
+export default function tabsReducer(
+  state = { activeTab: TabNames.Alarms },
+  action,
+) {
   switch (action.type) {
     case CHANGE_TAB: {
       return {

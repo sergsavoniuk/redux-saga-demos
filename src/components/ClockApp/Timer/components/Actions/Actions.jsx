@@ -9,7 +9,7 @@ import {
   StartStopIcon,
 } from './Actions.components';
 import { ActionCreators, Selectors } from 'redux/clock/timer';
-import { TimerStatuses } from 'constants/timerStatuses';
+import { TimerStatuses } from 'constants/clock/timerStatuses';
 
 export function Actions({
   status,

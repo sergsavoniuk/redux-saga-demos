@@ -3,17 +3,23 @@ import { connect } from 'react-redux';
 
 import Loader from 'components/Loader';
 import { getActiveTab } from 'redux/clock/tabs';
+import { TabNames } from 'constants/clock/tabNames';
+
+const { Alarms, StopWatch, Timer } = TabNames;
 
 const PAGES = {
-  StopWatch: lazy(() =>
+  [Alarms]: lazy(() =>
+    import(/* webpackChunkName: "Alarms" */ 'components/ClockApp/Alarms'),
+  ),
+  [StopWatch]: lazy(() =>
     import(/* webpackChunkName: "StopWatch" */ 'components/ClockApp/StopWatch'),
   ),
-  Timer: lazy(() =>
+  [Timer]: lazy(() =>
     import(/* webpackChunkName: "Timer" */ 'components/ClockApp/Timer'),
   ),
 };
 
-export function TabPanel({ name: componentName, isActiveTab }) {
+export function TabPanel({ componentName, isActiveTab }) {
   if (isActiveTab) {
     const Page = PAGES[componentName];
 
@@ -28,7 +34,7 @@ export function TabPanel({ name: componentName, isActiveTab }) {
 
 function mapStateToProps(state, ownProps) {
   return {
-    isActiveTab: ownProps.name === getActiveTab(state),
+    isActiveTab: ownProps.componentName === getActiveTab(state),
   };
 }
 

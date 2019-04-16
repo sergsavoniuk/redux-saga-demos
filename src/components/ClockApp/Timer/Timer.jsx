@@ -7,7 +7,7 @@ import TimeField from './components/TimeField';
 import Notification from 'components/ClockApp/Notification';
 import { Wrapper, Box, Separator, RemainedTime } from './Timer.components';
 import { ActionCreators, Selectors } from 'redux/clock/timer';
-import { TimerStatuses } from 'constants/timerStatuses';
+import { TimerStatuses } from 'constants/clock/timerStatuses';
 import { secsToTime, init, reducer } from './utils';
 
 export function Timer({

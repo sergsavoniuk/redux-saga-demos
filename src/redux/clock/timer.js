@@ -1,4 +1,4 @@
-import { TimerStatuses } from 'constants/timerStatuses';
+import { TimerStatuses } from 'constants/clock/timerStatuses';
 
 // Action types
 export const ActionTypes = {
