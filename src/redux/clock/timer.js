@@ -5,6 +5,7 @@ export const ActionTypes = {
   START: '@clock/timer/START',
   STOP: '@clock/timer/STOP',
   RESET: '@clock/timer/RESET',
+  FINISH: '@clock/timer/FINISH',
   TICK: '@clock/timer/TICK',
   SET_START_TIME: '@clock/timer/SET_START_TIME',
 };
@@ -29,6 +30,12 @@ export const ActionCreators = {
   reset() {
     return {
       type: ActionTypes.RESET,
+    };
+  },
+
+  finish() {
+    return {
+      type: ActionTypes.FINISH,
     };
   },
 
@@ -80,6 +87,12 @@ export default function timerReducer(state = initialState, action) {
         ...state,
         status: TimerStatuses.PENDING,
         remainedTime: null,
+      };
+    }
+    case ActionTypes.FINISH: {
+      return {
+        ...state,
+        status: TimerStatuses.FINISHED,
       };
     }
     case ActionTypes.TICK: {

@@ -22,7 +22,7 @@ export default function* watchTimer() {
         const remainedTime = yield select(Selectors.getRemainedTime);
 
         if (remainedTime === 0) {
-          yield put(ActionCreators.stop());
+          yield put(ActionCreators.finish());
           break;
         }
 
@@ -39,7 +39,7 @@ export default function* watchTimer() {
         }
       }
     } else {
-      yield put(ActionCreators.stop());
+      yield put(ActionCreators.finish());
     }
   }
 }

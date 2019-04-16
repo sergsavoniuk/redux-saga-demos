@@ -1,23 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import { connect } from 'react-redux';
-import { format, addSeconds, subSeconds } from 'date-fns';
+import { format, subSeconds } from 'date-fns';
 
-import TimeField from './TimeField';
 import Actions from './Actions';
+import TimeField from './components/TimeField';
 import Notification from 'components/ClockApp/Notification';
 import { Wrapper, Box, Separator, RemainedTime } from './Timer.components';
 import { ActionCreators, Selectors } from 'redux/clock/timer';
+import { TimerStatuses } from 'constants/timerStatuses';
+import { secsToTime, init, reducer } from './utils';
 
-function secsToTime(timeInSecs) {
-  return addSeconds(new Date('01 Jan 1970 00:00:00'), timeInSecs + 1);
-}
-
-export function Timer({ status, startTime, remainedTime, setStartTime }) {
+export function Timer({
+  status,
+  startTime,
+  remainedTime,
+  setStartTime,
+  reset,
+}) {
   const [showNotification, setShowNotification] = useState(false);
 
-  const [hours, setHours] = useState('00');
-  const [minutes, setMinutes] = useState('00');
-  const [seconds, setSeconds] = useState('00');
+  const [{ hours, minutes, seconds }, dispatch] = useReducer(
+    reducer,
+    startTime,
+    init,
+  );
 
   useEffect(() => {
     setStartTime(
@@ -28,29 +34,43 @@ export function Timer({ status, startTime, remainedTime, setStartTime }) {
   }, [hours, minutes, seconds]);
 
   useEffect(() => {
-    setShowNotification(remainedTime === 0 && status === 'STOPPED');
+    setShowNotification(status === TimerStatuses.FINISHED);
   }, [status]);
 
   function handleCloseNotification() {
+    reset();
     setShowNotification(false);
   }
 
   return (
     <Wrapper>
       <Box>
-        <TimeField name="Hours" value={hours} onChange={setHours} />
-        <Separator>:</Separator>
-        <TimeField name="Mins." value={minutes} onChange={setMinutes} />
-        <Separator>:</Separator>
-        <TimeField name="Secs." value={seconds} onChange={setSeconds} />
-      </Box>
-      {
-        <Notification
-          visible={showNotification}
-          onClose={handleCloseNotification}
+        <TimeField
+          name="hours"
+          label="Hours"
+          value={hours}
+          onChange={dispatch}
         />
-      }
-      {remainedTime !== null && (
+        <Separator>:</Separator>
+        <TimeField
+          name="minutes"
+          label="Mins."
+          value={minutes}
+          onChange={dispatch}
+        />
+        <Separator>:</Separator>
+        <TimeField
+          name="seconds"
+          label="Secs."
+          value={seconds}
+          onChange={dispatch}
+        />
+      </Box>
+      <Notification
+        visible={showNotification}
+        onClose={handleCloseNotification}
+      />
+      {status !== TimerStatuses.PENDING && (
         <RemainedTime>
           {remainedTime > 0
             ? format(subSeconds(secsToTime(remainedTime), 1), 'HH:mm:ss')
@@ -72,5 +92,5 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  { setStartTime: ActionCreators.setStartTime },
+  { setStartTime: ActionCreators.setStartTime, reset: ActionCreators.reset },
 )(Timer);

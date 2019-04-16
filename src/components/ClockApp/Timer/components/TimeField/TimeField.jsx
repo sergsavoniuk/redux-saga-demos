@@ -12,7 +12,7 @@ const CODE_OF_9 = 57;
 const LEFT_ARROW = 37;
 const RIGHT_ARROW = 39;
 
-function TimeField({ name, value, status, onChange }) {
+function TimeField({ name, label, value, status, onChange }) {
   const inputRef = useRef(null);
   const cursorPosition = useRef(null);
   const backspacePressed = useRef(null);
@@ -39,20 +39,28 @@ function TimeField({ name, value, status, onChange }) {
   }
 
   function handleChange(event) {
+    const action = {
+      type: `SET_${name.toUpperCase()}`,
+      payload: {
+        name,
+      },
+    };
     const newValue = event.target.value;
     cursorPosition.current = event.target.selectionStart;
 
     if (backspacePressed.current === true || deletePressed.current === true) {
       if (cursorPosition.current === 0) {
-        onChange('0' + newValue);
+        action.payload.value = '0' + newValue;
+        onChange(action);
       } else {
-        onChange(newValue + '0');
+        action.payload.value = newValue + '0';
+        onChange(action);
       }
     } else if (cursorPosition.current < 3) {
-      onChange(
+      action.payload.value =
         newValue.slice(0, cursorPosition.current) +
-          newValue.slice(cursorPosition.current + 1),
-      );
+        newValue.slice(cursorPosition.current + 1);
+      onChange(action);
     }
   }
 
@@ -70,7 +78,7 @@ function TimeField({ name, value, status, onChange }) {
         onChange={handleChange}
         onKeyDown={handleKeyDown}
       />
-      <span>{name}</span>
+      <span>{label}</span>
     </Wrapper>
   );
 }

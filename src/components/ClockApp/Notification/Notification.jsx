@@ -1,6 +1,7 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
 
+import NotificationAudio from './NotificationAudio';
 import {
   Notification as StyledNotification,
   Title,
@@ -8,9 +9,9 @@ import {
   CloseButton,
 } from './Notification.components';
 
-function Notification({ visible, onClose: handleCloseNotification }) {
-  const element = document.getElementById('modal');
+const element = document.getElementById('modal');
 
+function Notification({ visible, onClose: handleCloseNotification }) {
   if (visible) {
     element.classList.remove('hidden');
 
@@ -19,6 +20,7 @@ function Notification({ visible, onClose: handleCloseNotification }) {
         <Title>Timer</Title>
         <Body>The time is up!</Body>
         <CloseButton onClick={handleCloseNotification}>Close</CloseButton>
+        <NotificationAudio />
       </StyledNotification>,
       element,
     );

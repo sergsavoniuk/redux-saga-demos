@@ -1,1 +1,6 @@
-export { StopwatchStatuses as TimerStatuses } from './stopwatchStatuses';
+import { StopwatchStatuses } from './stopwatchStatuses';
+
+export const TimerStatuses = {
+  ...StopwatchStatuses,
+  FINISHED: 'FINISHED',
+};
