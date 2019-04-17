@@ -67,6 +67,8 @@ export function Timer({
         />
       </Box>
       <Notification
+        title="Timer"
+        body="The time is up!"
         visible={showNotification}
         onClose={handleCloseNotification}
       />

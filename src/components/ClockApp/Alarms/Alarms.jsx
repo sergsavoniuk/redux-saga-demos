@@ -9,7 +9,7 @@ export function Alarms({ alarmKeys }) {
   return (
     <Wrapper>
       {alarmKeys.map(alarmKey => (
-        <Alarm key={alarmKey} alarmId={alarmKey} />
+        <Alarm key={alarmKey} alarmId={+alarmKey} />
       ))}
     </Wrapper>
   );

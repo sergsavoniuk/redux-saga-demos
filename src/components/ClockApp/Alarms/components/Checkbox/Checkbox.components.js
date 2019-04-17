@@ -45,6 +45,11 @@ export const StyledCheckbox = styled.div`
     box-shadow: 0 0 0 3px pink;
   }
 
+  ${HiddenCheckbox}:disabled + & {
+    background: #90908f;
+    cursor: auto;
+  }
+
   ${Icon} {
     visibility: ${props => (props.checked ? 'visible' : 'hidden')}
   }

@@ -11,14 +11,19 @@ import {
 
 const element = document.getElementById('modal');
 
-function Notification({ visible, onClose: handleCloseNotification }) {
+function Notification({
+  title,
+  body,
+  visible,
+  onClose: handleCloseNotification,
+}) {
   if (visible) {
     element.classList.remove('hidden');
 
     return createPortal(
       <StyledNotification>
-        <Title>Timer</Title>
-        <Body>The time is up!</Body>
+        <Title>{title}</Title>
+        <Body>{body}</Body>
         <CloseButton onClick={handleCloseNotification}>Close</CloseButton>
         <NotificationAudio />
       </StyledNotification>,
