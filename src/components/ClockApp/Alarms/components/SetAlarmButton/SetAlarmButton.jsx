@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import Checkbox from '../Checkbox';
 import { Wrapper } from './SetAlarmButton.components';
 
-function SetAlarmButton() {
+function SetAlarmButton({ setAlarm, checked }) {
+  function handleCheckboxChange(event) {
+    setAlarm(event.target.checked);
+  }
+
   return (
     <Wrapper>
-      <Checkbox label="" onChange={() => {}} />
+      <label>
+        <Checkbox checked={checked} onChange={handleCheckboxChange} />
+      </label>
     </Wrapper>
   );
 }
 
-export default SetAlarmButton;
+export default memo(SetAlarmButton);

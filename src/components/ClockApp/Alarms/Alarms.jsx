@@ -1,17 +1,24 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import Alarm from './components/Alarm';
 import { Wrapper } from './Alarms.components';
+import { Selectors } from 'redux/clock/alarms';
 
-function Alarms() {
+export function Alarms({ alarmKeys }) {
   return (
     <Wrapper>
-      <Alarm />
-      <Alarm />
-      <Alarm />
-      <Alarm />
+      {alarmKeys.map(alarmKey => (
+        <Alarm key={alarmKey} alarmId={alarmKey} />
+      ))}
     </Wrapper>
   );
 }
 
-export default Alarms;
+function mapStateToProps(state) {
+  return {
+    alarmKeys: Selectors.getAlarmsKeys(state),
+  };
+}
+
+export default connect(mapStateToProps)(Alarms);
