@@ -6,20 +6,12 @@ export function secsToTime(timeInSecs) {
   return addSeconds(date, timeInSecs + 1);
 }
 
-// export function init(startTime) {
-//   const datetime = addSeconds(date, startTime);
-//   return {
-//     hours: String(datetime.getHours()).padStart(2, '0'),
-//     minutes: String(datetime.getMinutes()).padStart(2, '0'),
-//     seconds: String(datetime.getSeconds()).padStart(2, '0'),
-//   };
-// }
-
 export function init(startTime) {
   const datetime = addMinutes(date, startTime);
   return {
     hours: String(datetime.getHours()).padStart(2, '0'),
     minutes: String(datetime.getMinutes()).padStart(2, '0'),
+    seconds: String(datetime.getSeconds()).padStart(2, '0'),
   };
 }
 

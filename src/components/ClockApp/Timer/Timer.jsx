@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import { format, subSeconds } from 'date-fns';
 
 import Actions from './components/Actions';
-import TimeField from './components/TimeField';
+import TimeField from 'components/ClockApp/TimeField';
 import Notification from 'components/ClockApp/Notification';
 import { Wrapper, Box, Separator, RemainedTime } from './Timer.components';
 import { ActionCreators, Selectors } from 'redux/clock/timer';
 import { TimerStatuses } from 'constants/clock/timerStatuses';
-import { secsToTime, init, reducer } from './utils';
+import { secsToTime, init, reducer } from 'components/ClockApp/TimeField/utils';
 
 export function Timer({
   status,
@@ -48,6 +48,7 @@ export function Timer({
         <TimeField
           name="hours"
           label="Hours"
+          disabled={status !== TimerStatuses.PENDING}
           value={hours}
           onChange={dispatch}
         />
@@ -55,6 +56,7 @@ export function Timer({
         <TimeField
           name="minutes"
           label="Mins."
+          disabled={status !== TimerStatuses.PENDING}
           value={minutes}
           onChange={dispatch}
         />
@@ -62,6 +64,7 @@ export function Timer({
         <TimeField
           name="seconds"
           label="Secs."
+          disabled={status !== TimerStatuses.PENDING}
           value={seconds}
           onChange={dispatch}
         />
