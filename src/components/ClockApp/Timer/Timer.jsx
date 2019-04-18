@@ -21,7 +21,7 @@ export function Timer({
 
   const [{ hours, minutes, seconds }, dispatch] = useReducer(
     reducer,
-    startTime,
+    { startTime },
     init,
   );
 

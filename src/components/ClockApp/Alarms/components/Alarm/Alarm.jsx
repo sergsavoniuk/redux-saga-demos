@@ -19,7 +19,11 @@ export function Alarm({
 }) {
   const [showNotification, setShowNotification] = useState(false);
 
-  const [{ hours, minutes }, dispatch] = useReducer(reducer, time, init);
+  const [{ hours, minutes }, dispatch] = useReducer(
+    reducer,
+    { startTime: time, inSeconds: false },
+    init,
+  );
 
   useEffect(() => {
     updateAlarmTime(
