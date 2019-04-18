@@ -13,6 +13,8 @@ import { TimerStatuses } from 'constants/clock/timerStatuses';
 export default function* watchTimer() {
   const channel = yield actionChannel(ActionTypes.START);
 
+  let tickDifference = null;
+
   while (yield take(channel)) {
     const status = yield select(Selectors.getStatus);
     const remainedTime = yield select(Selectors.getRemainedTime);
@@ -26,15 +28,22 @@ export default function* watchTimer() {
           break;
         }
 
+        const timeBeforeAction = Date.now();
+
         const { stopAction, resetAction, tickAction } = yield race({
           stopAction: take(ActionTypes.STOP),
           resetAction: take(ActionTypes.RESET),
-          tickAction: delay(1000),
+          tickAction: delay(tickDifference || 1000),
         });
 
         if (tickAction) {
           yield put(ActionCreators.tick(remainedTime - 1));
+          tickDifference = null;
         } else if (resetAction || stopAction) {
+          // if stop action happened, calculate the time for the next tick
+          if (stopAction) {
+            tickDifference = 1000 - Math.abs(Date.now() - timeBeforeAction);
+          }
           break;
         }
       }
