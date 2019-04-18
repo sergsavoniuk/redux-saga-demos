@@ -8,11 +8,12 @@ export const ActionTypes = {
 
 // Action creators
 export const ActionCreators = {
-  setAlarm(alarmId) {
+  setAlarm(alarmId, active) {
     return {
       type: `${ActionTypes.SET_ALARM}.${alarmId}`,
       payload: {
         alarmId,
+        active,
       },
     };
   },
@@ -49,31 +50,29 @@ export const ActionCreators = {
 };
 
 const initialState = {
-  alarms: {
-    1: {
-      time: 360,
-      selectedDays: [],
-      isAlarmWentOff: false,
-      active: false,
-    },
-    2: {
-      time: 540,
-      selectedDays: [],
-      isAlarmWentOff: false,
-      active: false,
-    },
-    3: {
-      time: 720,
-      selectedDays: [],
-      isAlarmWentOff: false,
-      active: false,
-    },
-    4: {
-      time: 900,
-      selectedDays: [],
-      isAlarmWentOff: false,
-      active: false,
-    },
+  1: {
+    time: 360,
+    selectedDays: [],
+    isAlarmWentOff: false,
+    active: false,
+  },
+  2: {
+    time: 540,
+    selectedDays: [],
+    isAlarmWentOff: false,
+    active: false,
+  },
+  3: {
+    time: 720,
+    selectedDays: [],
+    isAlarmWentOff: false,
+    active: false,
+  },
+  4: {
+    time: 900,
+    selectedDays: [],
+    isAlarmWentOff: false,
+    active: false,
   },
 };
 
@@ -83,15 +82,13 @@ export default function alarmsReducer(state = initialState, action) {
 
   switch (extractedAction) {
     case ActionTypes.SET_ALARM: {
-      const { alarmId } = action.payload;
+      const { alarmId, active } = action.payload;
       return {
         ...state,
-        alarms: {
-          ...state.alarms,
-          [alarmId]: {
-            ...state.alarms[alarmId],
-            active: !state.alarms[alarmId].active,
-          },
+        [alarmId]: {
+          ...state[alarmId],
+          active,
+          selectedDays: active ? state[alarmId].selectedDays : [],
         },
       };
     }
@@ -99,12 +96,9 @@ export default function alarmsReducer(state = initialState, action) {
       const { alarmId, time } = action.payload;
       return {
         ...state,
-        alarms: {
-          ...state.alarms,
-          [alarmId]: {
-            ...state.alarms[alarmId],
-            time,
-          },
+        [alarmId]: {
+          ...state[alarmId],
+          time,
         },
       };
     }
@@ -112,18 +106,11 @@ export default function alarmsReducer(state = initialState, action) {
       const { alarmId, day: selectedDay } = action.payload;
       return {
         ...state,
-        alarms: {
-          ...state.alarms,
-          [alarmId]: {
-            ...state.alarms[alarmId],
-            selectedDays: state.alarms[alarmId].selectedDays.includes(
-              selectedDay,
-            )
-              ? state.alarms[alarmId].selectedDays.filter(
-                  day => day !== selectedDay,
-                )
-              : state.alarms[alarmId].selectedDays.concat(selectedDay),
-          },
+        [alarmId]: {
+          ...state[alarmId],
+          selectedDays: state[alarmId].selectedDays.includes(selectedDay)
+            ? state[alarmId].selectedDays.filter(day => day !== selectedDay)
+            : state[alarmId].selectedDays.concat(selectedDay),
         },
       };
     }
@@ -131,12 +118,9 @@ export default function alarmsReducer(state = initialState, action) {
       const { alarmId, isAlarmWentOff } = action.payload;
       return {
         ...state,
-        alarms: {
-          ...state.alarms,
-          [alarmId]: {
-            ...state.alarms[alarmId],
-            isAlarmWentOff,
-          },
+        [alarmId]: {
+          ...state.alarms[alarmId],
+          isAlarmWentOff,
         },
       };
     }
@@ -148,22 +132,22 @@ export default function alarmsReducer(state = initialState, action) {
 // Selectors
 export const Selectors = {
   getAlarmTime(state, alarmId) {
-    return state.clockApp.alarms.alarms[alarmId].time;
+    return state.clockApp.alarms[alarmId].time;
   },
 
   getSelectedDays(state, alarmId) {
-    return state.clockApp.alarms.alarms[alarmId].selectedDays;
+    return state.clockApp.alarms[alarmId].selectedDays;
   },
 
   getIsAlarmWentOff(state, alarmId) {
-    return state.clockApp.alarms.alarms[alarmId].isAlarmWentOff;
+    return state.clockApp.alarms[alarmId].isAlarmWentOff;
   },
 
   getAlarmsKeys(state) {
-    return Object.keys(state.clockApp.alarms.alarms);
+    return Object.keys(state.clockApp.alarms);
   },
 
   getAlarmDataByKey(state, alarmKey) {
-    return state.clockApp.alarms.alarms[alarmKey];
+    return state.clockApp.alarms[alarmKey];
   },
 };

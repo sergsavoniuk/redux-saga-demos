@@ -84,8 +84,8 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch, ownProps) {
   return {
-    setAlarm: function() {
-      dispatch(ActionCreators.setAlarm(ownProps.alarmId));
+    setAlarm: function(active) {
+      dispatch(ActionCreators.setAlarm(ownProps.alarmId, active));
     },
     updateAlarmTime: function(time) {
       dispatch(ActionCreators.updateAlarmTime(ownProps.alarmId, time));
