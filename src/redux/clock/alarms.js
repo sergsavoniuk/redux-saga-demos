@@ -119,7 +119,7 @@ export default function alarmsReducer(state = initialState, action) {
       return {
         ...state,
         [alarmId]: {
-          ...state.alarms[alarmId],
+          ...state[alarmId],
           isAlarmWentOff,
         },
       };
