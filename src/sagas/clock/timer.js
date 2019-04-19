@@ -42,7 +42,7 @@ export default function* watchTimer() {
         } else if (resetAction || stopAction) {
           // if stop action happened, calculate the time for the next tick
           if (stopAction) {
-            tickDifference = 1000 - Math.abs(Date.now() - timeBeforeAction);
+            tickDifference = 1000 - (Date.now() - timeBeforeAction);
           }
           break;
         }
