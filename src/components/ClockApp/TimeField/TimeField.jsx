@@ -1,9 +1,10 @@
 import React from 'react';
+import { string, bool, func } from 'prop-types';
 
-import { Wrapper, TimeInput } from './TimeField.components';
 import useTimeField from './hooks/useTimeField';
+import { Wrapper, TimeInput } from './TimeField.components';
 
-function TimeField({ name, label, value, disabled, onChange }) {
+function TimeField({ name, label = '', value, disabled = false, onChange }) {
   const { inputRef, handleKeyDown, handleChange } = useTimeField(
     name,
     onChange,
@@ -22,5 +23,13 @@ function TimeField({ name, label, value, disabled, onChange }) {
     </Wrapper>
   );
 }
+
+TimeField.propTypes = {
+  name: string.isRequired,
+  label: string,
+  value: string.isRequired,
+  disabled: bool,
+  onChange: func.isRequired,
+};
 
 export default TimeField;

@@ -1,4 +1,5 @@
 import React, { Suspense, lazy } from 'react';
+import { string, bool } from 'prop-types';
 import { connect } from 'react-redux';
 
 import Loader from 'components/Loader';
@@ -31,6 +32,11 @@ export function TabPanel({ componentName, isActiveTab }) {
   }
   return null;
 }
+
+TabPanel.propTypes = {
+  componentName: string.isRequired,
+  isActiveTab: bool.isRequired,
+};
 
 function mapStateToProps(state, ownProps) {
   return {

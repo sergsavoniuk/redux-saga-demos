@@ -1,11 +1,12 @@
 import React from 'react';
+import { bool, number, func, arrayOf } from 'prop-types';
 
 import { Wrapper, Box } from './Days.components';
 import Checkbox from '../Checkbox';
 
 const DAYS = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
 
-export function Days({ active, selectedDays, changeAlarmDay }) {
+export function Days({ active = false, selectedDays = [], changeAlarmDay }) {
   function handleCheckboxChange(event) {
     changeAlarmDay(DAYS.indexOf(event.target.name) + 1);
   }
@@ -28,5 +29,11 @@ export function Days({ active, selectedDays, changeAlarmDay }) {
     </Wrapper>
   );
 }
+
+Days.propTypes = {
+  active: bool,
+  selectedDays: arrayOf(number),
+  changeAlarmDay: func.isRequired,
+};
 
 export default Days;

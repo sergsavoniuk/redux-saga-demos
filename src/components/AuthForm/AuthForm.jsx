@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { object, bool, func } from 'prop-types';
 import { connect } from 'react-redux';
 
 import Loader from 'components/Loader';
@@ -35,7 +36,7 @@ export function AuthForm({ error, loading, login }) {
     <Wrapper>
       <Form onSubmit={handleSubmit}>
         <Title>Auth Form</Title>
-        {error && <ErrorMessage>User with name {error}</ErrorMessage>}
+        {error && <ErrorMessage>{error}</ErrorMessage>}
         <Input
           name="username"
           placeholder="Enter your username"
@@ -53,6 +54,12 @@ export function AuthForm({ error, loading, login }) {
     </Wrapper>
   );
 }
+
+AuthForm.propTypes = {
+  error: object,
+  loading: bool.isRequired,
+  login: func.isRequired,
+};
 
 function mapStateToProps(state) {
   return {

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useReducer } from 'react';
+import { number, string, func } from 'prop-types';
 import { connect } from 'react-redux';
 import { format, subSeconds } from 'date-fns';
 
@@ -86,6 +87,14 @@ export function Timer({
     </Wrapper>
   );
 }
+
+Timer.propTypes = {
+  status: string.isRequired,
+  startTime: number.isRequired,
+  remainedTime: number.isRequired,
+  setStartTime: func.isRequired,
+  reset: func.isRequired,
+};
 
 function mapStateToProps(state) {
   return {

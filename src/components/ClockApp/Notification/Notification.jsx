@@ -1,5 +1,6 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
+import { string, bool, func } from 'prop-types';
 
 import NotificationAudio from './NotificationAudio';
 import {
@@ -12,8 +13,8 @@ import {
 const element = document.getElementById('modal');
 
 function Notification({
-  title,
-  body,
+  title = '',
+  body = '',
   visible,
   onClose: handleCloseNotification,
 }) {
@@ -35,5 +36,12 @@ function Notification({
 
   return null;
 }
+
+Notification.propTypes = {
+  title: string,
+  body: string,
+  visible: bool.isRequired,
+  onClose: func.isRequired,
+};
 
 export default Notification;

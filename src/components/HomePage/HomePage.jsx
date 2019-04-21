@@ -1,4 +1,5 @@
 import React from 'react';
+import { string, func } from 'prop-types';
 import { connect } from 'react-redux';
 
 import AppCard from './AppCard';
@@ -15,6 +16,11 @@ export function HomePage({ username }) {
     </>
   );
 }
+
+HomePage.propTypes = {
+  username: string.isRequired,
+  dispatch: func.isRequired,
+};
 
 function mapStateToProps(state) {
   return {

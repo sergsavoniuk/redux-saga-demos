@@ -1,4 +1,5 @@
 import React from 'react';
+import { arrayOf, string, func } from 'prop-types';
 import { connect } from 'react-redux';
 
 import Alarm from './components/Alarm';
@@ -14,6 +15,11 @@ export function Alarms({ alarmKeys }) {
     </Wrapper>
   );
 }
+
+Alarms.propTypes = {
+  alarmKeys: arrayOf(string).isRequired,
+  dispatch: func.isRequired,
+};
 
 function mapStateToProps(state) {
   return {
