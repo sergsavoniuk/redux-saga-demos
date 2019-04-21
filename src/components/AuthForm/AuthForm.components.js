@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -73,4 +73,15 @@ export const SubmitButton = styled.button.attrs({
   :hover {
     border: 1px solid #ddc3e2;
   }
+
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      background-color: #ffffff1a;
+      cursor: not-allowed;
+
+      :hover {
+        border: none;
+      }
+    `}
 `;

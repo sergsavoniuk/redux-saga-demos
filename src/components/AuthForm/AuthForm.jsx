@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useState, useMemo } from 'react';
 import { connect } from 'react-redux';
 
 import Loader from 'components/Loader';
@@ -14,14 +14,22 @@ import {
 } from './AuthForm.components';
 
 export function AuthForm({ error, loading, login }) {
-  const inputRef = useRef(null);
+  const [username, setUsername] = useState('');
 
   function handleSubmit(event) {
     event.preventDefault();
 
-    login(inputRef.current.value);
-    inputRef.current.value = null;
+    login(username.trim());
+    setUsername(null);
   }
+
+  function handleChange(event) {
+    setUsername(event.target.value);
+  }
+
+  const isEmpty = useMemo(() => {
+    return username.trim().length === 0;
+  }, [username]);
 
   return (
     <Wrapper>
@@ -31,9 +39,10 @@ export function AuthForm({ error, loading, login }) {
         <Input
           name="username"
           placeholder="Enter your username"
-          ref={inputRef}
+          value={username}
+          onChange={handleChange}
         />
-        <SubmitButton disabled={loading}>
+        <SubmitButton disabled={loading || isEmpty}>
           {loading ? (
             <Loader alignment="0 auto" size={30} color="#848080" />
           ) : (
