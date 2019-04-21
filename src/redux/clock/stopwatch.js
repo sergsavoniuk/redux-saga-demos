@@ -8,16 +8,15 @@ export const ActionTypes = {
   TOTAL_TICK: '@clock/stopwatch/TOTAL_TICK',
   LAP_TICK: '@clock/stopwatch/LAP_TICK',
   SET_LAP_TIME: '@clock/stopwatch/SET_LAP_TIME',
+  UPDATE_TOTAL_TIME: '@clock/stopwatch/UPDATE_TOTAL_TIME',
+  UPDATE_LAP_TIME: '@clock/stopwatch/UPDATE_LAP_TIME',
 };
 
 // Action creators
 export const ActionCreators = {
-  start(time) {
+  start() {
     return {
       type: ActionTypes.START,
-      payload: {
-        time: 0,
-      },
     };
   },
 
@@ -62,12 +61,51 @@ export const ActionCreators = {
       },
     };
   },
+
+  updateTotalTime(time) {
+    return {
+      type: ActionTypes.UPDATE_TOTAL_TIME,
+      payload: {
+        time,
+      },
+    };
+  },
+
+  updateLapTime(time) {
+    return {
+      type: ActionTypes.UPDATE_LAP_TIME,
+      payload: {
+        time,
+      },
+    };
+  },
+
+  // updateLapHistory(time) {
+  //   return {
+  //     type: 'UPDATE_LAP_HISTORY',
+  //     payload: {
+  //       time,
+  //     },
+  //   };
+  // },
+
+  updateLapHistory(totalTime, lapTime) {
+    return {
+      type: 'UPDATE_LAP_HISTORY',
+      payload: {
+        totalTime,
+        lapTime,
+      },
+    };
+  },
 };
 
 const initialState = {
   status: StopwatchStatuses.PENDING,
   totalTime: 0,
+  totalTimeTmp: 0,
   lapTime: 0,
+  lapTimeTmp: 0,
   lapsHistory: [],
 };
 
@@ -78,8 +116,8 @@ export default function stopwatchReducer(state = initialState, action) {
       return {
         ...state,
         status: StopwatchStatuses.RUNNING,
+        totalTime: 0,
         lapTime: 0,
-        // totalTime: action.payload.time,
       };
     }
     case ActionTypes.STOP: {
@@ -111,14 +149,47 @@ export default function stopwatchReducer(state = initialState, action) {
         lapTime: action.payload.time,
       };
     }
-    case ActionTypes.SET_LAP_TIME: {
+    // case ActionTypes.SET_LAP_TIME: {
+    //   return {
+    //     ...state,
+    //     lapTime: 0,
+    //     lapsHistory: state.lapsHistory.concat({
+    //       lap: state.lapsHistory.length + 1,
+    //       total: state.totalTime,
+    //       lapResult: state.lapTime,
+    //     }),
+    //   };
+    // }
+    case ActionTypes.UPDATE_TOTAL_TIME: {
       return {
         ...state,
-        lapTime: 0,
+        totalTimeTmp: state.totalTime + action.payload.time,
+      };
+    }
+    case ActionTypes.UPDATE_LAP_TIME: {
+      return {
+        ...state,
+        lapTimeTmp: state.lapTime + action.payload.time,
+        // lapsHistory: state.lapsHistory.concat({
+        //   lap: state.lapsHistory.length + 1,
+        //   total: state.totalTime,
+        //   lapResult: state.lapTime + action.payload.time,
+        // }),
+      };
+    }
+    case 'UPDATE_LAP_HISTORY': {
+      return {
+        ...state,
+        // lapTime: state.lapTime + action.payload.time,
+        // lapsHistory: state.lapsHistory.concat({
+        //   lap: state.lapsHistory.length + 1,
+        //   total: state.totalTime,
+        //   lapResult: state.lapTime + action.payload.time,
+        // }),
         lapsHistory: state.lapsHistory.concat({
           lap: state.lapsHistory.length + 1,
-          total: state.totalTime,
-          lapResult: state.lapTime,
+          total: action.payload.totalTime,
+          lapResult: action.payload.lapTime,
         }),
       };
     }
@@ -143,5 +214,13 @@ export const Selectors = {
 
   getLapsHistory(state) {
     return state.clockApp.stopwatch.lapsHistory;
+  },
+
+  getTotalTimeTmp(state) {
+    return state.clockApp.stopwatch.totalTimeTmp;
+  },
+
+  getLapTimeTmp(state) {
+    return state.clockApp.stopwatch.lapTimeTmp;
   },
 };
