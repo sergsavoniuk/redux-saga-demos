@@ -15,9 +15,9 @@ export const UserInfoLink = styled.a`
   align-items: center;
   color: #fff;
   background-color: transparent;
-  border: none;
-  cursor: pointer;
+  border: 0;
   outline: none;
+  cursor: pointer;
 `;
 
 export const Avatar = styled.img.attrs({
@@ -27,12 +27,15 @@ export const Avatar = styled.img.attrs({
 })`
   border-radius: 50%;
   margin-left: 10px;
+  width: 40px;
   height: 40px;
 `;
 
 export const Login = styled.span`
-  font-size: 1.2em;
+  font-size: 1.3em;
   ::after {
+    margin-left: 5px;
+    font-size: 0.7em;
     content: '▼';
   }
 `;
@@ -42,7 +45,8 @@ export const Dropdown = styled.ul`
   top: 70px;
   right: 0;
   width: 160px;
-  background-color: #ffffff1a;
+  background-color: #0e1427;
+  border: 1px solid #ddc3e2;
   color: #fff;
   list-style-type: none;
   margin: 0;
@@ -54,6 +58,7 @@ export const DropdownItem = styled.li`
   align-items: center;
   justify-content: space-between;
   padding: 15px;
+  font-size: 1.1em;
   cursor: pointer;
 
   &:hover {
@@ -65,4 +70,7 @@ export const DropdownItem = styled.li`
 export const LogoutIcon = styled.img.attrs({
   src: `${process.env.PUBLIC_URL}/images/logout_icon.png`,
   alt: 'Logout icon',
-})``;
+})`
+  width: 26px;
+  height: 26px;
+`;

@@ -22,27 +22,35 @@ function AppCard() {
         </Card>
       </Link>
 
-      <Card>
-        <Title>Clock App</Title>
-        <ClockAppLogo />
-        <Description>
-          Minimalistic clock app with alarm clock, stopwatch and timer
-        </Description>
-      </Card>
-      <Card>
-        <Title>Clock App</Title>
-        <ClockAppLogo />
-        <Description>
-          Minimalistic clock app with alarm clock, stopwatch and timer
-        </Description>
-      </Card>
-      <Card>
-        <Title>Clock App</Title>
-        <ClockAppLogo />
-        <Description>
-          Minimalistic clock app with alarm clock, stopwatch and timer
-        </Description>
-      </Card>
+      <Link to="#">
+        <Card>
+          <Title>Clock App</Title>
+          <ClockAppLogo />
+          <Description>
+            Minimalistic clock app with alarm clock, stopwatch and timer
+          </Description>
+        </Card>
+      </Link>
+
+      <Link to="#">
+        <Card>
+          <Title>Clock App</Title>
+          <ClockAppLogo />
+          <Description>
+            Minimalistic clock app with alarm clock, stopwatch and timer
+          </Description>
+        </Card>
+      </Link>
+
+      <Link to="#">
+        <Card>
+          <Title>Clock App</Title>
+          <ClockAppLogo />
+          <Description>
+            Minimalistic clock app with alarm clock, stopwatch and timer
+          </Description>
+        </Card>
+      </Link>
     </CardList>
   );
 }

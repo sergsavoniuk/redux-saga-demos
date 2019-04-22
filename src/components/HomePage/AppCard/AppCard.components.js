@@ -2,20 +2,27 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const CardList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  width: 80%;
+  display: grid;
+  grid-gap: 35px;
+  grid-template-columns: repeat(auto-fill, 300px);
   justify-content: center;
-  width: 800px;
+
+  margin-bottom: 35px;
+
+  @media (max-width: 1440px) {
+    width: 90%;
+  }
+
+  @media (max-width: 320px) {
+    grid-template-columns: repeat(auto-fill, 290px);
+  }
 `;
 
 export const Card = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 300px;
+  display: grid;
+  justify-items: center;
   padding: 10px;
-  margin-right: 35px;
-  margin-bottom: 35px;
   background-color: #29293f;
   border: 1px solid #ddc3e2;
   border-radius: 5px;
@@ -43,5 +50,7 @@ export const ClockAppLogo = styled.img.attrs({
 export const Description = styled.p`
   color: #ddc3e2;
   text-align: center;
-  font-size: 1.05em;
+  font-size: 1.25em;
+  font-style: italic;
+  letter-spacing: 0.8px;
 `;
