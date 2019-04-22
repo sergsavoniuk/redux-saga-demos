@@ -6,7 +6,7 @@ import {
   StyledLink as Link,
   Title,
   Description,
-  ClockAppLogo,
+  Logo,
 } from './AppCard.components';
 
 function AppCard() {
@@ -15,7 +15,7 @@ function AppCard() {
       <Link to="/apps/clock">
         <Card>
           <Title>Clock App</Title>
-          <ClockAppLogo />
+          <Logo name="clock" alt="Clock App Logo" />
           <Description>
             Minimalistic clock app with alarm clock, stopwatch and timer
           </Description>
@@ -24,31 +24,25 @@ function AppCard() {
 
       <Link to="#">
         <Card>
-          <Title>Clock App</Title>
-          <ClockAppLogo />
-          <Description>
-            Minimalistic clock app with alarm clock, stopwatch and timer
-          </Description>
+          <Title>Next App</Title>
+          <Logo name="question" alt="Next App Logo" />
+          <Description>Coming soon ...</Description>
         </Card>
       </Link>
 
       <Link to="#">
         <Card>
-          <Title>Clock App</Title>
-          <ClockAppLogo />
-          <Description>
-            Minimalistic clock app with alarm clock, stopwatch and timer
-          </Description>
+          <Title>Next App</Title>
+          <Logo name="question" alt="Next App Logo" />
+          <Description>Coming soon ...</Description>
         </Card>
       </Link>
 
       <Link to="#">
         <Card>
-          <Title>Clock App</Title>
-          <ClockAppLogo />
-          <Description>
-            Minimalistic clock app with alarm clock, stopwatch and timer
-          </Description>
+          <Title>Next App</Title>
+          <Logo name="question" alt="Next App Logo" />
+          <Description>Coming soon ...</Description>
         </Card>
       </Link>
     </CardList>

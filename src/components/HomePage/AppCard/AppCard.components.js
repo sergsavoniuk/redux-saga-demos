@@ -34,6 +34,7 @@ export const Card = styled.div`
 `;
 
 export const StyledLink = styled(Link)`
+  display: contents;
   text-decoration: none;
 `;
 
@@ -42,10 +43,13 @@ export const Title = styled.h2`
   color: #ddc3e2;
 `;
 
-export const ClockAppLogo = styled.img.attrs({
-  src: `${process.env.PUBLIC_URL}/images/clock.png`,
-  alt: 'Clock App Logo',
-})``;
+export const Logo = styled.img.attrs({
+  src: props => `${process.env.PUBLIC_URL}/images/${props.name}.png`,
+  alt: props => props.logo,
+})`
+  width: 128px;
+  height: 128px;
+`;
 
 export const Description = styled.p`
   color: #ddc3e2;
