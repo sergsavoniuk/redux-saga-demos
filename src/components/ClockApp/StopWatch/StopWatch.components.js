@@ -3,8 +3,7 @@ import styled from 'styled-components';
 const Box = styled.div`
   display: flex;
   flex-direction: column;
-  width: calc(100% - 40px);
-  margin: 20px;
+  width: 100%;
 `;
 
 export const Total = styled(Box)``;

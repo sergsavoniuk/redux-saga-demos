@@ -36,6 +36,10 @@ export const Tab = styled.a`
     css`
       font-weight: bold;
       font-size: 1.5em;
+
+      @media (max-width: 374px) {
+        font-size: 1.3em;
+      }
     `}
 
   &:hover {
