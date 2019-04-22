@@ -15,7 +15,7 @@ export function changeTab(tab) {
 
 // Reducer
 export default function tabsReducer(
-  state = { activeTab: TabNames.StopWatch },
+  state = { activeTab: TabNames.Alarms },
   action,
 ) {
   switch (action.type) {

@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 export const Tabs = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 400px;
   margin: 50px 0;
   background-color: #ddc3e20d;
@@ -44,5 +45,5 @@ export const Tab = styled.a`
 
 export const TabPanels = styled.div`
   width: 100%;
-  height: 533px;
+  min-height: 530px;
 `;

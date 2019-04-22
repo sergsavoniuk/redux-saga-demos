@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  height: 100%;
+  height: 530px;
 `;
 
 export const Box = styled.div`

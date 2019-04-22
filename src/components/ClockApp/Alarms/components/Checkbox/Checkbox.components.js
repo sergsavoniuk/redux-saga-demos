@@ -6,6 +6,10 @@ export const Wrapper = styled.label`
   align-items: center;
   width: 23px;
   margin-right: 4px;
+
+  @media (max-width: 374px) {
+    margin-bottom: 10px;
+  }
 `;
 
 export const CheckboxContainer = styled.div`

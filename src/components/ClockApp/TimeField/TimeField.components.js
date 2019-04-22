@@ -25,6 +25,13 @@ export const TimeInput = styled.input`
   :focus {
     border: 2px solid #ddc3e2;
   }
+
+  @media (max-width: 410px) {
+    width: 55px;
+    margin-right: 1px;
+    margin-left: 5px;
+    font-size: 2em;
+  }
 `;
 
 export const Box = styled.div`
