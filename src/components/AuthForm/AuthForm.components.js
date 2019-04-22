@@ -5,8 +5,26 @@ export const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 30%;
+  width: 25%;
   min-height: 80vh;
+
+  @media (max-width: 1440px) {
+    width: 40%;
+  }
+
+  @media (max-width: 1024px) {
+    width: 55%;
+  }
+
+  @media (max-width: 768px) {
+    width: 70%;
+    font-size: 0.95em;
+  }
+
+  @media (max-width: 425px) {
+    width: 95%;
+    font-size: 0.85em;
+  }
 `;
 
 export const Form = styled.form`
