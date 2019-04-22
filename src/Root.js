@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { object } from 'prop-types';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { createGlobalStyle } from 'styled-components';
@@ -52,26 +53,28 @@ const GlobalStyles = createGlobalStyle`
     filter: blur(0) saturate(1);
     opacity: 1;
   }
-  
+
   #modal:not(.hidden) ~ #root {
     filter: blur(5px) saturate(0.1);
     opacity: 0.2;
   }
 `;
 
-class Root extends Component {
-  render() {
-    return (
-      <>
-        <GlobalStyles />
-        <Provider store={this.props.store}>
-          <ConnectedRouter history={history}>
-            <App />
-          </ConnectedRouter>
-        </Provider>
-      </>
-    );
-  }
+function Root({ store }) {
+  return (
+    <>
+      <GlobalStyles />
+      <Provider store={store}>
+        <ConnectedRouter history={history}>
+          <App />
+        </ConnectedRouter>
+      </Provider>
+    </>
+  );
 }
+
+Root.propTypes = {
+  store: object.isRequired,
+};
 
 export default Root;

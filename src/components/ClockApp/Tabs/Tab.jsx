@@ -1,4 +1,5 @@
 import React from 'react';
+import { string, bool, func } from 'prop-types';
 import { connect } from 'react-redux';
 
 import { Tab as StyledTab } from './Tabs.components';
@@ -15,6 +16,12 @@ export function Tab({ name: tabName, isActiveTab, changeTab }) {
     </StyledTab>
   );
 }
+
+Tab.propTypes = {
+  name: string.isRequired,
+  isActiveTab: bool.isRequired,
+  changeTab: func.isRequired,
+};
 
 function mapStateToProps(state, ownProps) {
   return {

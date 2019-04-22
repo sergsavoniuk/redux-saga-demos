@@ -1,4 +1,5 @@
 import React from 'react';
+import { string, func } from 'prop-types';
 import { connect } from 'react-redux';
 
 import {
@@ -39,6 +40,14 @@ export function Actions({ status, start, stop, reset, setLapTime }) {
     </Wrapper>
   );
 }
+
+Actions.propTypes = {
+  status: string.isRequired,
+  start: func.isRequired,
+  stop: func.isRequired,
+  reset: func.isRequired,
+  setLapTime: func.isRequired,
+};
 
 function mapStateToProps(state) {
   return {

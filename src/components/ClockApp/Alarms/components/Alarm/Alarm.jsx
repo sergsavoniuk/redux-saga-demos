@@ -1,4 +1,5 @@
 import React, { useReducer, useEffect, useState } from 'react';
+import { number, bool, func, arrayOf, shape } from 'prop-types';
 import { connect } from 'react-redux';
 
 import Notification from 'components/ClockApp/Notification';
@@ -10,7 +11,7 @@ import { Selectors, ActionCreators } from 'redux/clock/alarms';
 import { reducer, init } from 'components/ClockApp/TimeField/utils';
 
 export function Alarm({
-  alarm: { time, selectedDays, active },
+  alarm: { time = 0, selectedDays = [], active = false },
   isAlarmWentOff,
   setAlarm,
   updateAlarmTime,
@@ -74,6 +75,19 @@ export function Alarm({
     </Wrapper>
   );
 }
+
+Alarm.propTypes = {
+  alarm: shape({
+    time: number,
+    selectedDays: arrayOf(number),
+    active: bool,
+  }).isRequired,
+  isAlarmWentOff: bool.isRequired,
+  setAlarm: func.isRequired,
+  updateAlarmTime: func.isRequired,
+  updateAlarmDays: func.isRequired,
+  setAlarmWentOff: func.isRequired,
+};
 
 function mapStateToProps(state, ownProps) {
   return {

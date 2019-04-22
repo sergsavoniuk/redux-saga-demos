@@ -62,8 +62,8 @@ export const ActionCreators = {
 
 const initialState = {
   status: TimerStatuses.PENDING,
-  startTime: null,
-  remainedTime: null,
+  startTime: 0,
+  remainedTime: 0,
 };
 
 export default function timerReducer(state = initialState, action) {
@@ -86,7 +86,7 @@ export default function timerReducer(state = initialState, action) {
       return {
         ...state,
         status: TimerStatuses.PENDING,
-        remainedTime: null,
+        remainedTime: 0,
       };
     }
     case ActionTypes.FINISH: {

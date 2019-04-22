@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { number, string } from 'prop-types';
 
 import { Wrapper, Child } from './Loader.components';
 
@@ -12,8 +12,6 @@ function Loader({ alignment, size, color }) {
     </Wrapper>
   );
 }
-
-const { number, string } = PropTypes;
 
 Loader.propTypes = {
   alignment: string,

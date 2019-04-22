@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { bool, func } from 'prop-types';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
@@ -32,6 +33,12 @@ function App({ isAuthenticated, login, push }) {
 
   return <Layout>{Component}</Layout>;
 }
+
+App.propTypes = {
+  isAuthenticated: bool.isRequired,
+  login: func.isRequired,
+  push: func.isRequired,
+};
 
 function mapStateToProps(state) {
   return {

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { string, func } from 'prop-types';
 import { connect } from 'react-redux';
 
 import {
@@ -32,6 +33,11 @@ export function Header({ username, logout }) {
     </>
   );
 }
+
+Header.propTypes = {
+  username: string.isRequired,
+  logout: func.isRequired,
+};
 
 function mapStateToProps(state) {
   return {

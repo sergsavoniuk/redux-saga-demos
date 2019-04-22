@@ -1,31 +1,28 @@
 import React from 'react';
+import { number, func } from 'prop-types';
 import { connect } from 'react-redux';
-import { format, addSeconds } from 'date-fns';
 
 import DisplayTime from './DisplayTime';
 import Actions from './Actions';
 import LapsHistory from './LapsHistory';
-import { Total, Lap, Label, Value } from './StopWatch.components';
-import { ActionCreators, Selectors } from 'redux/clock/stopwatch';
+import { Selectors } from 'redux/clock/stopwatch';
 
-function StopWatch({ totalTime, start, lapTime }) {
+export function StopWatch({ totalTime, lapTime }) {
   return (
     <>
       <DisplayTime label="Total" value={totalTime} />
       <DisplayTime label="Lap" value={lapTime} />
-      {/* <Total>
-        <Label>Total</Label>
-        <Value>{format(addSeconds(new Date(0), totalTime), 'mm:ss')}</Value>
-      </Total>
-      <Lap>
-        <Label>Lap</Label>
-        <Value>{format(addSeconds(new Date(0), lapTime), 'mm:ss')}</Value>
-      </Lap> */}
       <LapsHistory />
       <Actions />
     </>
   );
 }
+
+StopWatch.propTypes = {
+  totalTime: number.isRequired,
+  lapTime: number.isRequired,
+  dispatch: func.isRequired,
+};
 
 function mapStateToProps(state) {
   return {
@@ -34,7 +31,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  { start: ActionCreators.start },
-)(StopWatch);
+export default connect(mapStateToProps)(StopWatch);

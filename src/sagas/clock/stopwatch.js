@@ -18,16 +18,15 @@ export default function* watchStopwatch() {
   let isStopwatchStopped = false;
   let isLapActionHappened = false;
 
-  let timeSynchonized = true;
+  let timeSyncronized = true;
 
   while (yield take(channel)) {
     while (true) {
-      const timeBeforeAction = performance.now();
+      let actionStartTime = performance.now();
 
       const {
         stopAction,
         setLapAction,
-        tickAction,
         resetAction,
         totalTickAction,
         lapTickAction,
@@ -35,125 +34,73 @@ export default function* watchStopwatch() {
         stopAction: take(ActionTypes.STOP),
         setLapAction: take(ActionTypes.SET_LAP_TIME),
         resetAction: take(ActionTypes.RESET),
-        totalTickAction: delay(totalTickDifference || 1000),
-        lapTickAction: delay(lapTickDifference || 1000),
-        tickAction: delay(1000),
+        totalTickAction: delay(
+          totalTickDifference
+            ? totalTickDifference > 0
+              ? totalTickDifference
+              : 1000 + totalTickDifference
+            : 1000,
+        ),
+        lapTickAction: delay(
+          lapTickDifference
+            ? lapTickDifference > 0
+              ? lapTickDifference
+              : 1000 + lapTickDifference
+            : 1000,
+        ),
       });
 
-      let timeLeft = Math.abs(performance.now() - timeBeforeAction);
-      // const diff = 1000 - (Date.now() - timeBeforeAction);
+      let actionDuration = Math.abs(performance.now() - actionStartTime);
+      let timeLeft = 1000 - actionDuration;
 
       let totalTime = yield select(Selectors.getTotalTime);
       let lapTime = yield select(Selectors.getLapTime);
 
       if (totalTickAction) {
-        ///////////////////////
-        ///////////////////////
-        // debugger;
         lapTickDifference = null;
         totalTickDifference = null;
-        // yield put(ActionCreators.totalTick(totalTime + 1000));
-        yield put(
-          ActionCreators.totalTick(totalTime + (1000 - (totalTime % 100))),
-        );
+
+        yield put(ActionCreators.totalTick(totalTime + 1000));
 
         if (isLapActionHappened) {
-          console.log('isLapActionHappened', isLapActionHappened);
           isLapActionHappened = false;
-          timeLeft = timeLeft > 1000 ? 1000 : timeLeft;
-          yield put(ActionCreators.updateLapTime(timeLeft));
-
-          lapTickDifference = 1000 - timeLeft;
-          // debugger;
-        } else if (timeSynchonized) {
-          // yield put(ActionCreators.lapTick(lapTime + 1000));
-          yield put(
-            ActionCreators.lapTick(lapTime + (1000 - (totalTime % 100))),
-          );
+          yield put(ActionCreators.updateLapTime(actionDuration));
+          lapTickDifference = timeLeft;
+        } else if (timeSyncronized) {
+          yield put(ActionCreators.lapTick(lapTime + 1000));
         } else {
-          timeLeft = timeLeft > 1000 ? 1000 : timeLeft;
-          yield put(ActionCreators.updateLapTime(timeLeft));
-
-          lapTickDifference = 1000 - timeLeft;
+          yield put(ActionCreators.updateLapTime(actionDuration));
+          lapTickDifference = timeLeft;
         }
-        // if (isStopwatchStopped | isLapActionHappened) {
-        //   lapTickDifference = 1000 - (Date.now() - timeBeforeAction);
-        //   isStopwatchStopped = false;
-        //   isLapActionHappened = false;
-        // } else {
-        //   yield put(ActionCreators.lapTick(lapTime + 1000));
-        // }
-
-        // yield put(ActionCreators.lapTick(lapTime + 1000));
-        ///////////////////////
-        ///////////////////////
       } else if (lapTickAction) {
-        ///////////////////////
-        ///////////////////////
-        // totalTickDifference = 1000 - (Date.now() - timeBeforeAction);
-        // console.log('lapTick');
         lapTickDifference = null;
-        timeLeft = timeLeft > 1000 ? 1000 : timeLeft;
-        debugger;
-        yield put(ActionCreators.updateTotalTime(timeLeft));
-
-        totalTime = totalTime + timeLeft;
-
-        totalTickDifference = totalTime % 100;
-        console.log('totalTickDifference', totalTickDifference);
-        // totalTickDifference = 1000 - (performance.now() - timeBeforeAction);
-
-        // yield put(ActionCreators.updateTotalTime(lapTickDifference));
-        debugger;
-        yield put(ActionCreators.lapTick(lapTime + (1000 - (lapTime % 100))));
-        ///////////////////////
-        ///////////////////////
-        ///////////////////////
+        yield put(ActionCreators.updateTotalTime(actionDuration));
+        totalTickDifference = timeLeft;
+        yield put(ActionCreators.lapTick(lapTime + 1000));
       } else if (setLapAction) {
-        ///////////////////////
-        ///////////////////////
-        ///////////////////////
-        console.log('lapAction');
-        timeSynchonized = false;
+        timeSyncronized = false;
         isLapActionHappened = true;
 
-        timeLeft = timeLeft > 1000 ? 1000 : timeLeft;
-        debugger;
-        // debugger;
-        yield put(ActionCreators.updateTotalTime(timeLeft));
-        yield put(ActionCreators.updateLapHistory(timeLeft));
+        yield put(ActionCreators.updateTotalTime(actionDuration));
+
+        const totalTimeTmp = yield select(Selectors.getTotalTimeTmp);
+        const lapTimeTmp = yield select(Selectors.getLapTimeTmp);
+
+        const tmp =
+          lapTimeTmp > 0
+            ? lapTimeTmp + (totalTimeTmp - totalTime)
+            : lapTime + (totalTimeTmp - totalTime);
+        yield put(ActionCreators.updateLapHistory(totalTimeTmp, tmp));
 
         yield put(ActionCreators.lapTick(0));
 
-        totalTime = totalTime + timeLeft;
-        // const lapTime = yield select(Selectors.getLapTime);
-
-        totalTickDifference = totalTime % 100;
-        // lapTickDifference = lapTime % 100;
-        // lapTickDifference = 1000 - timeLeft;
-        ///////////////////////
-        ///////////////////////
-        ///////////////////////
+        totalTickDifference = timeLeft;
       } else if (stopAction) {
-        ///////////////////////
-        ///////////////////////
-        ///////////////////////
-        totalTickDifference = 1000 - (performance.now() - timeBeforeAction);
         isStopwatchStopped = true;
         break;
-        ///////////////////////
-        ///////////////////////
-        ///////////////////////
       } else if (resetAction || stopAction) {
         break;
       }
-
-      // if (tickAction) {
-      //   yield put(ActionCreators.totalTick(totalTime + 1));
-      //   yield put(ActionCreators.lapTick(lapTime + 1));
-      // } else if (resetAction || stopAction) {
-      //   break;
-      // }
     }
   }
 }

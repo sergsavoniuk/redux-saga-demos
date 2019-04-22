@@ -80,11 +80,21 @@ export const ActionCreators = {
     };
   },
 
-  updateLapHistory(time) {
+  // updateLapHistory(time) {
+  //   return {
+  //     type: 'UPDATE_LAP_HISTORY',
+  //     payload: {
+  //       time,
+  //     },
+  //   };
+  // },
+
+  updateLapHistory(totalTime, lapTime) {
     return {
       type: 'UPDATE_LAP_HISTORY',
       payload: {
-        time,
+        totalTime,
+        lapTime,
       },
     };
   },
@@ -93,7 +103,9 @@ export const ActionCreators = {
 const initialState = {
   status: StopwatchStatuses.PENDING,
   totalTime: 0,
+  totalTimeTmp: 0,
   lapTime: 0,
+  lapTimeTmp: 0,
   lapsHistory: [],
 };
 
@@ -151,13 +163,13 @@ export default function stopwatchReducer(state = initialState, action) {
     case ActionTypes.UPDATE_TOTAL_TIME: {
       return {
         ...state,
-        totalTime: state.totalTime + action.payload.time,
+        totalTimeTmp: state.totalTime + action.payload.time,
       };
     }
     case ActionTypes.UPDATE_LAP_TIME: {
       return {
         ...state,
-        lapTime: state.lapTime + action.payload.time,
+        lapTimeTmp: state.lapTime + action.payload.time,
         // lapsHistory: state.lapsHistory.concat({
         //   lap: state.lapsHistory.length + 1,
         //   total: state.totalTime,
@@ -168,11 +180,16 @@ export default function stopwatchReducer(state = initialState, action) {
     case 'UPDATE_LAP_HISTORY': {
       return {
         ...state,
-        lapTime: state.lapTime + action.payload.time,
+        // lapTime: state.lapTime + action.payload.time,
+        // lapsHistory: state.lapsHistory.concat({
+        //   lap: state.lapsHistory.length + 1,
+        //   total: state.totalTime,
+        //   lapResult: state.lapTime + action.payload.time,
+        // }),
         lapsHistory: state.lapsHistory.concat({
           lap: state.lapsHistory.length + 1,
-          total: state.totalTime,
-          lapResult: state.lapTime + action.payload.time,
+          total: action.payload.totalTime,
+          lapResult: action.payload.lapTime,
         }),
       };
     }
@@ -197,5 +214,13 @@ export const Selectors = {
 
   getLapsHistory(state) {
     return state.clockApp.stopwatch.lapsHistory;
+  },
+
+  getTotalTimeTmp(state) {
+    return state.clockApp.stopwatch.totalTimeTmp;
+  },
+
+  getLapTimeTmp(state) {
+    return state.clockApp.stopwatch.lapTimeTmp;
   },
 };
