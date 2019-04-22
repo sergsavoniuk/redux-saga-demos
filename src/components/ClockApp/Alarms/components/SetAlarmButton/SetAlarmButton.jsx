@@ -4,7 +4,7 @@ import { bool, func } from 'prop-types';
 import Checkbox from '../Checkbox';
 import { Wrapper } from './SetAlarmButton.components';
 
-function SetAlarmButton({ setAlarm, checked = false }) {
+function SetAlarmButton({ setAlarm, disabled = true, checked = false }) {
   function handleCheckboxChange(event) {
     setAlarm(event.target.checked);
   }
@@ -14,6 +14,7 @@ function SetAlarmButton({ setAlarm, checked = false }) {
       <label>
         <Checkbox
           name="set-alarm"
+          disabled={disabled}
           checked={checked}
           onChange={handleCheckboxChange}
         />
@@ -24,6 +25,7 @@ function SetAlarmButton({ setAlarm, checked = false }) {
 
 SetAlarmButton.propTypes = {
   checked: bool,
+  disabled: bool,
   setAlarm: func.isRequired,
 };
 

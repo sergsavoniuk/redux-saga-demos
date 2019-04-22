@@ -2,6 +2,7 @@ import React, { useReducer, useEffect, useState } from 'react';
 import { number, bool, func, arrayOf, shape } from 'prop-types';
 import { connect } from 'react-redux';
 
+import AlarmNotification from '../Notification';
 import Notification from 'components/ClockApp/Notification';
 import TimeField, { Separator, Box } from 'components/ClockApp/TimeField';
 import Days from '../Days';
@@ -40,7 +41,7 @@ export function Alarm({
     setAlarmWentOff(false);
     setShowNotification(false);
   }
-
+  console.log('render');
   return (
     <Wrapper>
       <Box>
@@ -65,13 +66,18 @@ export function Alarm({
         selectedDays={selectedDays}
         changeAlarmDay={updateAlarmDays}
       />
-      <SetAlarmButton checked={active} setAlarm={setAlarm} />
+      <SetAlarmButton
+        checked={active}
+        disabled={selectedDays.length === 0}
+        setAlarm={setAlarm}
+      />
       <Notification
         title="Alarm"
         body="The alarm went off!"
         visible={showNotification}
         onClose={handleCloseNotification}
       />
+      {active && <AlarmNotification />}
     </Wrapper>
   );
 }
