@@ -4,10 +4,14 @@ export const Tabs = styled.div`
   display: flex;
   flex-direction: column;
   width: 400px;
-  margin-top: 50px;
+  margin: 50px 0;
   background-color: #ddc3e20d;
   border: 1px solid #ddc3e2;
   color: #ddc3e2;
+
+  @media (max-width: 410px) {
+    width: 95%;
+  }
 `;
 
 export const TabList = styled.div`
