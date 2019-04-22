@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { string, bool, func } from 'prop-types';
 
 import useTimeField from './hooks/useTimeField';
@@ -32,4 +32,4 @@ TimeField.propTypes = {
   onChange: func.isRequired,
 };
 
-export default TimeField;
+export default memo(TimeField);

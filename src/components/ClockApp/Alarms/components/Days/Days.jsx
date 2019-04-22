@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { bool, number, func, arrayOf } from 'prop-types';
 
 import { Wrapper, Box } from './Days.components';
@@ -36,4 +36,4 @@ Days.propTypes = {
   changeAlarmDay: func.isRequired,
 };
 
-export default Days;
+export default memo(Days);

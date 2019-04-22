@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import { number, string, func } from 'prop-types';
 import { connect } from 'react-redux';
-import { format, subSeconds } from 'date-fns';
 
 import Actions from './components/Actions';
+import RemainedTime from './components/RemainedTime';
 import TimeField from 'components/ClockApp/TimeField';
 import Notification from 'components/ClockApp/Notification';
-import { Wrapper, Box, Separator, RemainedTime } from './Timer.components';
+import { Wrapper, Box, Separator } from './Timer.components';
 import { ActionCreators, Selectors } from 'redux/clock/timer';
 import { TimerStatuses } from 'constants/clock/timerStatuses';
-import { secsToTime, init, reducer } from 'components/ClockApp/TimeField/utils';
+import { init, reducer } from 'components/ClockApp/TimeField/utils';
 
 export function Timer({
   status,
@@ -77,11 +77,7 @@ export function Timer({
         onClose={handleCloseNotification}
       />
       {status !== TimerStatuses.PENDING && (
-        <RemainedTime>
-          {remainedTime > 0
-            ? format(subSeconds(secsToTime(remainedTime), 1), 'HH:mm:ss')
-            : '00:00:00'}
-        </RemainedTime>
+        <RemainedTime remainedTime={remainedTime} />
       )}
       <Actions />
     </Wrapper>
