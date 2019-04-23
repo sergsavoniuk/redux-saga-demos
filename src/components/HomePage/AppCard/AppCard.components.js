@@ -43,10 +43,10 @@ export const Title = styled.h2`
   color: #ddc3e2;
 `;
 
-export const Logo = styled.img.attrs({
-  src: props => `${process.env.PUBLIC_URL}/images/${props.name}.png`,
-  alt: props => props.logo,
-})`
+export const Logo = styled.img.attrs(props => ({
+  src: `${process.env.PUBLIC_URL}/images/${props.name}.png`,
+  alt: props.logo,
+}))`
   width: 128px;
   height: 128px;
 `;
