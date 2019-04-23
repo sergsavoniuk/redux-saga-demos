@@ -20,7 +20,7 @@
     "start": "cross-env NODE_PATH=src/ react-scripts start",
     "build": "cross-env NODE_PATH=src/ react-scripts build",
     "format": "prettier \"src/**/*.{js,jsx}\" --write",
-    "test": "react-scripts test",
+    "test": "cross-env NODE_PATH=src/ react-scripts test --verbose false",
     "eject": "react-scripts eject"
   },
   "husky": {

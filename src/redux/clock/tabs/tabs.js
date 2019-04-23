@@ -13,11 +13,12 @@ export function changeTab(tab) {
   };
 }
 
+export const initialState = {
+  activeTab: TabNames.Alarms,
+};
+
 // Reducer
-export default function tabsReducer(
-  state = { activeTab: TabNames.StopWatch },
-  action,
-) {
+export default function tabsReducer(state = initialState, action) {
   switch (action.type) {
     case CHANGE_TAB: {
       return {
