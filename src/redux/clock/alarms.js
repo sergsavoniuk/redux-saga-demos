@@ -3,7 +3,6 @@ export const ActionTypes = {
   SET_ALARM: '@clock/alarms/SET_ALARM',
   UPDATE_ALARM_TIME: '@clock/alarms/UPDATE_ALARM_TIME',
   UPDATE_ALARM_DAYS: '@clock/alarms/UPDATE_ALARM_DAYS',
-  SET_ALARM_WENT_OFF: '@clock/alarms/SET_ALARM_WENT_OFF',
 };
 
 // Action creators
@@ -37,41 +36,27 @@ export const ActionCreators = {
       },
     };
   },
-
-  setAlarmWentOff(alarmId, isAlarmWentOff) {
-    return {
-      type: `${ActionTypes.SET_ALARM_WENT_OFF}.${alarmId}`,
-      payload: {
-        alarmId,
-        isAlarmWentOff,
-      },
-    };
-  },
 };
 
 const initialState = {
   1: {
     time: 360,
     selectedDays: [],
-    isAlarmWentOff: false,
     active: false,
   },
   2: {
     time: 540,
     selectedDays: [],
-    isAlarmWentOff: false,
     active: false,
   },
   3: {
     time: 720,
     selectedDays: [],
-    isAlarmWentOff: false,
     active: false,
   },
   4: {
     time: 900,
     selectedDays: [],
-    isAlarmWentOff: false,
     active: false,
   },
 };
@@ -114,16 +99,6 @@ export default function alarmsReducer(state = initialState, action) {
         },
       };
     }
-    case ActionTypes.SET_ALARM_WENT_OFF: {
-      const { alarmId, isAlarmWentOff } = action.payload;
-      return {
-        ...state,
-        [alarmId]: {
-          ...state[alarmId],
-          isAlarmWentOff,
-        },
-      };
-    }
     default:
       return state;
   }
@@ -137,10 +112,6 @@ export const Selectors = {
 
   getSelectedDays(state, alarmId) {
     return state.clockApp.alarms[alarmId].selectedDays;
-  },
-
-  getIsAlarmWentOff(state, alarmId) {
-    return state.clockApp.alarms[alarmId].isAlarmWentOff;
   },
 
   getAlarmsKeys(state) {

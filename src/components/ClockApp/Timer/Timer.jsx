@@ -1,25 +1,18 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { number, string, func } from 'prop-types';
 import { connect } from 'react-redux';
 
 import Actions from './components/Actions';
 import RemainedTime from './components/RemainedTime';
 import TimeField from 'components/ClockApp/TimeField';
-import Notification from 'components/ClockApp/Notification';
 import { Wrapper, Box, Separator } from './Timer.components';
 import { ActionCreators, Selectors } from 'redux/clock/timer';
 import { TimerStatuses } from 'constants/clock/timerStatuses';
 import { init, reducer } from 'components/ClockApp/TimeField/utils';
 
-export function Timer({
-  status,
-  startTime,
-  remainedTime,
-  setStartTime,
-  reset,
-}) {
-  const [showNotification, setShowNotification] = useState(false);
+const { PENDING, FINISHED } = TimerStatuses;
 
+export function Timer({ status, startTime, remainedTime, setStartTime }) {
   const [{ hours, minutes, seconds }, dispatch] = useReducer(
     reducer,
     { startTime },
@@ -34,22 +27,13 @@ export function Timer({
     );
   }, [hours, minutes, seconds]);
 
-  useEffect(() => {
-    setShowNotification(status === TimerStatuses.FINISHED);
-  }, [status]);
-
-  function handleCloseNotification() {
-    reset();
-    setShowNotification(false);
-  }
-
   return (
     <Wrapper>
       <Box>
         <TimeField
           name="hours"
           label="Hours"
-          disabled={status !== TimerStatuses.PENDING}
+          disabled={status !== PENDING}
           value={hours}
           onChange={dispatch}
         />
@@ -57,7 +41,7 @@ export function Timer({
         <TimeField
           name="minutes"
           label="Mins."
-          disabled={status !== TimerStatuses.PENDING}
+          disabled={status !== PENDING}
           value={minutes}
           onChange={dispatch}
         />
@@ -65,18 +49,12 @@ export function Timer({
         <TimeField
           name="seconds"
           label="Secs."
-          disabled={status !== TimerStatuses.PENDING}
+          disabled={status !== PENDING}
           value={seconds}
           onChange={dispatch}
         />
       </Box>
-      <Notification
-        title="Timer"
-        body="The time is up!"
-        visible={showNotification}
-        onClose={handleCloseNotification}
-      />
-      {status !== TimerStatuses.PENDING && (
+      {status !== PENDING && status !== FINISHED && (
         <RemainedTime remainedTime={remainedTime} />
       )}
       <Actions />
@@ -89,7 +67,6 @@ Timer.propTypes = {
   startTime: number.isRequired,
   remainedTime: number.isRequired,
   setStartTime: func.isRequired,
-  reset: func.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -102,5 +79,5 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  { setStartTime: ActionCreators.setStartTime, reset: ActionCreators.reset },
+  { setStartTime: ActionCreators.setStartTime },
 )(Timer);

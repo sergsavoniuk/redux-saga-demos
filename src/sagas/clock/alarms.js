@@ -1,7 +1,8 @@
 import { delay, race, put, take, select, call } from 'redux-saga/effects';
 import { addDays, addMinutes } from 'date-fns';
 
-import { ActionTypes, ActionCreators, Selectors } from 'redux/clock/alarms';
+import { ActionTypes, Selectors } from 'redux/clock/alarms';
+import { ActionCreators as NotificationActionCreators } from 'redux/notifications';
 
 export function create(Class, ...args) {
   return call(() => new Class(...args));
@@ -33,7 +34,12 @@ export default function* watchAlarms(alarmId) {
       });
 
       if (alarmRang) {
-        yield put(ActionCreators.setAlarmWentOff(alarmId, true));
+        yield put(
+          NotificationActionCreators.addNotificationToQueue({
+            title: 'Alarms',
+            body: 'The alarm went off!',
+          }),
+        );
         time = yield call(calculateTimeUntilTheNextAlarm);
       } else {
         break;

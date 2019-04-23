@@ -8,6 +8,7 @@ import {
 } from 'redux-saga/effects';
 
 import { ActionTypes, ActionCreators, Selectors } from 'redux/clock/timer';
+import { ActionCreators as NotificationActionCreators } from 'redux/notifications';
 import { TimerStatuses } from 'constants/clock/timerStatuses';
 
 export default function* watchTimer() {
@@ -25,6 +26,13 @@ export default function* watchTimer() {
 
         if (remainedTime === 0) {
           yield put(ActionCreators.finish());
+          yield put(
+            NotificationActionCreators.addNotificationToQueue({
+              title: 'Timer',
+              body: 'The time is up!',
+              entityName: 'TIMER',
+            }),
+          );
           break;
         }
 

@@ -1,6 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { createPortal } from 'react-dom';
-import { string, bool, func } from 'prop-types';
+import { string, number, func } from 'prop-types';
 
 import NotificationAudio from './NotificationAudio';
 import {
@@ -9,16 +10,19 @@ import {
   Body,
   CloseButton,
 } from './Notification.components';
+import { Selectors, ActionCreators } from 'redux/notifications';
 
 const element = document.getElementById('modal');
 
-function Notification({
-  title = '',
-  body = '',
-  visible,
-  onClose: handleCloseNotification,
-}) {
-  if (visible) {
+export function Notification({ notification, closeNotification }) {
+  const { id, title, body } = notification || {};
+
+  function handleCloseNotification() {
+    element.classList.add('hidden');
+    closeNotification(id);
+  }
+
+  if (id !== undefined) {
     element.classList.remove('hidden');
 
     return createPortal(
@@ -38,10 +42,21 @@ function Notification({
 }
 
 Notification.propTypes = {
+  id: number,
   title: string,
   body: string,
-  visible: bool.isRequired,
-  onClose: func.isRequired,
+  closeNotification: func.isRequired,
 };
 
-export default Notification;
+function mapStateToProps(state) {
+  return {
+    notification: Selectors.getActiveNotification(state),
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  {
+    closeNotification: ActionCreators.removeNotificationFromQueue,
+  },
+)(Notification);

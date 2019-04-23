@@ -1,8 +1,7 @@
-import React, { useReducer, useEffect, useState } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import { number, bool, func, arrayOf, shape } from 'prop-types';
 import { connect } from 'react-redux';
 
-import Notification from 'components/ClockApp/Notification';
 import TimeField, { Separator, Box } from 'components/ClockApp/TimeField';
 import Days from '../Days';
 import SetAlarmButton from '../SetAlarmButton';
@@ -12,14 +11,10 @@ import { reducer, init } from 'components/ClockApp/TimeField/utils';
 
 export function Alarm({
   alarm: { time = 0, selectedDays = [], active = false },
-  isAlarmWentOff,
   setAlarm,
   updateAlarmTime,
   updateAlarmDays,
-  setAlarmWentOff,
 }) {
-  const [showNotification, setShowNotification] = useState(false);
-
   const [{ hours, minutes }, dispatch] = useReducer(
     reducer,
     { startTime: time, inSeconds: false },
@@ -31,15 +26,6 @@ export function Alarm({
       `${hours}:${minutes}`.split(':').reduce((acc, time) => 60 * acc + +time),
     );
   }, [hours, minutes]);
-
-  useEffect(() => {
-    setShowNotification(isAlarmWentOff);
-  }, [isAlarmWentOff]);
-
-  function handleCloseNotification() {
-    setAlarmWentOff(false);
-    setShowNotification(false);
-  }
 
   return (
     <Wrapper>
@@ -70,12 +56,6 @@ export function Alarm({
         disabled={selectedDays.length === 0}
         setAlarm={setAlarm}
       />
-      <Notification
-        title="Alarm"
-        body="The alarm went off!"
-        visible={showNotification}
-        onClose={handleCloseNotification}
-      />
     </Wrapper>
   );
 }
@@ -86,17 +66,14 @@ Alarm.propTypes = {
     selectedDays: arrayOf(number),
     active: bool,
   }).isRequired,
-  isAlarmWentOff: bool.isRequired,
   setAlarm: func.isRequired,
   updateAlarmTime: func.isRequired,
   updateAlarmDays: func.isRequired,
-  setAlarmWentOff: func.isRequired,
 };
 
 function mapStateToProps(state, ownProps) {
   return {
     alarm: Selectors.getAlarmDataByKey(state, ownProps.alarmId),
-    isAlarmWentOff: Selectors.getIsAlarmWentOff(state, ownProps.alarmId),
   };
 }
 
@@ -110,11 +87,6 @@ function mapDispatchToProps(dispatch, ownProps) {
     },
     updateAlarmDays: function(day) {
       dispatch(ActionCreators.updateAlarmDays(ownProps.alarmId, day));
-    },
-    setAlarmWentOff: function(isAlarmWentOff) {
-      dispatch(
-        ActionCreators.setAlarmWentOff(ownProps.alarmId, isAlarmWentOff),
-      );
     },
   };
 }
