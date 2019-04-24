@@ -13,7 +13,7 @@ export function changeTab(tab) {
   };
 }
 
-export const initialState = {
+const initialState = {
   activeTab: TabNames.Alarms,
 };
 

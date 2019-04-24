@@ -1,9 +1,8 @@
-import { __DO_NOT_USE__ActionTypes } from 'redux';
-import tabsReducer, { CHANGE_TAB, changeTab, initialState } from './tabs';
+import tabsReducer, { CHANGE_TAB, changeTab, getActiveTab } from './tabs';
 import { TabNames } from 'constants/clock/tabNames';
 
-describe('TEST Action Creators', () => {
-  it('test changeTab action creator', () => {
+describe('Tabs Action Creators', () => {
+  it('should create an action to change a tab', () => {
     const tab = TabNames.Alarms;
     const expectedAction = {
       type: CHANGE_TAB,
@@ -16,23 +15,39 @@ describe('TEST Action Creators', () => {
   });
 });
 
-describe('TEST Reducer', () => {
-  it('reducer return default state when unknown action is dispatched', () => {
-    const action = { type: __DO_NOT_USE__ActionTypes.INIT };
-
-    expect(tabsReducer(undefined, action)).toEqual(initialState);
+describe('Tabs Reducer', () => {
+  it('should return the initial state', () => {
+    expect(tabsReducer(undefined, {})).toEqual({ activeTab: TabNames.Alarms });
   });
 
-  it('reducer update tab property when action CHANGE_TAB is dispatched', () => {
-    const tab = TabNames.StopWatch;
-    const action = {
-      type: CHANGE_TAB,
-      payload: {
-        tab,
-      },
-    };
-    const expectedState = { activeTab: tab };
+  it('should handle CHANGE_TAB', () => {
+    const newTab = TabNames.StopWatch;
 
-    expect(tabsReducer(initialState, action)).toEqual(expectedState);
+    expect(
+      tabsReducer(
+        { activeTab: TabNames.Alarms },
+        {
+          type: CHANGE_TAB,
+          payload: {
+            tab: newTab,
+          },
+        },
+      ),
+    ).toEqual({ activeTab: newTab });
+  });
+});
+
+describe('Tabs Selectors', () => {
+  const activeTab = TabNames.Alarms;
+  const mockedState = {
+    clockApp: {
+      tabs: {
+        activeTab,
+      },
+    },
+  };
+
+  it('should return active tab', () => {
+    expect(getActiveTab(mockedState)).toBe(activeTab);
   });
 });
