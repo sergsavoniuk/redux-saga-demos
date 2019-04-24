@@ -73,6 +73,7 @@ export default function timerReducer(state = initialState, action) {
       return {
         ...state,
         status: TimerStatuses.RUNNING,
+        startTime: time,
         remainedTime: time,
       };
     }
