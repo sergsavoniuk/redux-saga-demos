@@ -1,4 +1,4 @@
-import { take, fork, call, put, cancel } from 'redux-saga/effects';
+import { take, fork, call, all, put, cancel } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
 import { ActionTypes, ActionCreators } from 'redux/auth';
@@ -6,7 +6,7 @@ import { ActionTypes, ActionCreators } from 'redux/auth';
 export function* authorizeUser(username) {
   try {
     yield call([localStorage, localStorage.setItem], 'username', username);
-    yield [put(ActionCreators.loginSuccess(username)), put(push('/'))];
+    yield all([put(ActionCreators.loginSuccess(username)), put(push('/'))]);
   } catch (error) {
     yield put(
       ActionCreators.loginFailure({ error, message: `${username} not found` }),

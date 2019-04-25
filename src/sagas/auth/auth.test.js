@@ -1,6 +1,6 @@
 import { createMockTask, cloneableGenerator } from '@redux-saga/testing-utils';
 import { push } from 'connected-react-router';
-import { take, fork, call, put, cancel } from 'redux-saga/effects';
+import { take, fork, call, put, cancel, all } from 'redux-saga/effects';
 
 import watchAuthorization, { authorizeUser } from './auth';
 import { ActionTypes, ActionCreators } from 'redux/auth';
@@ -75,10 +75,10 @@ describe('Auth - test authorize user service', () => {
 
   it('successful user authorization', () => {
     const cloneGenerator = generator.clone();
-    const expectedPutYield = [
+    const expectedPutYield = all([
       put(ActionCreators.loginSuccess(username)),
       put(push('/')),
-    ];
+    ]);
     expect(cloneGenerator.next().value).toEqual(expectedPutYield);
   });
 

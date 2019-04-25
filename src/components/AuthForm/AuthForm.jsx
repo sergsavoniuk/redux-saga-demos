@@ -21,7 +21,7 @@ export function AuthForm({ error, loading, login }) {
     event.preventDefault();
 
     login(username.trim());
-    setUsername(null);
+    setUsername('');
   }
 
   function handleChange(event) {
