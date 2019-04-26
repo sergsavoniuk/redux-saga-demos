@@ -110,6 +110,30 @@ describe('Alarms Reducer', () => {
     });
   });
 
+  it('should handle SET_ALARM action - if the alarm has already set', () => {
+    const alarmId = 2;
+    const active = false;
+    expect(
+      alarmsReducer(
+        {
+          ...initialState,
+          [alarmId]: {
+            ...initialState[alarmId],
+            active,
+          },
+        },
+        ActionCreators.setAlarm(alarmId, active),
+      ),
+    ).toEqual({
+      ...initialState,
+      [alarmId]: {
+        ...initialState[alarmId],
+        active,
+        selectedDays: [],
+      },
+    });
+  });
+
   it('should handle UPDATE_ALARM_TIME action', () => {
     const alarmId = 1;
     const time = 600;
