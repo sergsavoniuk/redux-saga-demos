@@ -34,27 +34,30 @@ describe('Timer - test timer flow', () => {
     );
   });
 
-  // it('timer remained time is 0', () => {
-  //   const cloneGenerator = generator.clone();
-  //   const remainedTime = 0;
-  //   const status = TimerStatuses.RUNNING;
+  it('timer remained time is 0 - finish timer and create notification', () => {
+    const cloneGenerator = generator.clone();
+    const remainedTime = 0;
+    const status = TimerStatuses.RUNNING;
 
-  //   const expectedPutYield = all([
-  //     put(ActionCreators.finish()),
-  //     put(
-  //       NotificationActionCreators.addNotificationToQueue({
-  //         title: 'Timer',
-  //         body: 'The time is up!',
-  //       }),
-  //     ),
-  //   ]);
-  //   expect(cloneGenerator.next([status, remainedTime]).value).toEqual(
-  //     expectedPutYield,
-  //   );
-  // });
+    const expectedPutYield = all([
+      put(ActionCreators.finish()),
+      putLike(
+        NotificationActionCreators.addNotificationToQueue({
+          title: 'Timer',
+          body: 'The time is up!',
+        }),
+      ),
+    ]);
+
+    expect(
+      removeNotificationIdFromYieldedValue(
+        cloneGenerator.next([status, remainedTime]).value,
+      ),
+    ).toEqual(expectedPutYield);
+  });
 });
 
-describe('test timerWorkerSage', () => {
+describe('Timer - test timerWorkerSaga', () => {
   const generator = cloneableGenerator(timerWorkerSaga)(null);
   const remainedTime = 10;
 
@@ -77,6 +80,26 @@ describe('test timerWorkerSage', () => {
     expect(cloneGenerator.next({ tickAction: true }).value).toEqual(
       expectedPutYield,
     );
+
+    const expectedSelectYield = select(Selectors.getRemainedTime);
+    expect(cloneGenerator.next().value).toEqual(expectedSelectYield);
+
+    const expectedAllPutYield = all([
+      put(ActionCreators.finish()),
+      putLike(
+        NotificationActionCreators.addNotificationToQueue({
+          title: 'Timer',
+          body: 'The time is up!',
+        }),
+      ),
+    ]);
+    expect(
+      removeNotificationIdFromYieldedValue(
+        cloneGenerator.next(0 /* remained time */).value,
+      ),
+    ).toEqual(expectedAllPutYield);
+
+    expect(cloneGenerator.next().done).toBe(true);
   });
 
   it('reset action', () => {
@@ -97,3 +120,31 @@ describe('test timerWorkerSage', () => {
     });
   });
 });
+
+// Helpers
+
+function putLike(action) {
+  let expectedYield;
+
+  if (action.hasOwnProperty('@@redux-saga/IO')) {
+    expectedYield = action;
+  } else {
+    expectedYield = put(action);
+  }
+
+  delete expectedYield.payload.action.payload.id;
+  return expectedYield;
+}
+
+function removeNotificationIdFromYieldedValue(generatorNextYield) {
+  return {
+    ...generatorNextYield,
+    payload: generatorNextYield.payload.map((payloadItem, index) => {
+      // notification action
+      if (index === 1) {
+        return putLike(payloadItem);
+      }
+      return payloadItem;
+    }),
+  };
+}
