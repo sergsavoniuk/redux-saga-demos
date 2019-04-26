@@ -1,15 +1,38 @@
 import React from 'react';
 
-import { Card, Button } from '../Cards.components';
+import { Card, StyledLink as Link } from '../Cards.components';
+
+const baseUrl = '/apps/card-memory-game';
 
 function PlayCard({ isFlipped, onCardClick }) {
   const content = !isFlipped ? (
     <p>P</p>
   ) : (
     <>
-      <Button>Casual</Button>
-      <Button>Medium</Button>
-      <Button>Hard</Button>
+      <Link
+        to={{
+          pathname: `${baseUrl}/play`,
+          search: '?level=casual',
+        }}
+      >
+        Casual
+      </Link>
+      <Link
+        to={{
+          pathname: `${baseUrl}/play`,
+          search: '?level=medium',
+        }}
+      >
+        Medium
+      </Link>
+      <Link
+        to={{
+          pathname: `${baseUrl}/play`,
+          search: '?level=hard',
+        }}
+      >
+        Hard
+      </Link>
     </>
   );
   return (

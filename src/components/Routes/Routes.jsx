@@ -17,6 +17,10 @@ const CardMemoryGame = lazy(() =>
   import(/* webpackChunkName: "CardMemoryGame" */ 'components/CardMemoryGame'),
 );
 
+const CardMemoryGameBoard = lazy(() =>
+  import(/* webpackChunkName: "CardMemoryGameBoard" */ 'components/CardMemoryGame/GameBoard'),
+);
+
 function Routes() {
   return (
     <Suspense fallback={<Loader />}>
@@ -25,7 +29,11 @@ function Routes() {
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/apps/clock" component={ClockApp} />
-        <Route path="/apps/card-memory-game" component={CardMemoryGame} />
+        <Route exact path="/apps/card-memory-game" component={CardMemoryGame} />
+        <Route
+          path="/apps/card-memory-game/play"
+          component={CardMemoryGameBoard}
+        />
       </Switch>
     </Suspense>
   );
