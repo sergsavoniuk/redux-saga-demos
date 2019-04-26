@@ -22,11 +22,15 @@ function AppCard() {
         </Card>
       </Link>
 
-      <Link to="#">
+      <Link to="/apps/card-memory-game">
         <Card>
-          <Title>Next App</Title>
-          <Logo name="question" alt="Next App Logo" />
-          <Description>Coming soon ...</Description>
+          <Title>Card Memory Game</Title>
+          <Logo name="card-game" alt="Card Memory Game Logo" />
+          <Description>
+            A game where you have to click on a card to see what image is
+            underneath it and try to find the matching image underneath the
+            other cards
+          </Description>
         </Card>
       </Link>
 
