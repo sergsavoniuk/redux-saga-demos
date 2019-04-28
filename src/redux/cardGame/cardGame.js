@@ -56,7 +56,7 @@ export const ActionCreators = {
 
 const initialState = {
   cards: {},
-  flippedCards: [],
+  flippedCardsIds: [],
   status: GAME_STATUSES.Pending,
   level: null,
 };
@@ -83,19 +83,23 @@ export default function cardGameReducer(state = initialState, action) {
       };
     }
     case ActionTypes.FLIP_CARD: {
+      const { cardId } = action.payload;
+      const flippedCardsIds = state.flippedCardsIds;
       return {
         ...state,
-        flippedCards: state.flippedCards.concat(action.payload.cardId),
+        flippedCardsIds: flippedCardsIds.includes(cardId)
+          ? flippedCardsIds
+          : flippedCardsIds.concat(cardId),
       };
     }
     case ActionTypes.CHECK_FLIPPED_CARDS: {
-      const [firstCardId, secondCardId] = state.flippedCards;
-      const flippedCardsMatched =
+      const [firstCardId, secondCardId] = state.flippedCardsIds;
+      const flippedCardsIdsMatched =
         state.cards[firstCardId].key === state.cards[secondCardId].key;
       return {
         ...state,
-        flippedCards: [],
-        cards: flippedCardsMatched
+        flippedCardsIds: [],
+        cards: flippedCardsIdsMatched
           ? {
               ...state.cards,
               [firstCardId]: {
@@ -125,7 +129,7 @@ export const Selectors = {
     return state.cardGame.cards[cardId];
   },
 
-  getFlippedCards(state) {
-    return state.cardGame.flippedCards;
+  getFlippedCardsIds(state) {
+    return state.cardGame.flippedCardsIds;
   },
 };

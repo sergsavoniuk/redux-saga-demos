@@ -3,27 +3,32 @@ import { connect } from 'react-redux';
 
 import Cell from './Cell';
 import { Board } from './GameBoard.components';
-import { Selectors } from 'redux/cardGame';
-import { ActionCreators } from '../../../redux/cardGame/cardGame';
+import { ActionCreators, Selectors } from 'redux/cardGame';
 
-function GameBoard({ cardIds, flippedCards, checkFlippedCards, location }) {
+function GameBoard({
+  cardIds,
+  flippedCardsIds,
+  checkFlippedCards,
+  flipCard,
+  location,
+}) {
   const params = new URLSearchParams(location.search);
   const level = params.get('level');
 
   useEffect(() => {
-    if (flippedCards.length === 2) {
+    if (flippedCardsIds.length === 2) {
       setTimeout(checkFlippedCards, 700);
     }
-  }, [flippedCards]);
+  }, [flippedCardsIds]);
 
   return (
-    <Board>
+    <Board level={level}>
       {cardIds.map(cardId => (
         <Cell
           key={cardId}
           id={cardId}
-          isFlipped={flippedCards.includes(cardId)}
-          level={level}
+          flipped={flippedCardsIds.includes(cardId)}
+          onFlip={flipCard}
         />
       ))}
     </Board>
@@ -33,7 +38,7 @@ function GameBoard({ cardIds, flippedCards, checkFlippedCards, location }) {
 function mapStateToProps(state) {
   return {
     cardIds: Selectors.getCardIds(state),
-    flippedCards: Selectors.getFlippedCards(state),
+    flippedCardsIds: Selectors.getFlippedCardsIds(state),
   };
 }
 
@@ -41,5 +46,6 @@ export default connect(
   mapStateToProps,
   {
     checkFlippedCards: ActionCreators.checkFlippedCards,
+    flipCard: ActionCreators.flipCard,
   },
 )(GameBoard);

@@ -2,22 +2,17 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { Card, Front, Back } from '../GameBoard.components';
-import { ActionCreators, Selectors } from 'redux/cardGame';
+import { Selectors } from 'redux/cardGame';
 
-export function Cell({ id, isFlipped, level, card, flipCard }) {
+export function Cell({ id, flipped, card, onFlip }) {
   function handleCardFlip() {
-    flipCard(id);
+    onFlip(id);
   }
 
   return (
-    <Card
-      isFlipped={isFlipped}
-      isGuessed={card.isGuessed}
-      level={level}
-      onClick={handleCardFlip}
-    >
+    <Card flipped={flipped} visible={!card.isGuessed} onClick={handleCardFlip}>
       <Front />
-      <Back isFlipped={isFlipped}>{card.key}</Back>
+      <Back>{card.key}</Back>
     </Card>
   );
 }
@@ -28,9 +23,4 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  {
-    flipCard: ActionCreators.flipCard,
-  },
-)(Cell);
+export default connect(mapStateToProps)(Cell);
