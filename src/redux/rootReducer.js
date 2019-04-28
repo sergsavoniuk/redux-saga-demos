@@ -4,6 +4,7 @@ import { connectRouter } from 'connected-react-router';
 import clockReducer from 'redux/clock';
 import authReducer from 'redux/auth';
 import notificationsReducer from 'redux/notifications';
+import cardGameReducer from 'redux/cardGame';
 
 function rootReducer(history) {
   return combineReducers({
@@ -11,6 +12,7 @@ function rootReducer(history) {
     auth: authReducer,
     clockApp: clockReducer,
     notifications: notificationsReducer,
+    cardGame: cardGameReducer,
   });
 }
 

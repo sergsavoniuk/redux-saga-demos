@@ -30,7 +30,7 @@ export const Card = styled.div`
 
   &:hover {
     opacity: .8;
-  }   
+  }
 
   ${props =>
     props.flipped &&
@@ -83,10 +83,10 @@ export const Card = styled.div`
       }
     `}
 
- 
+
 `;
 
-export const StyledLink = styled(Link)`
+export const Button = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -100,7 +100,7 @@ export const StyledLink = styled(Link)`
   font-weight: bold;
   background-color: transparent;
   text-transform: uppercase;
-  text-decoration: none;
+  // text-decoration: none;
 
   &:hover {
     background-color: #ffffff1a;

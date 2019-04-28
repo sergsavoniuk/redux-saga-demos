@@ -1,38 +1,31 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-import { Card, StyledLink as Link } from '../Cards.components';
+import { Card, Button } from '../Cards.components';
+import { ActionCreators } from 'redux/cardGame';
+import { LEVELS } from 'constants/cardGame/levels';
 
-const baseUrl = '/apps/card-memory-game';
+const { Casual, Medium, Hard } = LEVELS;
 
-function PlayCard({ isFlipped, onCardClick }) {
+function PlayCard({ isFlipped, onCardClick, chooseLevel }) {
+  function handleChooseLevel(event) {
+    const level = event.target.name;
+    chooseLevel(level);
+  }
+
   const content = !isFlipped ? (
     <p>P</p>
   ) : (
     <>
-      <Link
-        to={{
-          pathname: `${baseUrl}/play`,
-          search: '?level=casual',
-        }}
-      >
+      <Button name={Casual} onClick={handleChooseLevel}>
         Casual
-      </Link>
-      <Link
-        to={{
-          pathname: `${baseUrl}/play`,
-          search: '?level=medium',
-        }}
-      >
+      </Button>
+      <Button name={Medium} onClick={handleChooseLevel}>
         Medium
-      </Link>
-      <Link
-        to={{
-          pathname: `${baseUrl}/play`,
-          search: '?level=hard',
-        }}
-      >
+      </Button>
+      <Button name={Hard} onClick={handleChooseLevel}>
         Hard
-      </Link>
+      </Button>
     </>
   );
   return (
@@ -42,4 +35,9 @@ function PlayCard({ isFlipped, onCardClick }) {
   );
 }
 
-export default PlayCard;
+export default connect(
+  null,
+  {
+    chooseLevel: ActionCreators.chooseLevel,
+  },
+)(PlayCard);

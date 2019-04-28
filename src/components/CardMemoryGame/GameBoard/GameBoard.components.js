@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-export const Cards = styled.div`
+export const Board = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 100%;
@@ -9,20 +9,48 @@ export const Cards = styled.div`
   font-family: Arial;
 `;
 
-export const Card = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 1px;
-  background-color: #16a085;
-  cursor: pointer;
-
-  transition-duration: 400ms;
-  transition-property: transform;
+const FlipBox = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
 
   &:hover {
     opacity: 0.8;
   }
+`;
+
+export const Front = styled(FlipBox)`
+  background-color: #16a085;
+`;
+
+export const Back = styled(FlipBox)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: perspective(1000px) rotateY(180deg);
+
+  ${props =>
+    props.isFlipped &&
+    css`
+      background-color: #c0392b;
+    `}
+`;
+
+export const Card = styled.div`
+  position: relative;
+  margin: 1px;
+  background-color: transparent;
+  cursor: pointer;
+
+  transition: transform 0.7s;
+  transform-style: preserve-3d;
+
+  ${props =>
+    props.isGuessed &&
+    css`
+      visibility: hidden;
+    `}
 
   ${props => {
     const level = props.level;
@@ -45,28 +73,9 @@ export const Card = styled.div`
   }}
 
   ${props =>
-    props.flipped &&
+    props.isFlipped &&
     css`
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: flex-start;
-      width: calc(100% - 2px);
-      padding: 0;
-      padding: 0 10px;
-      background-color: #c0392b;
-      font-family: 'Open Sans';
-      font-size: 0.85em;
-      letter-spacing: 0.8px;
-      font-weight: normal;
-      transform: rotate(360deg);
-
-      & > p {
-        padding: 0;
-        margin: 4px 0;
-      }
-
-      &:hover {
-        opacity: 1;
-      }
+      transform: perspective(1000px) rotateY(180deg);
     `}
+
 `;

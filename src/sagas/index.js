@@ -4,6 +4,7 @@ import watchAuthorization from 'sagas/auth';
 import watchStopwatch from 'sagas/clock/stopwatch';
 import watchTimer from 'sagas/clock/timer';
 import watchAlarms from './clock/alarms';
+import cardGameWatcher from './cardGame';
 
 export default function* rootSaga() {
   yield all([
@@ -14,5 +15,6 @@ export default function* rootSaga() {
     fork(watchAlarms, 4),
     fork(watchStopwatch),
     fork(watchTimer),
+    fork(cardGameWatcher),
   ]);
 }
