@@ -95,5 +95,8 @@ export const RemainedTimeProgressBar = styled.div`
   height: 5px;
   background-color: #33b5dc;
   z-index: 2;
-  animation: ${progressBar} 10s linear;
+  animation: ${({ totalTime }) =>
+    css`
+      ${progressBar} ${totalTime}ms linear;
+    `})}
 `;
