@@ -2,9 +2,9 @@ import React from 'react';
 
 import { Card } from '../Cards.components';
 
-function InstructionsCard({ isFlipped, onCardClick }) {
+function InstructionsCard({ name, isFlipped, onCardClick }) {
   const content = !isFlipped ? (
-    <p>I</p>
+    <p>{name}</p>
   ) : (
     <>
       <h2>Instructions</h2>

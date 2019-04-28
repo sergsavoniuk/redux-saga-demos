@@ -28,11 +28,11 @@ function Cards() {
     <StyledCards>
       {Object.keys(CARDS).map(
         name =>
-          isCardVisible(name, flippedCard) && (
+          isCardVisible(CARDS[name], flippedCard) && (
             <Card
               key={name}
-              name={name}
-              isFlipped={name === flippedCard}
+              name={CARDS[name]}
+              isFlipped={CARDS[name] === flippedCard}
               onCardClick={handleCardClick}
             />
           ),

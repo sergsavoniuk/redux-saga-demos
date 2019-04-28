@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components';
-import { Link } from 'react-router-dom';
 
 export const Cards = styled.div`
   display: flex;
@@ -100,7 +99,6 @@ export const Button = styled.button`
   font-weight: bold;
   background-color: transparent;
   text-transform: uppercase;
-  // text-decoration: none;
 
   &:hover {
     background-color: #ffffff1a;

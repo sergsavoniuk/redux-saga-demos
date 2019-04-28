@@ -2,7 +2,11 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import Cell from './Cell';
-import { Board } from './GameBoard.components';
+import {
+  Wrapper,
+  Board,
+  RemainedTimeProgressBar,
+} from './GameBoard.components';
 import { ActionCreators, Selectors } from 'redux/cardGame';
 
 function GameBoard({
@@ -22,16 +26,19 @@ function GameBoard({
   }, [flippedCardsIds]);
 
   return (
-    <Board level={level}>
-      {cardIds.map(cardId => (
-        <Cell
-          key={cardId}
-          id={cardId}
-          flipped={flippedCardsIds.includes(cardId)}
-          onFlip={flipCard}
-        />
-      ))}
-    </Board>
+    <Wrapper>
+      <RemainedTimeProgressBar />
+      <Board level={level}>
+        {cardIds.map(cardId => (
+          <Cell
+            key={cardId}
+            id={cardId}
+            flipped={flippedCardsIds.includes(cardId)}
+            onFlip={flipCard}
+          />
+        ))}
+      </Board>
+    </Wrapper>
   );
 }
 

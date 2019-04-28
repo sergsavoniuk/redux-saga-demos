@@ -1,13 +1,18 @@
 import React, { lazy } from 'react';
+
+import { CARDS } from 'constants/cardGame/cards';
+
+const { Figures, Mock, Instructions, Play } = CARDS;
+
 const Cards = {
-  Figures: lazy(() =>
+  [Figures]: lazy(() =>
     import(/* webpackChunkName: "FiguresCard" */ '../FiguresCard'),
   ),
-  Mock: lazy(() => import(/* webpackChunkName: "MockCard" */ '../MockCard')),
-  Instructions: lazy(() =>
+  [Mock]: lazy(() => import(/* webpackChunkName: "MockCard" */ '../MockCard')),
+  [Instructions]: lazy(() =>
     import(/* webpackChunkName: "InstructionsCard" */ '../InstructionsCard'),
   ),
-  Play: lazy(() => import(/* webpackChunkName: "PlayCard" */ '../PlayCard')),
+  [Play]: lazy(() => import(/* webpackChunkName: "PlayCard" */ '../PlayCard')),
 };
 
 function Card({ name, isFlipped, onCardClick }) {

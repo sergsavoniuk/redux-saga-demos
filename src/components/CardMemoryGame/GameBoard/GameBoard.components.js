@@ -1,8 +1,14 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 import { LEVELS } from 'constants/cardGame/levels';
 
 const { Casual, Medium, Hard } = LEVELS;
+
+export const Wrapper = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+`;
 
 export const Board = styled.div`
   display: flex;
@@ -69,4 +75,25 @@ export const Card = styled.div`
     css`
       transform: perspective(1000px) rotateY(180deg);
     `}
+`;
+
+const progressBar = keyframes`
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
+`;
+
+export const RemainedTimeProgressBar = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 5px;
+  background-color: #33b5dc;
+  z-index: 2;
+  animation: ${progressBar} 10s linear;
 `;

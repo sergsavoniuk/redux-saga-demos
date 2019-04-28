@@ -7,14 +7,14 @@ import { LEVELS } from 'constants/cardGame/levels';
 
 const { Casual, Medium, Hard } = LEVELS;
 
-function PlayCard({ isFlipped, onCardClick, chooseLevel }) {
+function PlayCard({ name, isFlipped, onCardClick, chooseLevel }) {
   function handleChooseLevel(event) {
     const level = event.target.name;
     chooseLevel(level);
   }
 
   const content = !isFlipped ? (
-    <p>P</p>
+    <p>{name}</p>
   ) : (
     <>
       <Button name={Casual} onClick={handleChooseLevel}>

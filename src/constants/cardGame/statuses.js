@@ -1,5 +1,5 @@
 export const GAME_STATUSES = {
-  Pending: 'Pending',
-  Running: 'Running',
-  Paused: 'Paused',
+  Pending: 'pending',
+  Running: 'running',
+  Paused: 'paused',
 };

@@ -1,6 +1,6 @@
 export const CARDS = {
-  Figures: 'Figures',
-  Mock: 'Mock',
-  Instructions: 'Instructions',
-  Play: 'Play',
+  Figures: 'F',
+  Mock: 'L',
+  Instructions: 'I',
+  Play: 'P',
 };
