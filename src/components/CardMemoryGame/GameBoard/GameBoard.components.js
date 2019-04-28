@@ -55,6 +55,11 @@ export const Back = styled(FlipBox)`
   background-color: #c0392b;
 `;
 
+export const Image = styled.img.attrs(({ name }) => ({
+  src: `${process.env.PUBLIC_URL}/images/${name}.png`,
+  alt: 'Card image',
+}))``;
+
 export const Card = styled.div`
   position: relative;
   margin: 1px;

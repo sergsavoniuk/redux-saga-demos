@@ -1,15 +1,18 @@
-import { take, put, all } from 'redux-saga/effects';
+import { take, put, all, race, call, delay } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
 import { ActionTypes, ActionCreators } from 'redux/cardGame';
 import { GAME_STATUSES } from 'constants/cardGame/statuses';
 import { LEVELS } from 'constants/cardGame/levels';
+import { LEVEL_TO_TIME } from 'constants/cardGame/levelToTime';
 
-const levelToBoardCells = new Map([
-  [LEVELS.Casual, 16],
-  [LEVELS.Medium, 20],
-  [LEVELS.Hard, 32],
-]);
+const { Casual, Medium, Hard } = LEVELS;
+
+const LEVEL_TO_BOARD_CELLS = {
+  [Casual]: 16,
+  [Medium]: 20,
+  [Hard]: 32,
+};
 
 function shuffle(a) {
   for (let i = a.length - 1; i > 0; i--) {
@@ -29,8 +32,8 @@ function generateAndFillArray(length) {
 
 function generateCards(level) {
   const cardArray = shuffle([
-    ...generateAndFillArray(levelToBoardCells.get(level) / 2),
-    ...generateAndFillArray(levelToBoardCells.get(level) / 2),
+    ...generateAndFillArray(LEVEL_TO_BOARD_CELLS[level] / 2),
+    ...generateAndFillArray(LEVEL_TO_BOARD_CELLS[level] / 2),
   ]);
 
   const cards = {};
@@ -56,5 +59,9 @@ export default function* cardGameWatcher() {
       put(ActionCreators.fillCards(generateCards(level))),
       put(push(`/apps/card-memory-game/play?level=${level}`)),
     ]);
+
+    const res = yield race({
+      timeout: delay(LEVEL_TO_TIME[level]),
+    });
   }
 }

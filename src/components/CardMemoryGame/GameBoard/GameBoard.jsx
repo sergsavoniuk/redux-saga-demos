@@ -8,15 +8,7 @@ import {
   RemainedTimeProgressBar,
 } from './GameBoard.components';
 import { ActionCreators, Selectors } from 'redux/cardGame';
-import { LEVELS } from 'constants/cardGame/levels';
-
-const { Casual, Medium, Hard } = LEVELS;
-
-const LEVEL_TO_TIME = {
-  [Casual]: 32000,
-  [Medium]: 90000,
-  [Hard]: 192000,
-};
+import { LEVEL_TO_TIME } from 'constants/cardGame/levelToTime';
 
 function GameBoard({
   cardIds,
