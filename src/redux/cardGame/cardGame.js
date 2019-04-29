@@ -2,6 +2,8 @@ import { createSelector } from 'reselect';
 
 import { GAME_STATUSES } from 'constants/cardGame/statuses';
 
+const { Pending, Running, Paused } = GAME_STATUSES;
+
 // Action Types
 export const ActionTypes = {
   CHOOSE_LEVEL: '@cardGame/CHOOSE_LEVEL',
@@ -100,7 +102,7 @@ export const ActionCreators = {
 const initialState = {
   cards: {},
   flippedCardsIds: [],
-  status: GAME_STATUSES.Pending,
+  status: Pending,
   level: null,
   statistics: {
     won: 0,
@@ -124,9 +126,11 @@ export default function cardGameReducer(state = initialState, action) {
       };
     }
     case ActionTypes.SET_STATUS: {
+      const newStatus = action.payload.status;
       return {
         ...state,
-        status: action.payload.status,
+        status:
+          newStatus === Paused && state.status === Paused ? Running : newStatus,
       };
     }
     case ActionTypes.FILL_CARDS: {

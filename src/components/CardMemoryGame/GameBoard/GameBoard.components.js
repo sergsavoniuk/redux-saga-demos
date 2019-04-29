@@ -20,14 +20,6 @@ export const Board = styled.div`
   margin: 0;
   margin-top: 5px;
 
-  ${props =>
-    props.paused &&
-    css`
-      z-index: 0;
-      filter: blur(5px) saturate(0.1);
-      opacity: 0.2;
-    `}
-
   & > div {
     ${({ level }) => {
       // eslint-disable-next-line default-case
@@ -103,6 +95,31 @@ const progressBar = keyframes`
   }
 `;
 
+export const PauseBanner = styled.div`
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 2;
+
+  & > h2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 200px;
+    margin-top: 400px;
+    font-size: 4em;
+    color: #fff;
+    background-color: #c0392b;
+    text-transform: uppercase;
+  }
+`;
+
 export const RemainedTimeProgressBar = styled.div`
   position: absolute;
   top: 0;
@@ -110,20 +127,9 @@ export const RemainedTimeProgressBar = styled.div`
   width: 0;
   height: 5px;
   background-color: #33b5dc;
-  z-index: 2;
+  z-index: 1;
   animation: ${({ totalTime }) =>
     css`
       ${progressBar} ${totalTime}ms linear;
     `})}
-`;
-
-export const PauseBanner = styled.div`
-  position: fixed;
-  width: 100%;
-  height: 200px;
-  margin-top: 100px;
-  top: 500px;
-  background-color: #c0392b;
-  text-align: center;
-  z-index: 1;
 `;

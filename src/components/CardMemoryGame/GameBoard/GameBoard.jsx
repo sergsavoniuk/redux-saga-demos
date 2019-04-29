@@ -56,20 +56,26 @@ function GameBoard({
   }
 
   return (
-    <Wrapper tabIndex="0" ref={gridRef} onKeyDown={handleKeyDown}>
-      {status === GAME_STATUSES.Paused && <PauseBanner>PAUSED</PauseBanner>}
-      <RemainedTimeProgressBar totalTime={LEVEL_TO_TIME[level]} />
-      <Board level={level} paused={status === GAME_STATUSES.Paused}>
-        {cardIds.map(cardId => (
-          <Cell
-            key={cardId}
-            id={cardId}
-            flipped={flippedCardsIds.includes(cardId)}
-            onFlip={flipCard}
-          />
-        ))}
-      </Board>
-    </Wrapper>
+    <>
+      <Wrapper tabIndex="0" ref={gridRef} onKeyDown={handleKeyDown}>
+        {status === GAME_STATUSES.Paused && (
+          <PauseBanner>
+            <h2>PAUSED</h2>
+          </PauseBanner>
+        )}
+        <RemainedTimeProgressBar totalTime={LEVEL_TO_TIME[level]} />
+        <Board level={level}>
+          {cardIds.map(cardId => (
+            <Cell
+              key={cardId}
+              id={cardId}
+              flipped={flippedCardsIds.includes(cardId)}
+              onFlip={flipCard}
+            />
+          ))}
+        </Board>
+      </Wrapper>
+    </>
   );
 }
 
