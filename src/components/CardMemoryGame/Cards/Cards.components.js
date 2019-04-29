@@ -79,7 +79,7 @@ export const Card = styled.div`
     props.active === false &&
     css`
       background-color: #c0392b;
-      transform: rotateY(360deg);
+      transform: rotateY(180deg);
 
       &:hover {
         opacity: 1;

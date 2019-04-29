@@ -1,4 +1,4 @@
-import { take, put, all, race, select, delay } from 'redux-saga/effects';
+import { take, put, all, race, delay } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
 import { ActionTypes, ActionCreators } from 'redux/cardGame';
@@ -63,36 +63,46 @@ export default function* cardGameWatcher() {
 
     const startTime = performance.now();
 
-    const { timeout } = yield race({
+    const { finish, timeout } = yield race({
       finish: take(ActionTypes.FINISH_GAME),
       timeout: delay(LEVEL_TO_TIME[level]),
     });
 
     const finishTime = performance.now();
 
-    // const actions = [
-    //   put(ActionCreators.setStatus(GAME_STATUSES.Finished)),
-    //   put(push(`/apps/card-memory-game/`)),
-    // ];
+    const actions = [
+      ActionCreators.setStatus(GAME_STATUSES.Finished),
+      push(`/apps/card-memory-game/`),
+    ];
 
     if (timeout) {
-      yield all([
-        put(ActionCreators.setStatus(GAME_STATUSES.Finished)),
-        put(push(`/apps/card-memory-game/`)),
-        put(ActionCreators.updateFiguresStatistics('lost')),
-      ]);
+      yield all(
+        actions
+          .concat(ActionCreators.updateFiguresStatistics('lost'))
+          .map(action => put(action)),
+      );
     } else {
-      yield all([
-        put(ActionCreators.setStatus(GAME_STATUSES.Finished)),
-        put(push(`/apps/card-memory-game/`)),
-        put(ActionCreators.updateFiguresStatistics('won')),
-        put(
-          ActionCreators.updateBestTimeStatistics({
-            key: `${level}BestTime`,
-            time: finishTime - startTime,
-          }),
-        ),
-      ]);
+      if (finish.payload.abandoned) {
+        yield all(
+          actions
+            .concat(ActionCreators.updateFiguresStatistics('abandoned'))
+            .map(action => put(action)),
+        );
+      } else {
+        yield all(
+          actions
+            .concat([
+              ActionCreators.updateFiguresStatistics('won'),
+              put(
+                ActionCreators.updateBestTimeStatistics({
+                  key: `${level}BestTime`,
+                  time: finishTime - startTime,
+                }),
+              ),
+            ])
+            .map(action => put(action)),
+        );
+      }
     }
   }
 }

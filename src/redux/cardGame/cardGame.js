@@ -59,9 +59,12 @@ export const ActionCreators = {
     };
   },
 
-  finishGame() {
+  finishGame({ abandoned } = { abandoned: false }) {
     return {
       type: ActionTypes.FINISH_GAME,
+      payload: {
+        abandoned,
+      },
     };
   },
 
@@ -102,6 +105,7 @@ const initialState = {
   statistics: {
     won: 0,
     lost: 0,
+    abandoned: 0,
     matchedFlips: 0,
     wrongFlips: 0,
     casualBestTime: null,
@@ -225,6 +229,10 @@ export const Selectors = {
 
   getStatistics(state) {
     return state.cardGame.statistics;
+  },
+
+  getStatus(state) {
+    return state.cardGame.status;
   },
 
   unguessedCardsCountSelector: createSelector(

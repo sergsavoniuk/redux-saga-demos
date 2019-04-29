@@ -3,4 +3,5 @@ export const GAME_STATUSES = {
   Running: 'running',
   Paused: 'paused',
   Finished: 'finished',
+  Abandoned: 'abandoned',
 };

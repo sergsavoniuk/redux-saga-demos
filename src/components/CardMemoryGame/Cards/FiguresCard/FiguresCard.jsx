@@ -14,6 +14,7 @@ function FiguresCard({
   statistics: {
     won,
     lost,
+    abandoned,
     casualBestTime,
     mediumBestTime,
     hardBestTime,
@@ -27,7 +28,7 @@ function FiguresCard({
   ) : (
     <Card flipped={isFlipped} onClick={onCardClick}>
       <Content>
-        <Figures won={won} lost={lost} />
+        <Figures won={won} lost={lost} abandoned={abandoned} />
         <Meta>
           <BestTime
             casual={casualBestTime}

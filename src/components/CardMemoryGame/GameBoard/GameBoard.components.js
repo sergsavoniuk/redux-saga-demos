@@ -15,8 +15,16 @@ export const Board = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  min-height: calc(100vh - 70px);
+  min-height: calc(100vh - 100px);
   margin: 0;
+
+  ${props =>
+    props.paused &&
+    css`
+      z-index: 0;
+      filter: blur(5px) saturate(0.1);
+      opacity: 0.2;
+    `}
 
   & > div {
     ${({ level }) => {
@@ -105,4 +113,15 @@ export const RemainedTimeProgressBar = styled.div`
     css`
       ${progressBar} ${totalTime}ms linear;
     `})}
+`;
+
+export const PauseBanner = styled.div`
+  position: fixed;
+  width: 100%;
+  height: 200px;
+  margin-top: 100px;
+  top: 500px;
+  background-color: #c0392b;
+  text-align: center;
+  z-index: 1;
 `;

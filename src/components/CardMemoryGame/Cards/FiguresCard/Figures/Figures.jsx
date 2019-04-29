@@ -1,8 +1,15 @@
 import React from 'react';
 
-import { Title, Won, Lost, Label, Value } from './Figures.components';
+import {
+  Title,
+  Won,
+  Lost,
+  Abandoned,
+  Label,
+  Value,
+} from './Figures.components';
 
-function Figures({ won, lost }) {
+function Figures({ won, lost, abandoned }) {
   return (
     <>
       <Title>
@@ -15,6 +22,10 @@ function Figures({ won, lost }) {
           <Value>{lost}</Value>
           <Label>lost</Label>
         </Lost>
+        <Abandoned>
+          <Value>{abandoned}</Value>
+          <Label>abandoned</Label>
+        </Abandoned>
       </Title>
     </>
   );
