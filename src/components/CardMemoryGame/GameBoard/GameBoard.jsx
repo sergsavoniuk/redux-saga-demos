@@ -17,6 +17,7 @@ function GameBoard({
   checkFlippedCards,
   flipCard,
   finishGame,
+  updateFlipsStatistics,
   location,
 }) {
   const params = new URLSearchParams(location.search);
@@ -26,13 +27,14 @@ function GameBoard({
     if (flippedCardsIds.length === 2) {
       setTimeout(() => {
         checkFlippedCards();
-
-        if (unguessedCardsCount === 0) {
-          finishGame();
-        }
+        updateFlipsStatistics(flippedCardsIds);
       }, 400);
     }
-  }, [flippedCardsIds]);
+
+    if (unguessedCardsCount === 0) {
+      finishGame();
+    }
+  }, [flippedCardsIds, unguessedCardsCount]);
 
   return (
     <Wrapper>
@@ -65,5 +67,6 @@ export default connect(
     checkFlippedCards: ActionCreators.checkFlippedCards,
     flipCard: ActionCreators.flipCard,
     finishGame: ActionCreators.finishGame,
+    updateFlipsStatistics: ActionCreators.updateFlipsStatistics,
   },
 )(GameBoard);

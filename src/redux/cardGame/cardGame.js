@@ -10,6 +10,9 @@ export const ActionTypes = {
   FLIP_CARD: '@cardGame/FLIP_CARD',
   CHECK_FLIPPED_CARDS: '@cardName/CHECK_FLIPPED_CARDS',
   FINISH_GAME: '@cardGame/FINISH_GAME',
+  UPDATE_FLIPS_STATISTICS: '@cardGame/UPDATE_FLIPS_STATISTICS',
+  UPDATE_FIGURES_STATISTICS: '@cardGame/UPDATE_FIGURES_STATISTICS',
+  UPDATE_BEST_TIME_STATISTICS: '@cardGame/UPDATE_BEST_TIME_STATISTICS',
 };
 
 // Action Creators
@@ -61,6 +64,34 @@ export const ActionCreators = {
       type: ActionTypes.FINISH_GAME,
     };
   },
+
+  updateFlipsStatistics(flippedCardsIds) {
+    return {
+      type: ActionTypes.UPDATE_FLIPS_STATISTICS,
+      payload: {
+        flippedCardsIds,
+      },
+    };
+  },
+
+  updateFiguresStatistics(key) {
+    return {
+      type: ActionTypes.UPDATE_FIGURES_STATISTICS,
+      payload: {
+        key,
+      },
+    };
+  },
+
+  updateBestTimeStatistics({ key, time }) {
+    return {
+      type: ActionTypes.UPDATE_BEST_TIME_STATISTICS,
+      payload: {
+        key,
+        time,
+      },
+    };
+  },
 };
 
 const initialState = {
@@ -73,9 +104,9 @@ const initialState = {
     lost: 0,
     matchedFlips: 0,
     wrongFlips: 0,
-    bestCasualTime: null,
-    bestMediumTime: null,
-    bestHardTime: null,
+    casualBestTime: null,
+    mediumBestTime: null,
+    hardBestTime: null,
   },
 };
 
@@ -98,6 +129,7 @@ export default function cardGameReducer(state = initialState, action) {
       return {
         ...state,
         cards: action.payload.cards,
+        flippedCardsIds: [],
       };
     }
     case ActionTypes.FLIP_CARD: {
@@ -130,6 +162,46 @@ export default function cardGameReducer(state = initialState, action) {
               },
             }
           : state.cards,
+      };
+    }
+    case ActionTypes.UPDATE_FLIPS_STATISTICS: {
+      const [firstCardId, secondCardId] = action.payload.flippedCardsIds;
+      const flippedCardsIdsMatched =
+        state.cards[firstCardId].key === state.cards[secondCardId].key;
+      return {
+        ...state,
+        statistics: {
+          ...state.statistics,
+          matchedFlips: flippedCardsIdsMatched
+            ? state.statistics.matchedFlips + 1
+            : state.statistics.matchedFlips,
+          wrongFlips: flippedCardsIdsMatched
+            ? state.statistics.wrongFlips
+            : state.statistics.wrongFlips + 1,
+        },
+      };
+    }
+    case ActionTypes.UPDATE_FIGURES_STATISTICS: {
+      const { key } = action.payload;
+      return {
+        ...state,
+        statistics: {
+          ...state.statistics,
+          [key]: state.statistics[key] + 1,
+        },
+      };
+    }
+    case ActionTypes.UPDATE_BEST_TIME_STATISTICS: {
+      const { key, time } = action.payload;
+      return {
+        ...state,
+        statistics: {
+          ...state.statistics,
+          [key]:
+            state.statistics[key] !== null && state.statistics[key] < time
+              ? state.statistics[key]
+              : time,
+        },
       };
     }
     default:

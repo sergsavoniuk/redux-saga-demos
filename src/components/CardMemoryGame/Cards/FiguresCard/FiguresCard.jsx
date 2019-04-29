@@ -14,9 +14,9 @@ function FiguresCard({
   statistics: {
     won,
     lost,
-    bestCasualTime,
-    bestMediumTime,
-    bestHardTime,
+    casualBestTime,
+    mediumBestTime,
+    hardBestTime,
     matchedFlips,
     wrongFlips,
   },
@@ -30,9 +30,9 @@ function FiguresCard({
         <Figures won={won} lost={lost} />
         <Meta>
           <BestTime
-            casual={bestCasualTime}
-            medium={bestMediumTime}
-            hard={bestHardTime}
+            casual={casualBestTime}
+            medium={mediumBestTime}
+            hard={hardBestTime}
           />
           <Flips matched={matchedFlips} wrong={wrongFlips} />
         </Meta>

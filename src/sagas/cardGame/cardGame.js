@@ -61,17 +61,38 @@ export default function* cardGameWatcher() {
       put(push(`/apps/card-memory-game/play?level=${level}`)),
     ]);
 
+    const startTime = performance.now();
+
     const { timeout } = yield race({
       finish: take(ActionTypes.FINISH_GAME),
       timeout: delay(LEVEL_TO_TIME[level]),
     });
 
+    const finishTime = performance.now();
+
+    // const actions = [
+    //   put(ActionCreators.setStatus(GAME_STATUSES.Finished)),
+    //   put(push(`/apps/card-memory-game/`)),
+    // ];
+
     if (timeout) {
       yield all([
         put(ActionCreators.setStatus(GAME_STATUSES.Finished)),
         put(push(`/apps/card-memory-game/`)),
+        put(ActionCreators.updateFiguresStatistics('lost')),
       ]);
     } else {
+      yield all([
+        put(ActionCreators.setStatus(GAME_STATUSES.Finished)),
+        put(push(`/apps/card-memory-game/`)),
+        put(ActionCreators.updateFiguresStatistics('won')),
+        put(
+          ActionCreators.updateBestTimeStatistics({
+            key: `${level}BestTime`,
+            time: finishTime - startTime,
+          }),
+        ),
+      ]);
     }
   }
 }

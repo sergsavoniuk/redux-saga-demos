@@ -10,7 +10,7 @@ function Flips({ matched, wrong }) {
         <Value>{2 * (matched + wrong)}</Value>
       </Row>
       <Row>
-        <Label>Best Medium:</Label>
+        <Label>Matched Flips:</Label>
         <Value>{matched}</Value>
       </Row>
       <Row>
