@@ -58,7 +58,7 @@ function GameBoard({
   return (
     <Wrapper tabIndex="0" ref={gridRef} onKeyDown={handleKeyDown}>
       {status === GAME_STATUSES.Paused && <PauseBanner>PAUSED</PauseBanner>}
-      {/* <RemainedTimeProgressBar totalTime={LEVEL_TO_TIME[level]} /> */}
+      <RemainedTimeProgressBar totalTime={LEVEL_TO_TIME[level]} />
       <Board level={level} paused={status === GAME_STATUSES.Paused}>
         {cardIds.map(cardId => (
           <Cell

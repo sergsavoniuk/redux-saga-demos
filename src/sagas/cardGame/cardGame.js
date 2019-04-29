@@ -5,8 +5,10 @@ import { ActionTypes, ActionCreators } from 'redux/cardGame';
 import { GAME_STATUSES } from 'constants/cardGame/statuses';
 import { LEVELS } from 'constants/cardGame/levels';
 import { LEVEL_TO_TIME } from 'constants/cardGame/levelToTime';
+import { GAME_RESULTS } from 'constants/cardGame/gameResults';
 
 const { Casual, Medium, Hard } = LEVELS;
+const { Won, Lost, Abandoned } = GAME_RESULTS;
 
 const LEVEL_TO_BOARD_CELLS = {
   [Casual]: 16,
@@ -78,27 +80,25 @@ export default function* cardGameWatcher() {
     if (timeout) {
       yield all(
         actions
-          .concat(ActionCreators.updateFiguresStatistics('lost'))
+          .concat(ActionCreators.updateFiguresStatistics(Lost))
           .map(action => put(action)),
       );
     } else {
       if (finish.payload.abandoned) {
         yield all(
           actions
-            .concat(ActionCreators.updateFiguresStatistics('abandoned'))
+            .concat(ActionCreators.updateFiguresStatistics(Abandoned))
             .map(action => put(action)),
         );
       } else {
         yield all(
           actions
             .concat([
-              ActionCreators.updateFiguresStatistics('won'),
-              put(
-                ActionCreators.updateBestTimeStatistics({
-                  key: `${level}BestTime`,
-                  time: finishTime - startTime,
-                }),
-              ),
+              ActionCreators.updateFiguresStatistics(Won),
+              ActionCreators.updateBestTimeStatistics({
+                key: `${level}BestTime`,
+                time: finishTime - startTime,
+              }),
             ])
             .map(action => put(action)),
         );

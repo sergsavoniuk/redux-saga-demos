@@ -7,16 +7,18 @@ const { Casual, Medium, Hard } = LEVELS;
 export const Wrapper = styled.div`
   position: relative;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 75px);
   overflow: hidden;
+  outline: 0px solid transparent;
 `;
 
 export const Board = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  min-height: calc(100vh - 100px);
+  min-height: calc(100vh - 75px);
   margin: 0;
+  margin-top: 5px;
 
   ${props =>
     props.paused &&
@@ -104,7 +106,7 @@ const progressBar = keyframes`
 export const RemainedTimeProgressBar = styled.div`
   position: absolute;
   top: 0;
-  left: 0;
+  left: 1px;
   width: 0;
   height: 5px;
   background-color: #33b5dc;
