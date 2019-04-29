@@ -8,6 +8,10 @@ export const Cards = styled.div`
   height: 500px;
   margin-top: 100px;
   font-family: Arial;
+
+  @media (max-width: 499px) {
+    width: 95%;
+  }
 `;
 
 export const Card = styled.div`
@@ -75,7 +79,7 @@ export const Card = styled.div`
     props.active === false &&
     css`
       background-color: #c0392b;
-      transform: rotateY(180deg);
+      transform: rotateY(360deg);
 
       &:hover {
         opacity: 1;
