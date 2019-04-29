@@ -1,4 +1,4 @@
-import { take, put, all, race, call, delay } from 'redux-saga/effects';
+import { take, put, all, race, select, delay } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
 import { ActionTypes, ActionCreators } from 'redux/cardGame';
@@ -40,6 +40,7 @@ function generateCards(level) {
   cardArray.forEach((card, index) => {
     cards[index] = {
       key: card,
+      content: card,
       isGuessed: false,
     };
   });
@@ -60,8 +61,17 @@ export default function* cardGameWatcher() {
       put(push(`/apps/card-memory-game/play?level=${level}`)),
     ]);
 
-    const res = yield race({
+    const { timeout } = yield race({
+      finish: take(ActionTypes.FINISH_GAME),
       timeout: delay(LEVEL_TO_TIME[level]),
     });
+
+    if (timeout) {
+      yield all([
+        put(ActionCreators.setStatus(GAME_STATUSES.Finished)),
+        put(push(`/apps/card-memory-game/`)),
+      ]);
+    } else {
+    }
   }
 }

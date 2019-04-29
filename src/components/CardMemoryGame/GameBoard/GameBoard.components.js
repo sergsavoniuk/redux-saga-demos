@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
+  overflow: hidden;
 `;
 
 export const Board = styled.div`
@@ -66,7 +67,7 @@ export const Card = styled.div`
   background-color: transparent;
   cursor: pointer;
 
-  transition: transform 0.7s;
+  transition: transform 0.3s;
   transform-style: preserve-3d;
 
   ${({ visible }) =>

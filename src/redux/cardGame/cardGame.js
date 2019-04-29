@@ -1,3 +1,5 @@
+import { createSelector } from 'reselect';
+
 import { GAME_STATUSES } from 'constants/cardGame/statuses';
 
 // Action Types
@@ -7,6 +9,7 @@ export const ActionTypes = {
   FILL_CARDS: '@cardGame/FILL_CARDS',
   FLIP_CARD: '@cardGame/FLIP_CARD',
   CHECK_FLIPPED_CARDS: '@cardName/CHECK_FLIPPED_CARDS',
+  FINISH_GAME: '@cardGame/FINISH_GAME',
 };
 
 // Action Creators
@@ -52,6 +55,12 @@ export const ActionCreators = {
       type: ActionTypes.CHECK_FLIPPED_CARDS,
     };
   },
+
+  finishGame() {
+    return {
+      type: ActionTypes.FINISH_GAME,
+    };
+  },
 };
 
 const initialState = {
@@ -59,6 +68,15 @@ const initialState = {
   flippedCardsIds: [],
   status: GAME_STATUSES.Pending,
   level: null,
+  statistics: {
+    won: 0,
+    lost: 0,
+    matchedFlips: 0,
+    wrongFlips: 0,
+    bestCasualTime: null,
+    bestMediumTime: null,
+    bestHardTime: null,
+  },
 };
 
 // Reducer
@@ -132,4 +150,19 @@ export const Selectors = {
   getFlippedCardsIds(state) {
     return state.cardGame.flippedCardsIds;
   },
+
+  getStatistics(state) {
+    return state.cardGame.statistics;
+  },
+
+  unguessedCardsCountSelector: createSelector(
+    state => state.cardGame.cards,
+    cards =>
+      Object.keys(cards).reduce((acc, card) => {
+        if (!cards[card].isGuessed) {
+          acc.push(card);
+        }
+        return acc;
+      }, []).length,
+  ),
 };

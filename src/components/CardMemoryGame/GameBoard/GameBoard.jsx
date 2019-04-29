@@ -13,8 +13,10 @@ import { LEVEL_TO_TIME } from 'constants/cardGame/levelToTime';
 function GameBoard({
   cardIds,
   flippedCardsIds,
+  unguessedCardsCount,
   checkFlippedCards,
   flipCard,
+  finishGame,
   location,
 }) {
   const params = new URLSearchParams(location.search);
@@ -22,7 +24,13 @@ function GameBoard({
 
   useEffect(() => {
     if (flippedCardsIds.length === 2) {
-      setTimeout(checkFlippedCards, 700);
+      setTimeout(() => {
+        checkFlippedCards();
+
+        if (unguessedCardsCount === 0) {
+          finishGame();
+        }
+      }, 400);
     }
   }, [flippedCardsIds]);
 
@@ -47,6 +55,7 @@ function mapStateToProps(state) {
   return {
     cardIds: Selectors.getCardIds(state),
     flippedCardsIds: Selectors.getFlippedCardsIds(state),
+    unguessedCardsCount: Selectors.unguessedCardsCountSelector(state),
   };
 }
 
@@ -55,5 +64,6 @@ export default connect(
   {
     checkFlippedCards: ActionCreators.checkFlippedCards,
     flipCard: ActionCreators.flipCard,
+    finishGame: ActionCreators.finishGame,
   },
 )(GameBoard);

@@ -13,7 +13,8 @@ export function Cell({ id, flipped, card, onFlip }) {
     <Card flipped={flipped} visible={!card.isGuessed} onClick={handleCardFlip}>
       <Front />
       <Back>
-        <Image name="plus_icon" />
+        {card.content}
+        {/* <Image name="plus_icon" /> */}
       </Back>
     </Card>
   );
