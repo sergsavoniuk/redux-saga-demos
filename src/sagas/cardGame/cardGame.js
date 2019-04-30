@@ -1,4 +1,4 @@
-import { take, put, all, race, delay } from 'redux-saga/effects';
+import { take, put, all, race, fork, delay } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
 import { ActionTypes, ActionCreators } from 'redux/cardGame';
@@ -32,7 +32,7 @@ function generateAndFillArray(length) {
   return array;
 }
 
-function generateCards(level) {
+export function generateCards(level) {
   const cardArray = shuffle([
     ...generateAndFillArray(LEVEL_TO_BOARD_CELLS[level] / 2),
     ...generateAndFillArray(LEVEL_TO_BOARD_CELLS[level] / 2),
@@ -49,7 +49,76 @@ function generateCards(level) {
   return cards;
 }
 
-export function* cardGameWorkerSaga() {}
+export function* cardGameWorkerSaga(gameLevel) {
+  const levelTime = LEVEL_TO_TIME[gameLevel];
+
+  let timeSpent = 0;
+
+  while (true) {
+    const startTime = performance.now();
+
+    const { finish, timeout } = yield race({
+      finish: take(ActionTypes.FINISH_GAME),
+      timeout: delay(
+        Math.abs(levelTime - timeSpent) < 1000
+          ? levelTime
+          : levelTime - timeSpent,
+      ),
+      pause: take(ActionTypes.SET_STATUS),
+    });
+
+    timeSpent = performance.now() - startTime;
+
+    const actions = [
+      ActionCreators.setStatus(GAME_STATUSES.Finished),
+      push(`/apps/card-memory-game/`),
+    ];
+
+    if (timeout) {
+      yield all(
+        actions
+          .concat(ActionCreators.updateFiguresStatistics(Lost))
+          .map(action => put(action)),
+      );
+      break;
+    } else if (finish) {
+      if (finish.payload.abandoned) {
+        yield all(
+          actions
+            .concat(ActionCreators.updateFiguresStatistics(Abandoned))
+            .map(action => put(action)),
+        );
+      } else {
+        yield all(
+          actions
+            .concat([
+              ActionCreators.updateFiguresStatistics(Won),
+              ActionCreators.updateBestTimeStatistics({
+                key: `${gameLevel}BestTime`,
+                time: timeSpent,
+              }),
+            ])
+            .map(action => put(action)),
+        );
+      }
+      break;
+    } else {
+      const { finishGame } = yield race({
+        setRunningStatus: take(ActionTypes.SET_STATUS),
+        finishGame: take(ActionTypes.FINISH_GAME),
+      });
+
+      if (finishGame) {
+        yield all(
+          actions
+            .concat(ActionCreators.updateFiguresStatistics(Abandoned))
+            .map(action => put(action)),
+        );
+        break;
+      }
+    }
+  }
+}
 
 export default function* cardGameWatcher() {
   while (true) {
@@ -63,73 +132,6 @@ export default function* cardGameWatcher() {
       put(push(`/apps/card-memory-game/play?level=${level}`)),
     ]);
 
-    const levelTime = LEVEL_TO_TIME[level];
-
-    let timeSpent = 0;
-
-    while (true) {
-      const startTime = performance.now();
-
-      const { finish, timeout } = yield race({
-        finish: take(ActionTypes.FINISH_GAME),
-        timeout: delay(
-          Math.abs(levelTime - timeSpent) < 1000
-            ? levelTime
-            : levelTime - timeSpent,
-        ),
-        pause: take(ActionTypes.SET_STATUS),
-      });
-
-      timeSpent = performance.now() - startTime;
-
-      const actions = [
-        ActionCreators.setStatus(GAME_STATUSES.Finished),
-        push(`/apps/card-memory-game/`),
-      ];
-
-      if (timeout) {
-        yield all(
-          actions
-            .concat(ActionCreators.updateFiguresStatistics(Lost))
-            .map(action => put(action)),
-        );
-        break;
-      } else if (finish) {
-        if (finish.payload.abandoned) {
-          yield all(
-            actions
-              .concat(ActionCreators.updateFiguresStatistics(Abandoned))
-              .map(action => put(action)),
-          );
-        } else {
-          yield all(
-            actions
-              .concat([
-                ActionCreators.updateFiguresStatistics(Won),
-                ActionCreators.updateBestTimeStatistics({
-                  key: `${level}BestTime`,
-                  time: timeSpent,
-                }),
-              ])
-              .map(action => put(action)),
-          );
-        }
-        break;
-      } else {
-        const { finishGame } = yield race({
-          setRunningStatus: take(ActionTypes.SET_STATUS),
-          finishGame: take(ActionTypes.FINISH_GAME),
-        });
-
-        if (finishGame) {
-          yield all(
-            actions
-              .concat(ActionCreators.updateFiguresStatistics(Abandoned))
-              .map(action => put(action)),
-          );
-          break;
-        }
-      }
-    }
+    yield fork(cardGameWorkerSaga, level);
   }
 }
