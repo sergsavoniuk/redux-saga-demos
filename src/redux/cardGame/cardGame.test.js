@@ -8,6 +8,8 @@ import { LEVELS } from 'constants/cardGame/levels';
 import { GAME_STATUSES } from 'constants/cardGame/statuses';
 import { GAME_RESULTS } from 'constants/cardGame/gameResults';
 
+const { Pending, Running, Paused } = GAME_STATUSES;
+
 describe('CardMemoryGame Action Creators', () => {
   it('should create an action to set game level', () => {
     const level = LEVELS.Casual;
@@ -22,7 +24,7 @@ describe('CardMemoryGame Action Creators', () => {
   });
 
   it('should create an action to set game status', () => {
-    const status = GAME_STATUSES.Running;
+    const status = Running;
     const expectedAction = {
       type: ActionTypes.SET_STATUS,
       payload: {
@@ -123,6 +125,292 @@ describe('CardMemoryGame Action Creators', () => {
   });
 });
 
+describe('CardMemoryGame reducer', () => {
+  const initialState = {
+    cards: {},
+    flippedCardsIds: [],
+    status: Pending,
+    level: null,
+    statistics: {
+      won: 0,
+      lost: 0,
+      abandoned: 0,
+      matchedFlips: 0,
+      wrongFlips: 0,
+      casualBestTime: null,
+      mediumBestTime: null,
+      hardBestTime: null,
+    },
+  };
+
+  it('should return the initial state', () => {
+    expect(cardGameReducer(undefined, {})).toEqual(initialState);
+  });
+
+  it('should handle CHOOSE_LEVEL action', () => {
+    const level = LEVELS.Casual;
+    expect(
+      cardGameReducer(initialState, ActionCreators.chooseLevel(level)),
+    ).toEqual({
+      ...initialState,
+      level,
+    });
+  });
+
+  it('should handle SET_STATUS action', () => {
+    const status = Paused;
+    const expectedState = cardGameReducer(
+      initialState,
+      ActionCreators.setStatus(status),
+    );
+    expect(expectedState).toEqual({
+      ...initialState,
+      status,
+    });
+
+    // if the current and new statuses are Paused then change the status to Running
+    expect(
+      cardGameReducer(expectedState, ActionCreators.setStatus(status)),
+    ).toEqual({
+      ...expectedState,
+      status: Running,
+    });
+  });
+
+  it('should handle FILL_CARDS action', () => {
+    const cards = {
+      1: {
+        key: 100,
+        isGuessed: false,
+        content: 5,
+      },
+    };
+    const flippedCardsIds = [];
+    expect(
+      cardGameReducer(initialState, ActionCreators.fillCards(cards)),
+    ).toEqual({
+      ...initialState,
+      cards,
+      flippedCardsIds,
+    });
+  });
+
+  it('should handle FLIP_CARD action', () => {
+    const cardId = 1;
+    const flippedCardsIds = [cardId];
+
+    const expectedState = cardGameReducer(
+      initialState,
+      ActionCreators.flipCard(cardId),
+    );
+    expect(expectedState).toEqual({
+      ...initialState,
+      flippedCardsIds,
+    });
+
+    // if the current card has already flipped then don't touch it
+    expect(
+      cardGameReducer(expectedState, ActionCreators.flipCard(cardId)),
+    ).toEqual(expectedState);
+  });
+
+  it('should handle CHECK_FLIPPED_CARDS action', () => {
+    const state = {
+      ...initialState,
+      cards: {
+        1: {
+          key: 100,
+          isGuessed: false,
+          content: 4,
+        },
+        2: {
+          key: 101,
+          isGuessed: false,
+          content: 8,
+        },
+        3: {
+          key: 100,
+          isGuessed: false,
+          content: 4,
+        },
+        4: {
+          key: 101,
+          isGuessed: false,
+          content: 8,
+        },
+      },
+    };
+    let flippedCardsIds = [1, 4];
+
+    expect(
+      cardGameReducer(
+        { ...state, flippedCardsIds },
+        ActionCreators.checkFlippedCards(),
+      ),
+    ).toEqual({
+      ...state,
+      flippedCardsIds: [],
+    });
+
+    flippedCardsIds = [1, 3];
+
+    expect(
+      cardGameReducer(
+        { ...state, flippedCardsIds },
+        ActionCreators.checkFlippedCards(),
+      ),
+    ).toEqual({
+      ...state,
+      flippedCardsIds: [],
+      cards: {
+        ...state.cards,
+        1: {
+          ...state.cards[1],
+          isGuessed: true,
+        },
+        3: {
+          ...state.cards[3],
+          isGuessed: true,
+        },
+      },
+    });
+  });
+
+  it('should handle UPDATE_FLIPS_STATISTICS', () => {
+    const state = {
+      ...initialState,
+      cards: {
+        1: {
+          key: 100,
+          isGuessed: false,
+          content: 4,
+        },
+        2: {
+          key: 101,
+          isGuessed: false,
+          content: 8,
+        },
+        3: {
+          key: 100,
+          isGuessed: false,
+          content: 4,
+        },
+        4: {
+          key: 101,
+          isGuessed: false,
+          content: 8,
+        },
+      },
+    };
+
+    let flippedCardsIds = [1, 2];
+    expect(
+      cardGameReducer(
+        state,
+        ActionCreators.updateFlipsStatistics(flippedCardsIds),
+      ),
+    ).toEqual({
+      ...state,
+      statistics: {
+        ...state.statistics,
+        wrongFlips: state.statistics.wrongFlips + 1,
+      },
+    });
+
+    flippedCardsIds = [1, 3];
+    expect(
+      cardGameReducer(
+        state,
+        ActionCreators.updateFlipsStatistics(flippedCardsIds),
+      ),
+    ).toEqual({
+      ...state,
+      statistics: {
+        ...state.statistics,
+        matchedFlips: state.statistics.matchedFlips + 1,
+      },
+    });
+  });
+
+  it('should handle UPDATE_FIGURES_STATISTICS action', () => {
+    let key = GAME_RESULTS.Won;
+    const expectedState = cardGameReducer(
+      initialState,
+      ActionCreators.updateFiguresStatistics(key),
+    );
+
+    expect(expectedState).toEqual({
+      ...initialState,
+      statistics: {
+        ...initialState.statistics,
+        [key]: initialState.statistics[key] + 1,
+      },
+    });
+
+    key = GAME_RESULTS.Lost;
+    expect(
+      cardGameReducer(
+        expectedState,
+        ActionCreators.updateFiguresStatistics(key),
+      ),
+    ).toEqual({
+      ...expectedState,
+      statistics: {
+        ...expectedState.statistics,
+        [key]: expectedState.statistics[key] + 1,
+      },
+    });
+  });
+
+  it('should handle UPDATE_BEST_TIME_STATISTICS action', () => {
+    let time = 25000;
+    const payload = {
+      key: 'casualBestTime',
+      time,
+    };
+
+    let expectedState = cardGameReducer(
+      initialState,
+      ActionCreators.updateBestTimeStatistics(payload),
+    );
+    expect(expectedState).toEqual({
+      ...initialState,
+      statistics: {
+        ...initialState.statistics,
+        [payload.key]: payload.time,
+      },
+    });
+
+    // if the new time bigger than current, then return old state
+    time = 27000;
+    expectedState = cardGameReducer(
+      expectedState,
+      ActionCreators.updateBestTimeStatistics({
+        ...payload,
+        time,
+      }),
+    );
+    expect(expectedState).toEqual(expectedState);
+
+    // if the new time less than current, then update the current time
+    time = 24000;
+    expectedState = cardGameReducer(
+      expectedState,
+      ActionCreators.updateBestTimeStatistics({
+        ...payload,
+        time,
+      }),
+    );
+    expect(expectedState).toEqual({
+      ...initialState,
+      statistics: {
+        ...initialState.statistics,
+        [payload.key]: time,
+      },
+    });
+  });
+});
+
 describe('CardMemoryGame Selectors', () => {
   const cardGameState = {
     cards: {
@@ -148,7 +436,7 @@ describe('CardMemoryGame Selectors', () => {
       },
     },
     flippedCardsIds: [1, 2],
-    status: GAME_STATUSES.Pending,
+    status: Pending,
     level: null,
     statistics: {
       won: 0,
