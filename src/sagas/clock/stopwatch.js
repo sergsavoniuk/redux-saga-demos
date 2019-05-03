@@ -15,7 +15,7 @@ export default function* watchStopwatch() {
   let totalTickDifference = null;
   let lapTickDifference = null;
 
-  let isStopwatchStopped = false;
+  // let isStopwatchStopped = false;
   let isLapActionHappened = false;
 
   let timeSyncronized = true;
@@ -96,7 +96,7 @@ export default function* watchStopwatch() {
 
         totalTickDifference = timeLeft;
       } else if (stopAction) {
-        isStopwatchStopped = true;
+        // isStopwatchStopped = true;
         break;
       } else if (resetAction || stopAction) {
         break;
