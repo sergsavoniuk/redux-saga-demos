@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import { Card, Button } from '../Cards.components';
 import { ActionCreators } from 'redux/cardGame';
@@ -17,13 +18,28 @@ function PlayCard({ name, isFlipped, onCardClick, chooseLevel }) {
     <p>{name}</p>
   ) : (
     <>
-      <Button name={Casual} onClick={handleChooseLevel}>
+      <Button
+        as={Link}
+        to={`/apps/card-memory-game/play?level=${Casual}`}
+        name={Casual}
+        onClick={handleChooseLevel}
+      >
         Casual
       </Button>
-      <Button name={Medium} onClick={handleChooseLevel}>
+      <Button
+        as={Link}
+        to={`/apps/card-memory-game/play?level=${Medium}`}
+        name={Medium}
+        onClick={handleChooseLevel}
+      >
         Medium
       </Button>
-      <Button name={Hard} onClick={handleChooseLevel}>
+      <Button
+        as={Link}
+        to={`/apps/card-memory-game/play?level=${Hard}`}
+        name={Hard}
+        onClick={handleChooseLevel}
+      >
         Hard
       </Button>
     </>

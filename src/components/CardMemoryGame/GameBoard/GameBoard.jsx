@@ -10,7 +10,7 @@ import {
 } from './GameBoard.components';
 import { ActionCreators, Selectors } from 'redux/cardGame';
 import { LEVEL_TO_TIME } from 'constants/cardGame/levelToTime';
-import { GAME_STATUSES } from '../../../constants/cardGame/statuses';
+import { GAME_STATUSES } from 'constants/cardGame/statuses';
 
 function GameBoard({
   cardIds,

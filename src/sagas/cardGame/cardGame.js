@@ -1,5 +1,5 @@
 import { take, put, all, race, fork, delay } from 'redux-saga/effects';
-import { push } from 'connected-react-router';
+import { goBack, LOCATION_CHANGE } from 'connected-react-router';
 
 import { ActionTypes, ActionCreators } from 'redux/cardGame';
 import { GAME_STATUSES } from 'constants/cardGame/statuses';
@@ -57,8 +57,9 @@ export function* cardGameWorkerSaga(gameLevel) {
   while (true) {
     const startTime = performance.now();
 
-    const { finish, timeout } = yield race({
+    const { finish, changeLocation, timeout, pause } = yield race({
       finish: take(ActionTypes.FINISH_GAME),
+      changeLocation: take(LOCATION_CHANGE),
       timeout: delay(
         Math.abs(levelTime - timeSpent) < 1000
           ? levelTime
@@ -71,7 +72,7 @@ export function* cardGameWorkerSaga(gameLevel) {
 
     const actions = [
       ActionCreators.setStatus(GAME_STATUSES.Finished),
-      push(`/apps/card-memory-game/`),
+      goBack(),
     ];
 
     if (timeout) {
@@ -81,10 +82,16 @@ export function* cardGameWorkerSaga(gameLevel) {
           .map(action => put(action)),
       );
       break;
-    } else if (finish) {
-      if (finish.payload.abandoned) {
+    } else if (
+      finish ||
+      (changeLocation &&
+        changeLocation.payload.location.pathname !==
+          '/apps/card-memory-game/play')
+    ) {
+      if (changeLocation || finish.payload.abandoned) {
+        const appliedAction = finish ? actions : actions.slice(0, 1);
         yield all(
-          actions
+          appliedAction
             .concat(ActionCreators.updateFiguresStatistics(Abandoned))
             .map(action => put(action)),
         );
@@ -102,7 +109,7 @@ export function* cardGameWorkerSaga(gameLevel) {
         );
       }
       break;
-    } else {
+    } else if (pause) {
       const { finishGame } = yield race({
         setRunningStatus: take(ActionTypes.SET_STATUS),
         finishGame: take(ActionTypes.FINISH_GAME),
@@ -129,7 +136,6 @@ export default function* cardGameWatcher() {
     yield all([
       put(ActionCreators.setStatus(GAME_STATUSES.Running)),
       put(ActionCreators.fillCards(generateCards(level))),
-      put(push(`/apps/card-memory-game/play?level=${level}`)),
     ]);
 
     yield fork(cardGameWorkerSaga, level);

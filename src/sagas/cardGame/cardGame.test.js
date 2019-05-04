@@ -1,6 +1,6 @@
 import { cloneableGenerator } from '@redux-saga/testing-utils';
 import { take, all, put, race, fork, delay } from 'redux-saga/effects';
-import { push } from 'connected-react-router';
+import { goBack, LOCATION_CHANGE } from 'connected-react-router';
 
 import cardGameWatcher, { cardGameWorkerSaga, generateCards } from './cardGame';
 import { ActionTypes, ActionCreators } from 'redux/cardGame';
@@ -22,7 +22,6 @@ describe('CardMemoryGame - test common flow', () => {
     const expectedPutAllYield = all([
       put(ActionCreators.setStatus(GAME_STATUSES.Running)),
       putLike(ActionCreators.fillCards(generateCards(level)), { cards: {} }),
-      put(push(`/apps/card-memory-game/play?level=${level}`)),
     ]);
 
     expect(
@@ -43,14 +42,12 @@ describe('CardMemoryGame - test gaming process flow', () => {
   const levelTime = LEVEL_TO_TIME[level];
   const generator = cloneableGenerator(cardGameWorkerSaga)(level);
 
-  const actions = [
-    ActionCreators.setStatus(GAME_STATUSES.Finished),
-    push(`/apps/card-memory-game/`),
-  ];
+  const actions = [ActionCreators.setStatus(GAME_STATUSES.Finished), goBack()];
 
   it('waits for finish, pause or timeout action', () => {
     const expectedRaceYield = race({
       finish: take(ActionTypes.FINISH_GAME),
+      changeLocation: take(LOCATION_CHANGE),
       timeout: delay(levelTime),
       pause: take(ActionTypes.SET_STATUS),
     });
@@ -117,6 +114,23 @@ describe('CardMemoryGame - test gaming process flow', () => {
     expect(cloneGenerator.next().done).toBe(true);
   });
 
+  it('change location action - game is abandoned', () => {
+    const cloneGenerator = generator.clone();
+    const expectedAllPutYield = all(
+      actions
+        .slice(0, 1)
+        .concat(ActionCreators.updateFiguresStatistics(GAME_RESULTS.Abandoned))
+        .map(action => put(action)),
+    );
+
+    expect(
+      cloneGenerator.next({
+        changeLocation: { payload: { location: { pathname: '/' } } },
+      }).value,
+    ).toEqual(expectedAllPutYield);
+    expect(cloneGenerator.next().done).toBe(true);
+  });
+
   it('pause action', () => {
     const cloneGenerator = generator.clone();
     const expectedRaceYield = race({
@@ -124,7 +138,9 @@ describe('CardMemoryGame - test gaming process flow', () => {
       finishGame: take(ActionTypes.FINISH_GAME),
     });
 
-    expect(cloneGenerator.next({}).value).toEqual(expectedRaceYield);
+    expect(cloneGenerator.next({ pause: true }).value).toEqual(
+      expectedRaceYield,
+    );
     expect(cloneGenerator.next({ finishGame: false }).done).toBe(false);
   });
 
@@ -135,7 +151,9 @@ describe('CardMemoryGame - test gaming process flow', () => {
       finishGame: take(ActionTypes.FINISH_GAME),
     });
 
-    expect(cloneGenerator.next({}).value).toEqual(expectedRaceYield);
+    expect(cloneGenerator.next({ pause: true }).value).toEqual(
+      expectedRaceYield,
+    );
 
     const expectedAllPutYield = all(
       actions
