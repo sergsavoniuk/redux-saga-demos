@@ -51,6 +51,7 @@ export const Dropdown = styled.ul`
   list-style-type: none;
   margin: 0;
   padding: 0;
+  z-index: 1 !important;
 `;
 
 export const DropdownItem = styled.li`
