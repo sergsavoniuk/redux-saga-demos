@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { Button } from './LevelButton.components';
 import { ActionCreators } from 'redux/cardGame';
+import { ROUTES } from 'constants/routes';
 
 export function LevelButton({ level, chooseLevel }) {
   function handleChooseLevel() {
@@ -13,7 +14,10 @@ export function LevelButton({ level, chooseLevel }) {
   return (
     <Button
       as={Link}
-      to={`/apps/card-memory-game/play?level=${level}`}
+      to={{
+        pathname: `${ROUTES.CardGameApp.Play}`,
+        search: `?level=${level}`,
+      }}
       onClick={handleChooseLevel}
     >
       {level}

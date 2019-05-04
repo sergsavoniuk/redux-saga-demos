@@ -8,11 +8,14 @@ import {
   Description,
   Logo,
 } from './AppCard.components';
+import { ROUTES } from 'constants/routes';
+
+const { ClockApp, CardGameApp } = ROUTES;
 
 function AppCard() {
   return (
     <CardList>
-      <Link to="/apps/clock">
+      <Link to={ClockApp}>
         <Card>
           <Title>Clock App</Title>
           <Logo name="clock" alt="Clock App Logo" />
@@ -22,7 +25,7 @@ function AppCard() {
         </Card>
       </Link>
 
-      <Link to="/apps/card-memory-game">
+      <Link to={CardGameApp.Root}>
         <Card>
           <Title>Card Memory Game</Title>
           <Logo name="card-game" alt="Card Memory Game Logo" />

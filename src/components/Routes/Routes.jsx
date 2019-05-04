@@ -4,6 +4,9 @@ import { Switch, Route } from 'react-router-dom';
 import Header from 'components/Header';
 import Loader from 'components/Loader';
 import Notification from 'components/Notification';
+import { ROUTES as RoutePathes } from 'constants/routes';
+
+const { Home, ClockApp: Clock, CardGameApp } = RoutePathes;
 
 const HomePage = lazy(() =>
   import(/* webpackChunkName: "HomePage" */ 'components/HomePage'),
@@ -27,13 +30,10 @@ function Routes() {
       <Notification />
       <Header />
       <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route path="/apps/clock" component={ClockApp} />
-        <Route exact path="/apps/card-memory-game" component={CardMemoryGame} />
-        <Route
-          path="/apps/card-memory-game/play"
-          component={CardMemoryGameBoard}
-        />
+        <Route exact path={Home} component={HomePage} />
+        <Route path={Clock} component={ClockApp} />
+        <Route exact path={CardGameApp.Root} component={CardMemoryGame} />
+        <Route path={CardGameApp.Play} component={CardMemoryGameBoard} />
       </Switch>
     </Suspense>
   );

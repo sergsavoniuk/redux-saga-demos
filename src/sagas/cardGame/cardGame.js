@@ -6,6 +6,7 @@ import { GAME_STATUSES } from 'constants/cardGame/statuses';
 import { LEVELS } from 'constants/cardGame/levels';
 import { LEVEL_TO_TIME } from 'constants/cardGame/levelToTime';
 import { GAME_RESULTS } from 'constants/cardGame/gameResults';
+import { ROUTES } from 'constants/routes';
 
 const { Casual, Medium, Hard } = LEVELS;
 const { Won, Lost, Abandoned } = GAME_RESULTS;
@@ -85,8 +86,7 @@ export function* cardGameWorkerSaga(gameLevel) {
     } else if (
       finish ||
       (changeLocation &&
-        changeLocation.payload.location.pathname !==
-          '/apps/card-memory-game/play')
+        changeLocation.payload.location.pathname !== ROUTES.CardGameApp.Play)
     ) {
       if (changeLocation || finish.payload.abandoned) {
         const appliedAction = finish ? actions : actions.slice(0, 1);
