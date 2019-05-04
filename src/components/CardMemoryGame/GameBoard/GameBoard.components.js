@@ -128,8 +128,11 @@ export const RemainedTimeProgressBar = styled.div`
   height: 5px;
   background-color: #33b5dc;
   z-index: 1;
-  animation: ${({ totalTime }) =>
+
+  ${({ totalTime }) =>
     css`
-      ${progressBar} ${totalTime}ms linear;
-    `})}
+      animation-name: ${progressBar};
+      animation-duration: ${totalTime}ms;
+      animation-timing-function: linear;
+    `}
 `;
