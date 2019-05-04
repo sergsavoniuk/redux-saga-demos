@@ -25,11 +25,26 @@ export const Board = styled.div`
       // eslint-disable-next-line default-case
       switch (level) {
         case Casual:
-          return `flex-basis: calc(25% - 2px);`;
+          return css`
+            flex-basis: calc(25% - 2px);
+            img {
+              width: 95%;
+            }
+          `;
         case Medium:
-          return `flex-basis: calc(20% - 2px);`;
+          return css`
+            flex-basis: calc(20% - 2px);
+            img {
+              width: 95%;
+            }
+          `;
         case Hard:
-          return `flex-basis: calc(12.5% - 2px);`;
+          return css`
+            flex-basis: calc(12.5% - 2px);
+            img {
+              width: 95%;
+            }
+          `;
       }
     }}
   }
