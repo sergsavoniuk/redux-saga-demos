@@ -45,6 +45,7 @@ describe('Timer - test timer flow', () => {
         NotificationActionCreators.addNotificationToQueue({
           title: 'Timer',
           body: 'The time is up!',
+          mediaSrc: `${process.env.PUBLIC_URL}/audio/timer.mp3`,
         }),
       ),
     ]);
@@ -90,6 +91,7 @@ describe('Timer - test timerWorkerSaga', () => {
         NotificationActionCreators.addNotificationToQueue({
           title: 'Timer',
           body: 'The time is up!',
+          mediaSrc: `${process.env.PUBLIC_URL}/audio/timer.mp3`,
         }),
       ),
     ]);

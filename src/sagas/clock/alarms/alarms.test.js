@@ -104,6 +104,7 @@ describe('Alarms - testing worker saga', () => {
       NotificationActionCreators.addNotificationToQueue({
         title: 'Alarms',
         body: 'The alarm went off!',
+        mediaSrc: `${process.env.PUBLIC_URL}/audio/timer.mp3`,
       }),
     );
     expect(

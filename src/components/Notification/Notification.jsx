@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createPortal } from 'react-dom';
-import { string, number, func } from 'prop-types';
+import { string, number, func, shape } from 'prop-types';
 
 import NotificationAudio from './NotificationAudio';
 import {
@@ -15,7 +15,7 @@ import { Selectors, ActionCreators } from 'redux/notifications';
 const element = document.getElementById('modal');
 
 export function Notification({ notification, closeNotification }) {
-  const { id, title, body } = notification || {};
+  const { id, title, body, mediaSrc } = notification;
 
   function handleCloseNotification() {
     element.classList.add('hidden');
@@ -30,7 +30,7 @@ export function Notification({ notification, closeNotification }) {
         <Title>{title}</Title>
         <Body>{body}</Body>
         <CloseButton onClick={handleCloseNotification}>Close</CloseButton>
-        <NotificationAudio />
+        <NotificationAudio src={mediaSrc} />
       </StyledNotification>,
       element,
     );
@@ -42,9 +42,12 @@ export function Notification({ notification, closeNotification }) {
 }
 
 Notification.propTypes = {
-  id: number,
-  title: string,
-  body: string,
+  notification: shape({
+    id: number.isRequired,
+    title: string.isRequired,
+    body: string.isRequired,
+    mediaSrc: string.isRequired,
+  }).isRequired,
   closeNotification: func.isRequired,
 };
 

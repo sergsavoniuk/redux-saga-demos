@@ -27,6 +27,7 @@ export function* alarmsWorkerSaga({
         NotificationActionCreators.addNotificationToQueue({
           title: 'Alarms',
           body: 'The alarm went off!',
+          mediaSrc: `${process.env.PUBLIC_URL}/audio/timer.mp3`,
         }),
       );
       time = yield call(calculateTimeUntilTheNextAlarm);

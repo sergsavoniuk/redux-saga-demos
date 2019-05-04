@@ -11,6 +11,7 @@ const utils = {
     const action = ActionCreators.addNotificationToQueue({
       title: '',
       body: '',
+      mediaSrc: '',
     });
     this.notifications.push(action.payload);
     return action;
@@ -23,6 +24,7 @@ describe('Notifications Action Types', () => {
       id: 0,
       title: 'Notification title',
       body: 'Notification body',
+      mediaSrc: '',
     };
     const expectedAction = {
       type: ActionTypes.ADD_NOTIFICATION_TO_QUEUE,

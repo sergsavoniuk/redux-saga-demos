@@ -4,6 +4,10 @@ import { goBack, LOCATION_CHANGE } from 'connected-react-router';
 
 import cardGameWatcher, { cardGameWorkerSaga, generateCards } from './cardGame';
 import { ActionTypes, ActionCreators } from 'redux/cardGame';
+import {
+  ActionCreators as NotificationActionCreators,
+  ActionTypes as NotificationActionTypes,
+} from 'redux/notifications';
 import { GAME_STATUSES } from 'constants/cardGame/statuses';
 import { LEVELS } from 'constants/cardGame/levels';
 import { LEVEL_TO_TIME } from 'constants/cardGame/levelToTime';
@@ -93,6 +97,9 @@ describe('CardMemoryGame - test gaming process flow', () => {
             key: `${level}BestTime`,
             time: 14000,
           }),
+          NotificationActionCreators.addNotificationToQueue({
+            title: 'Congratulations!',
+          }),
         ])
         .map(action => {
           if (action.type === ActionTypes.UPDATE_BEST_TIME_STATISTICS) {
@@ -100,13 +107,17 @@ describe('CardMemoryGame - test gaming process flow', () => {
               key: `${level}BestTime`,
               time: 100,
             });
+          } else if (
+            action.type === NotificationActionTypes.ADD_NOTIFICATION_TO_QUEUE
+          ) {
+            return putLike(action, {});
           }
           return put(action);
         }),
     );
 
     expect(
-      updatePayloadInUpdateBestTimeStatistics(
+      updatePayload(
         cloneGenerator.next({ finish: { payload: { abandoned: false } } })
           .value,
       ),
@@ -201,7 +212,7 @@ function clearPayloadInFillCardsAction(generatorNextYieldedValue) {
   };
 }
 
-function updatePayloadInUpdateBestTimeStatistics(generatorNextYieldedValue) {
+function updatePayload(generatorNextYieldedValue) {
   return {
     ...generatorNextYieldedValue,
     payload: generatorNextYieldedValue.payload.map(payloadItem => {
@@ -213,6 +224,12 @@ function updatePayloadInUpdateBestTimeStatistics(generatorNextYieldedValue) {
           key: `casualBestTime`,
           time: 100,
         });
+      }
+      if (
+        payloadItem.payload.action.type ===
+        NotificationActionTypes.ADD_NOTIFICATION_TO_QUEUE
+      ) {
+        return putLike(payloadItem, {});
       }
       return payloadItem;
     }),

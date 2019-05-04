@@ -9,13 +9,14 @@ let notificationId = 0;
 
 // Action creators
 export const ActionCreators = {
-  addNotificationToQueue({ title, body }) {
+  addNotificationToQueue({ title, body, mediaSrc }) {
     return {
       type: ActionTypes.ADD_NOTIFICATION_TO_QUEUE,
       payload: {
         id: notificationId++,
         title,
         body,
+        mediaSrc,
       },
     };
   },

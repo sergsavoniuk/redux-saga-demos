@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 
-const audioSrc = `${process.env.PUBLIC_URL}/audio/timer.mp3`;
-
-function NotificationAudio() {
+function NotificationAudio({ src }) {
   useEffect(() => {
     const audio = document.getElementById('audio');
     audio.play();
@@ -11,7 +9,7 @@ function NotificationAudio() {
 
   return (
     <audio id="audio" loop>
-      <source src={audioSrc} type="audio/mpeg" />
+      <source src={src} type="audio/mpeg" />
     </audio>
   );
 }

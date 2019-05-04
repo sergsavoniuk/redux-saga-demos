@@ -1,7 +1,9 @@
 import { take, put, all, race, fork, delay } from 'redux-saga/effects';
 import { goBack, LOCATION_CHANGE } from 'connected-react-router';
+import { format } from 'date-fns';
 
 import { ActionTypes, ActionCreators } from 'redux/cardGame';
+import { ActionCreators as NotificationActionCreators } from 'redux/notifications';
 import { GAME_STATUSES } from 'constants/cardGame/statuses';
 import { LEVELS } from 'constants/cardGame/levels';
 import { LEVEL_TO_TIME } from 'constants/cardGame/levelToTime';
@@ -103,6 +105,11 @@ export function* cardGameWorkerSaga(gameLevel) {
               ActionCreators.updateBestTimeStatistics({
                 key: `${gameLevel}BestTime`,
                 time: timeSpent,
+              }),
+              NotificationActionCreators.addNotificationToQueue({
+                title: 'Congratulations!',
+                body: `Your time - ${format(timeSpent, 'ss.SSS')}s`,
+                mediaSrc: `${process.env.PUBLIC_URL}/audio/game-winner.mp3`,
               }),
             ])
             .map(action => put(action)),

@@ -15,6 +15,7 @@ export function* timerWorkerSaga(tickDifference) {
           NotificationActionCreators.addNotificationToQueue({
             title: 'Timer',
             body: 'The time is up!',
+            mediaSrc: `${process.env.PUBLIC_URL}/audio/timer.mp3`,
           }),
         ),
       ]);
@@ -60,6 +61,7 @@ export default function* watchTimer() {
           NotificationActionCreators.addNotificationToQueue({
             title: 'Timer',
             body: 'The time is up!',
+            mediaSrc: `${process.env.PUBLIC_URL}/audio/timer.mp3`,
           }),
         ),
       ]);
