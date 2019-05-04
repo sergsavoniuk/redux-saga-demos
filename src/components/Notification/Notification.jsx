@@ -15,7 +15,7 @@ import { Selectors, ActionCreators } from 'redux/notifications';
 const element = document.getElementById('modal');
 
 export function Notification({ notification, closeNotification }) {
-  const { id, title, body, mediaSrc } = notification;
+  const { id, title, body, mediaSrc } = notification || {};
 
   function handleCloseNotification() {
     element.classList.add('hidden');
@@ -47,7 +47,7 @@ Notification.propTypes = {
     title: string.isRequired,
     body: string.isRequired,
     mediaSrc: string.isRequired,
-  }).isRequired,
+  }),
   closeNotification: func.isRequired,
 };
 
