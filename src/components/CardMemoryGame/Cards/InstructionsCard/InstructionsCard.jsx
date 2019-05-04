@@ -1,5 +1,6 @@
 import React from 'react';
 
+import withMemo from 'utils/withMemo';
 import { Card } from '../Cards.components';
 
 function InstructionsCard({ name, isFlipped, onCardClick }) {
@@ -31,4 +32,4 @@ function InstructionsCard({ name, isFlipped, onCardClick }) {
   );
 }
 
-export default InstructionsCard;
+export default withMemo(InstructionsCard, ['isFlipped']);

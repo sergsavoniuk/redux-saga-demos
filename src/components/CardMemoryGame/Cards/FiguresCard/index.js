@@ -1,1 +1,1 @@
-export { default } from './FiguresCard';
+export { default, FiguresCard } from './FiguresCard';

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import withMemo from 'utils/withMemo';
 import Figures from './Figures';
 import BestTime from './BestTime';
 import Flips from './Flips';
@@ -8,7 +9,7 @@ import { Card } from '../Cards.components';
 import { Content, Meta } from './FiguresCard.components';
 import { Selectors } from 'redux/cardGame/';
 
-function FiguresCard({
+export function FiguresCard({
   name,
   isFlipped,
   statistics: {
@@ -48,4 +49,6 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(FiguresCard);
+const MemoizedFiguresCard = withMemo(FiguresCard, ['isFlipped']);
+
+export default connect(mapStateToProps)(MemoizedFiguresCard);

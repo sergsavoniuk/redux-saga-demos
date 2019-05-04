@@ -1,5 +1,6 @@
 import React from 'react';
 
+import withMemo from 'utils/withMemo';
 import { Card } from '../Cards.components';
 import { LEVELS } from 'constants/cardGame/levels';
 
@@ -7,7 +8,7 @@ import LevelButton from './LevelButton';
 
 const { Casual, Medium, Hard } = LEVELS;
 
-function PlayCard({ name, isFlipped, onCardClick, chooseLevel }) {
+function PlayCard({ name, isFlipped, onCardClick }) {
   const content = !isFlipped ? (
     <p>{name}</p>
   ) : (
@@ -24,4 +25,4 @@ function PlayCard({ name, isFlipped, onCardClick, chooseLevel }) {
   );
 }
 
-export default PlayCard;
+export default withMemo(PlayCard, ['isFlipped']);

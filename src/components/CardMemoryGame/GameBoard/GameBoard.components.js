@@ -28,21 +28,24 @@ export const Board = styled.div`
           return css`
             flex-basis: calc(25% - 2px);
             img {
-              width: 95%;
+              max-width: 100%;
+              max-height: 100%;
             }
           `;
         case Medium:
           return css`
             flex-basis: calc(20% - 2px);
             img {
-              width: 95%;
+              max-width: 100%;
+              max-height: 100%;
             }
           `;
         case Hard:
           return css`
             flex-basis: calc(12.5% - 2px);
             img {
-              width: 95%;
+              max-width: 100%;
+              max-height: 100%;
             }
           `;
       }
