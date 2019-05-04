@@ -1,47 +1,20 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 
-import { Card, Button } from '../Cards.components';
-import { ActionCreators } from 'redux/cardGame';
+import { Card } from '../Cards.components';
 import { LEVELS } from 'constants/cardGame/levels';
+
+import LevelButton from './LevelButton';
 
 const { Casual, Medium, Hard } = LEVELS;
 
 function PlayCard({ name, isFlipped, onCardClick, chooseLevel }) {
-  function handleChooseLevel(event) {
-    const level = event.target.name;
-    chooseLevel(level);
-  }
-
   const content = !isFlipped ? (
     <p>{name}</p>
   ) : (
     <>
-      <Button
-        as={Link}
-        to={`/apps/card-memory-game/play?level=${Casual}`}
-        name={Casual}
-        onClick={handleChooseLevel}
-      >
-        Casual
-      </Button>
-      <Button
-        as={Link}
-        to={`/apps/card-memory-game/play?level=${Medium}`}
-        name={Medium}
-        onClick={handleChooseLevel}
-      >
-        Medium
-      </Button>
-      <Button
-        as={Link}
-        to={`/apps/card-memory-game/play?level=${Hard}`}
-        name={Hard}
-        onClick={handleChooseLevel}
-      >
-        Hard
-      </Button>
+      <LevelButton level={Casual} />
+      <LevelButton level={Medium} />
+      <LevelButton level={Hard} />
     </>
   );
   return (
@@ -51,9 +24,4 @@ function PlayCard({ name, isFlipped, onCardClick, chooseLevel }) {
   );
 }
 
-export default connect(
-  null,
-  {
-    chooseLevel: ActionCreators.chooseLevel,
-  },
-)(PlayCard);
+export default PlayCard;
