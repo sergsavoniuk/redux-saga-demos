@@ -1,4 +1,5 @@
 import React from 'react';
+import { string, bool, func, shape, number } from 'prop-types';
 import { connect } from 'react-redux';
 
 import { Card, Front, Back, Image } from '../GameBoard.components';
@@ -18,6 +19,17 @@ export function Cell({ id, flipped, card, onFlip }) {
     </Card>
   );
 }
+
+Cell.propTypes = {
+  id: string.isRequired,
+  flipped: bool.isRequired,
+  card: shape({
+    key: number.isRequired,
+    content: string.isRequired,
+    isGuessed: bool.isRequired,
+  }).isRequired,
+  onFlip: func.isRequired,
+};
 
 function mapStateToProps(state, ownProps) {
   return {

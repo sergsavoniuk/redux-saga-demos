@@ -3,6 +3,7 @@ import React from 'react';
 import withMemo from 'utils/withMemo';
 import { Card } from '../Cards.components';
 import { LEVELS } from 'constants/cardGame/levels';
+import { CardPropTypes } from '../Card';
 
 import LevelButton from './LevelButton';
 
@@ -24,5 +25,7 @@ function PlayCard({ name, isFlipped, onCardClick }) {
     </Card>
   );
 }
+
+PlayCard.propTypes = CardPropTypes;
 
 export default withMemo(PlayCard, ['isFlipped']);

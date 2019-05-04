@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { string } from 'prop-types';
 
 function NotificationAudio({ src }) {
   useEffect(() => {
@@ -13,5 +14,9 @@ function NotificationAudio({ src }) {
     </audio>
   );
 }
+
+NotificationAudio.propTypes = {
+  src: string.isRequired,
+};
 
 export default NotificationAudio;

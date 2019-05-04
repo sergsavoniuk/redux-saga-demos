@@ -1,4 +1,5 @@
 import React from 'react';
+import { string, func } from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -24,6 +25,11 @@ export function LevelButton({ level, chooseLevel }) {
     </Button>
   );
 }
+
+LevelButton.propTypes = {
+  level: string.isRequired,
+  chooseLevel: func.isRequired,
+};
 
 export default connect(
   null,

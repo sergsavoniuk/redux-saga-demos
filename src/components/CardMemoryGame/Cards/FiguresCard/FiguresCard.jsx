@@ -1,4 +1,5 @@
 import React from 'react';
+import { shape, number } from 'prop-types';
 import { connect } from 'react-redux';
 
 import withMemo from 'utils/withMemo';
@@ -8,6 +9,7 @@ import Flips from './Flips';
 import { Card } from '../Cards.components';
 import { Content, Meta } from './FiguresCard.components';
 import { Selectors } from 'redux/cardGame/';
+import { CardPropTypes } from '../Card';
 
 export function FiguresCard({
   name,
@@ -42,6 +44,20 @@ export function FiguresCard({
     </Card>
   );
 }
+
+FiguresCard.propTypes = {
+  ...CardPropTypes,
+  statistics: shape({
+    won: number.isRequired,
+    lost: number.isRequired,
+    abandoned: number.isRequired,
+    casualBestTime: number,
+    mediumBestTime: number,
+    hardBestTime: number,
+    matchedFlips: number.isRequired,
+    wrongFlips: number.isRequired,
+  }).isRequired,
+};
 
 function mapStateToProps(state) {
   return {

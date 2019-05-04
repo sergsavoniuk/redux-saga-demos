@@ -2,6 +2,7 @@ import React from 'react';
 
 import withMemo from 'utils/withMemo';
 import { Card } from '../Cards.components';
+import { CardPropTypes } from '../Card';
 
 function InstructionsCard({ name, isFlipped, onCardClick }) {
   const content = !isFlipped ? (
@@ -31,5 +32,7 @@ function InstructionsCard({ name, isFlipped, onCardClick }) {
     </Card>
   );
 }
+
+InstructionsCard.propTypes = CardPropTypes;
 
 export default withMemo(InstructionsCard, ['isFlipped']);

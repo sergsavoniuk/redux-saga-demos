@@ -1,4 +1,5 @@
 import React, { lazy } from 'react';
+import { string, bool, func } from 'prop-types';
 
 import { CARDS } from 'constants/cardGame/cards';
 
@@ -30,5 +31,13 @@ function Card({ name, isFlipped, onCardClick }) {
     />
   );
 }
+
+export const CardPropTypes = {
+  name: string.isRequired,
+  isFlipped: bool.isRequired,
+  onCardClick: func.isRequired,
+};
+
+Card.propTypes = CardPropTypes;
 
 export default Card;

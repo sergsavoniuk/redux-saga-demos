@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { func, arrayOf, number, string } from 'prop-types';
 import { connect } from 'react-redux';
 
 import Cell from './Cell';
@@ -12,7 +13,7 @@ import { ActionCreators, Selectors } from 'redux/cardGame';
 import { LEVEL_TO_TIME } from 'constants/cardGame/levelToTime';
 import { GAME_STATUSES } from 'constants/cardGame/statuses';
 
-function GameBoard({
+export function GameBoard({
   cardIds,
   flippedCardsIds,
   status,
@@ -80,6 +81,18 @@ function GameBoard({
     </>
   );
 }
+
+GameBoard.propTypes = {
+  cardIds: arrayOf(string).isRequired,
+  flippedCardsIds: arrayOf(string).isRequired,
+  status: string.isRequired,
+  unguessedCardsCount: number.isRequired,
+  checkFlippedCards: func.isRequired,
+  flipCard: func.isRequired,
+  finishGame: func.isRequired,
+  updateFlipsStatistics: func.isRequired,
+  setStatus: func.isRequired,
+};
 
 function mapStateToProps(state) {
   return {
