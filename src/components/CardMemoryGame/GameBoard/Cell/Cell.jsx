@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { Card, Front, Back } from '../GameBoard.components';
+import { Card, Front, Back, Image } from '../GameBoard.components';
 import { Selectors } from 'redux/cardGame';
 
 export function Cell({ id, flipped, card, onFlip }) {
@@ -13,8 +13,7 @@ export function Cell({ id, flipped, card, onFlip }) {
     <Card flipped={flipped} visible={!card.isGuessed} onClick={handleCardFlip}>
       <Front />
       <Back>
-        {card.content}
-        {/* <Image name="plus_icon" /> */}
+        <Image name={card.content} />
       </Back>
     </Card>
   );

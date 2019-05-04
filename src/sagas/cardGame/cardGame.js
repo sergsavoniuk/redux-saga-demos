@@ -19,6 +19,25 @@ const LEVEL_TO_BOARD_CELLS = {
   [Hard]: 32,
 };
 
+const IMAGES = [
+  'animal_cachorro',
+  'animal_camelo',
+  'animal_cavalo',
+  'animal_coelho',
+  'animal_elefante',
+  'animal_ganco',
+  'animal_gato',
+  'animal_girafa',
+  'animal_leao',
+  'animal_lobo',
+  'animal_macaco',
+  'animal_pato',
+  'animal_peixe',
+  'animal_touro',
+  'animal_vaca',
+  'animal_zebra',
+];
+
 function shuffle(a) {
   for (let i = a.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -41,15 +60,15 @@ export function generateCards(level) {
     ...generateAndFillArray(LEVEL_TO_BOARD_CELLS[level] / 2),
   ]);
 
-  const cards = {};
-  cardArray.forEach((card, index) => {
-    cards[index] = {
+  const images = shuffle(IMAGES);
+  return cardArray.reduce((acc, card, index) => {
+    acc[index] = {
       key: card,
-      content: card,
+      content: images[card - 1],
       isGuessed: false,
     };
-  });
-  return cards;
+    return acc;
+  }, {});
 }
 
 export function* cardGameWorkerSaga(gameLevel) {
