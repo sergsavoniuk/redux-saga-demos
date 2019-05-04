@@ -129,8 +129,9 @@ export const RemainedTimeProgressBar = styled.div`
   background-color: #33b5dc;
   z-index: 1;
 
-  ${({ totalTime }) =>
+  ${({ totalTime, paused }) =>
     css`
+      animation-play-state: ${paused ? 'paused' : 'running'};
       animation-name: ${progressBar};
       animation-duration: ${totalTime}ms;
       animation-timing-function: linear;

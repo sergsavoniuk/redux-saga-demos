@@ -25,8 +25,7 @@ function GameBoard({
   location,
 }) {
   const gridRef = useRef(null);
-  const params = new URLSearchParams(location.search);
-  const level = params.get('level');
+  const level = new URLSearchParams(location.search).get('level');
 
   useEffect(() => {
     if (flippedCardsIds.length === 2) {
@@ -63,7 +62,10 @@ function GameBoard({
             <h2>PAUSED</h2>
           </PauseBanner>
         )}
-        <RemainedTimeProgressBar totalTime={LEVEL_TO_TIME[level]} />
+        <RemainedTimeProgressBar
+          paused={status === GAME_STATUSES.Paused}
+          totalTime={LEVEL_TO_TIME[level]}
+        />
         <Board level={level}>
           {cardIds.map(cardId => (
             <Cell
