@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 import Header from 'components/Header';
 import Loader from 'components/Loader';
@@ -34,6 +34,7 @@ function Routes() {
         <Route path={Clock} component={ClockApp} />
         <Route exact path={CardGameApp.Root} component={CardMemoryGame} />
         <Route path={CardGameApp.Play} component={CardMemoryGameBoard} />
+        <Redirect to={Home} component={HomePage} />
       </Switch>
     </Suspense>
   );
