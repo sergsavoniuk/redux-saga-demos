@@ -24,7 +24,7 @@
   "scripts": {
     "start": "cross-env NODE_PATH=src/ react-scripts start",
     "build-sw": "node ./src/sw-build.js",
-    "build": "cross-env NODE_PATH=src/ react-scripts build && npm run build-sw",
+    "build": "rimraf -rf build && cross-env NODE_PATH=src/ react-scripts build && npm run build-sw",
     "build:run": "npm run build && node ./src/server.js",
     "format": "prettier \"src/**/*.{js,jsx}\" --write",
     "test": "cross-env NODE_PATH=src/ react-scripts test --verbose false",

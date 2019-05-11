@@ -21,8 +21,7 @@ export const UserInfoLink = styled.a`
 `;
 
 export const Avatar = styled.img.attrs({
-  src:
-    'http://gravatar.com/avatar/72887e772aa84fd2bce45f46debb7b1f.png?s=40&d=mp',
+  src: `${process.env.PUBLIC_URL}/images/avatar.jpg`,
   alt: 'Image of user',
 })`
   border-radius: 50%;

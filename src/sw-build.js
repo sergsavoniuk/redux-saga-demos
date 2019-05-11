@@ -5,7 +5,7 @@ const buildSW = () => {
     swSrc: 'src/sw-template.js',
     swDest: 'build/sw.js',
     globDirectory: 'build',
-    globPatterns: ['**/*.{js,css,html,png,mp3,ttf}'],
+    globPatterns: ['**/*.{js,css,html,png,jpg,mp3,ttf}'],
   });
 };
 
