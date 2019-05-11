@@ -27,8 +27,7 @@
     "build": "rimraf -rf build && cross-env NODE_PATH=src/ react-scripts build && npm run build-sw",
     "build:run": "npm run build && node ./src/server.js",
     "format": "prettier \"src/**/*.{js,jsx}\" --write",
-    "test": "cross-env NODE_PATH=src/ react-scripts test --verbose false",
-    "eject": "react-scripts eject"
+    "test": "cross-env NODE_PATH=src/ react-scripts test --verbose false"
   },
   "husky": {
     "hooks": {

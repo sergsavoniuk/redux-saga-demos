@@ -1,4 +1,33 @@
+[![Build Status](https://travis-ci.com/sergsavoniuk/redux-saga-demos.svg?branch=master)](https://travis-ci.com/sergsavoniuk/redux-saga-demos)
+
+<hr />
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Introduction
+
+You can view a live demo over at https://redux-saga-demos.herokuapp.com/
+
+This repository contains a collection of apps that implemented using library Redux-Saga. Redux-Saga is a library that aims to make application side effects easier to manage, more efficient to execute, easy to test, and better at handling failures.
+
+## Features
+
+- **React** — 16.8
+- **Redux** — managing application state
+- **Redux-Saga** — managing side effects
+- **React Router** — declarative routing
+- **Reselect** — selector library for Redux
+- **Styled Components** — styling components using tagged template literals
+- **Jest/Enzyme** — testing components
+- **Service Worker** — Workbox (for adding offline support)
+- **lint-staged/husky** — run linters on git staged files, git hooks
+
+## Getting started
+
+1. Clone this repo using `git clone https://github.com/sergsavoniuk/redux-saga-demos.git <YOUR_PROJECT_NAME>`<br />
+2. Move to the appropriate directory: `cd <YOUR_PROJECT_NAME>`.<br />
+3. Run `yarn` or `npm install` to install dependencies.<br />
+4. Run `yarn` or `npm start` to see the example app at `http://localhost:3000`.
 
 ## Available Scripts
 
@@ -27,42 +56,7 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## Things to do
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- [ ] Write tests for React components
+- [ ] Stopwatch component - fix start/stop functionality
