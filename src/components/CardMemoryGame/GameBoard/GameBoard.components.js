@@ -113,6 +113,8 @@ const progressBar = keyframes`
   }
 `;
 
+export const Text = styled.span``;
+
 export const PauseBanner = styled.div`
   position: fixed;
   width: 100%;
@@ -124,7 +126,7 @@ export const PauseBanner = styled.div`
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 2;
 
-  & > h2 {
+  & > ${Text} {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -132,6 +134,7 @@ export const PauseBanner = styled.div`
     height: 200px;
     margin-top: 400px;
     font-size: 4em;
+    font-weight: 700;
     color: #fff;
     background-color: #c0392b;
     text-transform: uppercase;

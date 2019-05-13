@@ -8,10 +8,16 @@ import {
   Board,
   RemainedTimeProgressBar,
   PauseBanner,
+  Text,
 } from './GameBoard.components';
 import { ActionCreators, Selectors } from 'redux/cardGame';
 import { LEVEL_TO_TIME } from 'constants/cardGame/levelToTime';
 import { GAME_STATUSES } from 'constants/cardGame/statuses';
+
+const { Paused } = GAME_STATUSES;
+
+const ESC_CODE = 27;
+const P_CODE = 80;
 
 export function GameBoard({
   cardIds,
@@ -28,57 +34,61 @@ export function GameBoard({
   const gridRef = useRef(null);
   const level = new URLSearchParams(location.search).get('level');
 
-  useEffect(() => {
-    if (flippedCardsIds.length === 2) {
-      setTimeout(() => {
-        checkFlippedCards();
-        updateFlipsStatistics(flippedCardsIds);
-      }, 400);
-    }
+  useEffect(
+    function checkFlippedCardsAndUpdateStatistics() {
+      if (flippedCardsIds.length === 2) {
+        setTimeout(() => {
+          checkFlippedCards();
+          updateFlipsStatistics(flippedCardsIds);
+        }, 400);
+      }
+    },
+    [flippedCardsIds],
+  );
 
-    if (unguessedCardsCount === 0) {
-      finishGame();
-    }
-  }, [flippedCardsIds, unguessedCardsCount]);
+  useEffect(
+    function finishGameIfAllCardsHasGuessed() {
+      if (unguessedCardsCount === 0) {
+        finishGame();
+      }
+    },
+    [unguessedCardsCount],
+  );
 
-  useEffect(() => {
+  useEffect(function setFocusOnGrid() {
     gridRef.current.focus();
   }, []);
 
   function handleKeyDown(event) {
-    if (event.keyCode === 27) {
+    if (event.keyCode === ESC_CODE) {
       finishGame({ abandoned: true });
-    }
-
-    if (event.keyCode === 80) {
-      setStatus(GAME_STATUSES.Paused);
+    } else if (event.keyCode === P_CODE) {
+      setStatus(Paused);
     }
   }
 
   return (
-    <>
-      <Wrapper tabIndex="0" ref={gridRef} onKeyDown={handleKeyDown}>
-        {status === GAME_STATUSES.Paused && (
-          <PauseBanner>
-            <h2>PAUSED</h2>
-          </PauseBanner>
-        )}
-        <RemainedTimeProgressBar
-          paused={status === GAME_STATUSES.Paused}
-          totalTime={LEVEL_TO_TIME[level]}
-        />
-        <Board level={level}>
-          {cardIds.map(cardId => (
-            <Cell
-              key={cardId}
-              id={cardId}
-              flipped={flippedCardsIds.includes(cardId)}
-              onFlip={flipCard}
-            />
-          ))}
-        </Board>
-      </Wrapper>
-    </>
+    <Wrapper tabIndex="0" ref={gridRef} onKeyDown={handleKeyDown}>
+      {status === Paused && (
+        <PauseBanner>
+          <Text>PAUSED</Text>
+        </PauseBanner>
+      )}
+      <RemainedTimeProgressBar
+        paused={status === Paused}
+        totalTime={LEVEL_TO_TIME[level]}
+      />
+      <Board level={level}>
+        {cardIds.map(cardId => (
+          <Cell
+            key={cardId}
+            id={cardId}
+            flipped={flippedCardsIds.includes(cardId)}
+            onFlip={flipCard}
+          />
+        ))}
+      </Board>
+    </Wrapper>
   );
 }
 
