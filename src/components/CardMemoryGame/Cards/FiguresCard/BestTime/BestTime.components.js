@@ -12,5 +12,4 @@ export const Row = styled.div`
   padding: 5px;
 `;
 
-export const Label = styled.span``;
-export const Value = styled.span``;
+export const Span = styled.span``;

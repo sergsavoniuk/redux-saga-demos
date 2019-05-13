@@ -1,17 +1,27 @@
 import styled, { css } from 'styled-components';
 
-export const Cards = styled.div`
+export const Wrapper = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-direction: column;
   width: 500px;
-  height: 500px;
   margin-top: 100px;
-  font-family: Arial;
 
   @media (max-width: 499px) {
     width: 95%;
   }
+`;
+
+export const Tip = styled.span`
+  text-align: center;
+  color: #ddc3e2;
+`;
+
+export const Cards = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 500px;
+  font-family: Arial;
 `;
 
 export const Card = styled.div`

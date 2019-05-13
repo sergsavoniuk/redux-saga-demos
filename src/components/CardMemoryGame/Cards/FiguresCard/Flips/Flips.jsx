@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Wrapper, Row, Label, Value } from './Flips.components';
+import { Wrapper, Row, Span as Label, Span as Value } from './Flips.components';
 
 function Flips({ matched, wrong }) {
   return (

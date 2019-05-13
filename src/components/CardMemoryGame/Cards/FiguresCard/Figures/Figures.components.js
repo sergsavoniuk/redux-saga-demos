@@ -1,7 +1,12 @@
 import styled from 'styled-components';
 
-export const Title = styled.h2`
+export const Wrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
   width: 100%;
+  font-size: 1.5em;
+  font-weight: 700;
+  margin: 15px 5px;
   text-transform: uppercase;
 
   & > span {
@@ -9,9 +14,7 @@ export const Title = styled.h2`
   }
 `;
 
-export const Won = styled.span``;
-export const Lost = styled.span``;
-export const Abandoned = styled.span``;
+export const Row = styled.span``;
 
 export const Label = styled.i`
   vertical-align: top;

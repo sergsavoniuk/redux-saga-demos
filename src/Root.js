@@ -25,6 +25,7 @@ const GlobalStyles = createGlobalStyle`
     padding: 0;
     font-size: 16px;
     background-color: #0E1427;
+    user-select: none;
   }
 
   #modal {

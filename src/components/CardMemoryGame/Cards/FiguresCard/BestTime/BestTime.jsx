@@ -1,22 +1,36 @@
 import React from 'react';
 import { format } from 'date-fns';
 
-import { Wrapper, Row, Label, Value } from './BestTime.components';
+import {
+  Wrapper,
+  Row,
+  Span as Label,
+  Span as Value,
+} from './BestTime.components';
+
+const DEFAULT_PLACEHOLDER = '-:-';
+const TIME_FORMAT = 'ss.SSS';
 
 function BestTime({ casual, medium, hard }) {
   return (
     <Wrapper>
       <Row>
         <Label>Best Casual:</Label>
-        <Value>{casual ? `${format(casual, 'ss.SSS')}s` : '-:-'}</Value>
+        <Value>
+          {casual ? `${format(casual, TIME_FORMAT)}s` : DEFAULT_PLACEHOLDER}
+        </Value>
       </Row>
       <Row>
         <Label>Best Medium:</Label>
-        <Value>{medium ? `${format(medium, 'ss.SSS')}s` : '-:-'}</Value>
+        <Value>
+          {medium ? `${format(medium, TIME_FORMAT)}s` : DEFAULT_PLACEHOLDER}
+        </Value>
       </Row>
       <Row>
         <Label>Best Hard:</Label>
-        <Value>{hard ? `${format(hard, 'ss.SSS')}s` : '-:-'}</Value>
+        <Value>
+          {hard ? `${format(hard, TIME_FORMAT)}s` : DEFAULT_PLACEHOLDER}
+        </Value>
       </Row>
     </Wrapper>
   );
