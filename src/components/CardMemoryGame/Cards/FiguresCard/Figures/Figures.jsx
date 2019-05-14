@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Wrapper, Row, Label, Value } from './Figures.components';
 
-function Figures({ won, lost, abandoned }) {
+function Figures({ won = 0, lost = 0, abandoned = 0 }) {
   return (
     <Wrapper>
       Figures:

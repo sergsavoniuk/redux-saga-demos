@@ -1,0 +1,117 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing BestTime component renders correctly with passed props 1`] = `
+<styled.div>
+  <styled.div>
+    <styled.span>
+      Best Casual:
+    </styled.span>
+    <styled.span>
+      10.000s
+    </styled.span>
+  </styled.div>
+  <styled.div>
+    <styled.span>
+      Best Medium:
+    </styled.span>
+    <styled.span>
+      18.000s
+    </styled.span>
+  </styled.div>
+  <styled.div>
+    <styled.span>
+      Best Hard:
+    </styled.span>
+    <styled.span>
+      27.000s
+    </styled.span>
+  </styled.div>
+</styled.div>
+`;
+
+exports[`Testing BestTime component renders correctly without props - used default placeholder 1`] = `
+<styled.div>
+  <styled.div>
+    <styled.span>
+      Best Casual:
+    </styled.span>
+    <styled.span>
+      -:-
+    </styled.span>
+  </styled.div>
+  <styled.div>
+    <styled.span>
+      Best Medium:
+    </styled.span>
+    <styled.span>
+      -:-
+    </styled.span>
+  </styled.div>
+  <styled.div>
+    <styled.span>
+      Best Hard:
+    </styled.span>
+    <styled.span>
+      -:-
+    </styled.span>
+  </styled.div>
+</styled.div>
+`;
+
+exports[`Testing Flips component renders correctly with passed props 1`] = `
+<styled.div>
+  <styled.div>
+    <styled.span>
+      Total Flips:
+    </styled.span>
+    <styled.span>
+      40
+    </styled.span>
+  </styled.div>
+  <styled.div>
+    <styled.span>
+      Matched Flips:
+    </styled.span>
+    <styled.span>
+      8
+    </styled.span>
+  </styled.div>
+  <styled.div>
+    <styled.span>
+      Wrong Flips:
+    </styled.span>
+    <styled.span>
+      12
+    </styled.span>
+  </styled.div>
+</styled.div>
+`;
+
+exports[`Testing Flips component renders correctly without props - used default values 1`] = `
+<styled.div>
+  <styled.div>
+    <styled.span>
+      Total Flips:
+    </styled.span>
+    <styled.span>
+      0
+    </styled.span>
+  </styled.div>
+  <styled.div>
+    <styled.span>
+      Matched Flips:
+    </styled.span>
+    <styled.span>
+      0
+    </styled.span>
+  </styled.div>
+  <styled.div>
+    <styled.span>
+      Wrong Flips:
+    </styled.span>
+    <styled.span>
+      0
+    </styled.span>
+  </styled.div>
+</styled.div>
+`;

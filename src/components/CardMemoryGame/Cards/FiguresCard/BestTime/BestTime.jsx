@@ -8,7 +8,7 @@ import {
   Span as Value,
 } from './BestTime.components';
 
-const DEFAULT_PLACEHOLDER = '-:-';
+export const DEFAULT_PLACEHOLDER = '-:-';
 const TIME_FORMAT = 'ss.SSS';
 
 function BestTime({ casual, medium, hard }) {

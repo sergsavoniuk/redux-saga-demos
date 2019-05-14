@@ -48,14 +48,14 @@ export function FiguresCard({
 FiguresCard.propTypes = {
   ...CardPropTypes,
   statistics: shape({
-    won: number.isRequired,
-    lost: number.isRequired,
-    abandoned: number.isRequired,
+    won: number,
+    lost: number,
+    abandoned: number,
     casualBestTime: number,
     mediumBestTime: number,
     hardBestTime: number,
-    matchedFlips: number.isRequired,
-    wrongFlips: number.isRequired,
+    matchedFlips: number,
+    wrongFlips: number,
   }).isRequired,
 };
 

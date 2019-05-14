@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing Figures component renders correctly with passed props 1`] = `
+<styled.div>
+  Figures:
+  <styled.span>
+    <styled.b>
+      10
+    </styled.b>
+    <styled.i>
+      won
+    </styled.i>
+  </styled.span>
+  <styled.span>
+    <styled.b>
+      4
+    </styled.b>
+    <styled.i>
+      lost
+    </styled.i>
+  </styled.span>
+  <styled.span>
+    <styled.b>
+      2
+    </styled.b>
+    <styled.i>
+      abandoned
+    </styled.i>
+  </styled.span>
+</styled.div>
+`;
+
+exports[`Testing Figures component renders correctly without props - used default values 1`] = `
+<styled.div>
+  Figures:
+  <styled.span>
+    <styled.b>
+      0
+    </styled.b>
+    <styled.i>
+      won
+    </styled.i>
+  </styled.span>
+  <styled.span>
+    <styled.b>
+      0
+    </styled.b>
+    <styled.i>
+      lost
+    </styled.i>
+  </styled.span>
+  <styled.span>
+    <styled.b>
+      0
+    </styled.b>
+    <styled.i>
+      abandoned
+    </styled.i>
+  </styled.span>
+</styled.div>
+`;

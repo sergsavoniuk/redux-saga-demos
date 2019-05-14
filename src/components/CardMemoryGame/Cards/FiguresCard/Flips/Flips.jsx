@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Wrapper, Row, Span as Label, Span as Value } from './Flips.components';
 
-function Flips({ matched, wrong }) {
+function Flips({ matched = 0, wrong = 0 }) {
   return (
     <Wrapper>
       <Row>

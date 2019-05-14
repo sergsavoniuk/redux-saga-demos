@@ -54,17 +54,22 @@
       "src/**/*.{js,jsx}",
       "!src/**/index.js",
       "!src/constants/"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
     ]
   },
   "devDependencies": {
     "@redux-saga/testing-utils": "^1.0.2",
     "enzyme": "^3.9.0",
-    "enzyme-adapter-react-16": "^1.12.1",
+    "enzyme-adapter-react-16": "^1.13.0",
+    "enzyme-to-json": "^3.3.5",
     "express": "^4.16.4",
     "husky": "^1.3.1",
     "lint-staged": "^8.1.5",
     "prettier": "^1.16.4",
     "prop-types": "^15.7.2",
+    "react-test-renderer": "^16.8.6",
     "rimraf": "^2.6.3",
     "workbox-build": "^4.3.1"
   }
