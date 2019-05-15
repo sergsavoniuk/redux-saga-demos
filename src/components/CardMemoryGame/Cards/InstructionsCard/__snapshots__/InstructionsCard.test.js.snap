@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing InstructionsCard component renders correctly flipped card 1`] = `
+<styled.div
+  flipped={true}
+  onClick={[MockFunction]}
+>
+  <h2>
+    Instructions
+  </h2>
+  <p>
+    Press [p] to pause, or [ESC] to abandon game.
+  </p>
+  <p>
+    Flip is a timed card memory game. Click the green cards to see what symbol they uncover and try to find the matching symbol underneath the other cards.
+  </p>
+  <p>
+    Uncover two matching symbols at once to eliminate them from the game.
+  </p>
+  <p>
+    Eliminate all cards as fast as you can to win the game. Have fun FLIPing!
+  </p>
+</styled.div>
+`;
+
+exports[`Testing InstructionsCard component renders correctly unflipped card 1`] = `
+<styled.div
+  flipped={false}
+  onClick={[MockFunction]}
+>
+  <p>
+    I
+  </p>
+</styled.div>
+`;

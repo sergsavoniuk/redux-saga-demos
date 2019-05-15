@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing PlayCard component renders correctly flipped card 1`] = `
+<styled.div
+  fixed={true}
+  onClick={[MockFunction]}
+>
+  <ConnectFunction
+    level="casual"
+  />
+  <ConnectFunction
+    level="medium"
+  />
+  <ConnectFunction
+    level="hard"
+  />
+</styled.div>
+`;
+
+exports[`Testing PlayCard component renders correctly unflipped card 1`] = `
+<styled.div
+  fixed={false}
+  onClick={[MockFunction]}
+>
+  <p>
+    P
+  </p>
+</styled.div>
+`;
