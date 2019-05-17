@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { object, bool, func } from 'prop-types';
+import { string, bool, func } from 'prop-types';
 import { connect } from 'react-redux';
 
 import Loader from 'components/Loader';
@@ -56,7 +56,7 @@ export function AuthForm({ error, loading, login }) {
 }
 
 AuthForm.propTypes = {
-  error: object,
+  error: string,
   loading: bool.isRequired,
   login: func.isRequired,
 };
