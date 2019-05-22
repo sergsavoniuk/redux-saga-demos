@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Testing LevelButton component renders correctly 1`] = `
+exports[`<LevelButton /> renders correctly 1`] = `
 <styled.button
   as={[Function]}
   onClick={[Function]}
@@ -12,20 +12,5 @@ exports[`Testing LevelButton component renders correctly 1`] = `
   }
 >
   casual
-</styled.button>
-`;
-
-exports[`Testing LevelButton component should change a game level after a click 1`] = `
-<styled.button
-  as={[Function]}
-  onClick={[Function]}
-  to={
-    Object {
-      "pathname": "/apps/card-memory-game/play",
-      "search": "?level=medium",
-    }
-  }
->
-  medium
 </styled.button>
 `;

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Testing InstructionsCard component renders correctly flipped card 1`] = `
+exports[`<InstructionsCard /> renders correctly flipped card 1`] = `
 <styled.div
   flipped={true}
   onClick={[MockFunction]}
@@ -23,7 +23,7 @@ exports[`Testing InstructionsCard component renders correctly flipped card 1`] =
 </styled.div>
 `;
 
-exports[`Testing InstructionsCard component renders correctly unflipped card 1`] = `
+exports[`<InstructionsCard /> renders correctly unflipped card 1`] = `
 <styled.div
   flipped={false}
   onClick={[MockFunction]}

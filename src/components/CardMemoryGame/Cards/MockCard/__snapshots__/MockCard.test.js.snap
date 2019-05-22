@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Testing MockCard component renders correctly 1`] = `
+exports[`<MockCard /> renders correctly 1`] = `
 <styled.div
   active={false}
 >

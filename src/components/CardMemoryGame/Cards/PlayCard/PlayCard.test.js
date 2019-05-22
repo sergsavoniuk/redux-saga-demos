@@ -4,41 +4,56 @@ import { shallow } from 'enzyme';
 import PlayCard from './PlayCard';
 import LevelButton from './LevelButton';
 
-describe('Testing PlayCard component', () => {
-  let props;
+describe('<PlayCard />', () => {
+  const onCardClick = jest.fn();
 
-  beforeEach(() => {
-    props = {
+  function setup(props) {
+    const defaultProps = {
       name: 'P',
       isFlipped: false,
-      onCardClick: jest.fn(),
+      onCardClick,
     };
+
+    const wrapper = shallow(<PlayCard {...defaultProps} {...props} />);
+
+    return {
+      wrapper,
+      props: defaultProps,
+    };
+  }
+
+  afterEach(() => {
+    onCardClick.mockClear();
   });
 
   test('renders correctly unflipped card', () => {
-    const wrapper = shallow(<PlayCard {...props} />);
+    const { wrapper, props } = setup();
 
     expect(wrapper).toMatchSnapshot();
+    expect(wrapper.text()).toMatch(props.name);
   });
 
   test('renders correctly flipped card', () => {
-    props.isFlipped = true;
-
-    const wrapper = shallow(<PlayCard {...props} />);
+    const { wrapper } = setup({ isFlipped: true });
 
     expect(wrapper).toMatchSnapshot();
+    expect(wrapper.find(LevelButton)).toHaveLength(3);
   });
 
-  test('should flip card after a click', () => {
-    const wrapper = shallow(<PlayCard {...props} />);
+  test('should flip a card after a click', () => {
+    const { wrapper, props } = setup();
+
+    expect(wrapper.text()).toMatch(props.name);
 
     wrapper.simulate('click');
-    expect(props.onCardClick).toHaveBeenCalledTimes(1);
+    expect(onCardClick).toHaveBeenCalledTimes(1);
+
     wrapper.setProps({ isFlipped: true });
     expect(wrapper.find(LevelButton)).toHaveLength(3);
 
     wrapper.simulate('click');
-    expect(props.onCardClick).toHaveBeenCalledTimes(2);
+    expect(onCardClick).toHaveBeenCalledTimes(2);
+
     wrapper.setProps({ isFlipped: false });
     expect(wrapper.text()).toMatch(props.name);
   });
