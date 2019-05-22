@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Testing Figures component renders correctly with passed props 1`] = `
+exports[`<Figures /> renders correctly with passed props 1`] = `
 <styled.div>
   Figures:
   <styled.span>
@@ -30,7 +30,7 @@ exports[`Testing Figures component renders correctly with passed props 1`] = `
 </styled.div>
 `;
 
-exports[`Testing Figures component renders correctly without props - used default values 1`] = `
+exports[`<Figures /> renders correctly without props - uses default values 1`] = `
 <styled.div>
   Figures:
   <styled.span>

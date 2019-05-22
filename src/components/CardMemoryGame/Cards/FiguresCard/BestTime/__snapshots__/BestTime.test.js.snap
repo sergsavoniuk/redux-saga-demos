@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Testing BestTime component renders correctly with passed props 1`] = `
+exports[`<BestTime /> renders correctly with passed props 1`] = `
 <styled.div>
   <styled.div>
     <styled.span>
@@ -29,7 +29,7 @@ exports[`Testing BestTime component renders correctly with passed props 1`] = `
 </styled.div>
 `;
 
-exports[`Testing BestTime component renders correctly without props - used default placeholder 1`] = `
+exports[`<BestTime /> renders correctly without props - uses default placeholder 1`] = `
 <styled.div>
   <styled.div>
     <styled.span>

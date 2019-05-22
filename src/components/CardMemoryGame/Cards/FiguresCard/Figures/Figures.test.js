@@ -4,24 +4,21 @@ import { shallow } from 'enzyme';
 import Figures from './Figures';
 import { Row } from './Figures.components';
 
-function getValueComponent(wrapper, index) {
-  return wrapper
-    .find(Row)
-    .at(index)
-    .children()
-    .at(0); // Value component
-}
-
-describe('Testing Figures component', () => {
-  test('renders correctly without props - used default values', () => {
+describe('<Figures />', () => {
+  test('renders correctly without props - uses default values', () => {
     const wrapper = shallow(<Figures />);
 
     expect(wrapper).toMatchSnapshot();
     expect(wrapper.find(Row)).toHaveLength(3);
 
-    expect(getValueComponent(wrapper, 0).text()).toMatch('0');
-    expect(getValueComponent(wrapper, 1).text()).toMatch('0');
-    expect(getValueComponent(wrapper, 2).text()).toMatch('0');
+    wrapper.find(Row).forEach(node => {
+      expect(
+        node
+          .children()
+          .first()
+          .text(),
+      ).toMatch('0');
+    });
   });
 
   test('renders correctly with passed props', () => {
@@ -35,9 +32,5 @@ describe('Testing Figures component', () => {
 
     expect(wrapper).toMatchSnapshot();
     expect(wrapper.find(Row)).toHaveLength(3);
-
-    expect(getValueComponent(wrapper, 0).text()).toMatch(`${props.won}`);
-    expect(getValueComponent(wrapper, 1).text()).toMatch(`${props.lost}`);
-    expect(getValueComponent(wrapper, 2).text()).toMatch(`${props.abandoned}`);
   });
 });

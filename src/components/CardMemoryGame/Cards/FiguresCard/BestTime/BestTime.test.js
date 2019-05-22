@@ -4,24 +4,21 @@ import { shallow } from 'enzyme';
 import BestTime, { DEFAULT_PLACEHOLDER } from './BestTime';
 import { Row } from './BestTime.components';
 
-export function getValueComponent(wrapper, rowIndex) {
-  return wrapper
-    .find(Row)
-    .at(rowIndex)
-    .children()
-    .at(1); // Value component
-}
-
-describe('Testing BestTime component', () => {
-  test('renders correctly without props - used default placeholder', () => {
+describe('<BestTime />', () => {
+  test('renders correctly without props - uses default placeholder', () => {
     const wrapper = shallow(<BestTime />);
 
     expect(wrapper).toMatchSnapshot();
     expect(wrapper.find(Row)).toHaveLength(3);
 
-    expect(getValueComponent(wrapper, 0).text()).toMatch(DEFAULT_PLACEHOLDER);
-    expect(getValueComponent(wrapper, 1).text()).toMatch(DEFAULT_PLACEHOLDER);
-    expect(getValueComponent(wrapper, 2).text()).toMatch(DEFAULT_PLACEHOLDER);
+    wrapper.find(Row).forEach(node => {
+      expect(
+        node
+          .children()
+          .last()
+          .text(),
+      ).toMatch(DEFAULT_PLACEHOLDER);
+    });
   });
 
   test('renders correctly with passed props', () => {
