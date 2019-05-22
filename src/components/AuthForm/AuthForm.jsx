@@ -61,15 +61,11 @@ AuthForm.propTypes = {
   login: func.isRequired,
 };
 
-function mapStateToProps(state) {
-  return {
+export default connect(
+  state => ({
     error: Selectors.getErrorMessage(state),
     loading: Selectors.getLoadingStatus(state),
-  };
-}
-
-export default connect(
-  mapStateToProps,
+  }),
   {
     login: ActionCreators.login,
   },
