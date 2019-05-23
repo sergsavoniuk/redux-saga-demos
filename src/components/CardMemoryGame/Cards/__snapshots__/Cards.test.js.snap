@@ -1,0 +1,97 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Cards /> renders correctly 1`] = `
+<styled.div>
+  <styled.span>
+    Click P to get started.
+  </styled.span>
+  <styled.div>
+    <Card
+      isFlipped={false}
+      key="Figures"
+      name="F"
+      onCardClick={[Function]}
+    />
+    <Card
+      isFlipped={false}
+      key="Mock"
+      name="L"
+      onCardClick={[Function]}
+    />
+    <Card
+      isFlipped={false}
+      key="Instructions"
+      name="I"
+      onCardClick={[Function]}
+    />
+    <Card
+      isFlipped={false}
+      key="Play"
+      name="P"
+      onCardClick={[Function]}
+    />
+  </styled.div>
+</styled.div>
+`;
+
+exports[`<Cards /> should flip a Figures card after a click and make a Mock card invisible, and after a second click back to the initial state 1`] = `
+<styled.div>
+  <styled.span>
+    Click P to get started.
+  </styled.span>
+  <styled.div>
+    <Card
+      isFlipped={true}
+      key="Figures"
+      name="F"
+      onCardClick={[Function]}
+    />
+    <Card
+      isFlipped={false}
+      key="Instructions"
+      name="I"
+      onCardClick={[Function]}
+    />
+    <Card
+      isFlipped={false}
+      key="Play"
+      name="P"
+      onCardClick={[Function]}
+    />
+  </styled.div>
+</styled.div>
+`;
+
+exports[`<Cards /> should flip a Figures card after a click and make a Mock card invisible, and after a second click back to the initial state 2`] = `
+<styled.div>
+  <styled.span>
+    Click P to get started.
+  </styled.span>
+  <styled.div>
+    <Card
+      isFlipped={true}
+      key="Figures"
+      name="F"
+      onCardClick={[Function]}
+    />
+    <Card
+      isFlipped={false}
+      key="Mock"
+      name="L"
+      onCardClick={[Function]}
+    />
+    <Card
+      isFlipped={false}
+      key="Instructions"
+      name="I"
+      onCardClick={[Function]}
+    />
+    <Card
+      isFlipped={false}
+      key="Play"
+      name="P"
+      onCardClick={[Function]}
+    />
+  </styled.div>
+</styled.div>
+`;

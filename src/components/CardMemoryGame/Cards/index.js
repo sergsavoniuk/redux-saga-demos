@@ -1,1 +1,1 @@
-export { default } from './Cards';
+export { default, isCardVisible } from './Cards';
