@@ -12,9 +12,10 @@ import {
 } from './Notification.components';
 import { Selectors, ActionCreators } from 'redux/notifications';
 
-const element = document.getElementById('modal');
+// export const element = document.getElementById('modal');
 
 export function Notification({ notification, closeNotification }) {
+  const element = document.getElementById('modal');
   const { id, title, body, mediaSrc } = notification || {};
 
   function handleCloseNotification() {
@@ -51,14 +52,8 @@ Notification.propTypes = {
   closeNotification: func.isRequired,
 };
 
-function mapStateToProps(state) {
-  return {
-    notification: Selectors.getActiveNotification(state),
-  };
-}
-
 export default connect(
-  mapStateToProps,
+  state => ({ notification: Selectors.getActiveNotification(state) }),
   {
     closeNotification: ActionCreators.removeNotificationFromQueue,
   },
